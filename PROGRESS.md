@@ -130,3 +130,39 @@
 **Blockers**
 
 - None
+
+## Task: Synchronize the public experiment records
+
+**Status:** in progress
+**Started:** 2026-08-10 03:51 +07
+
+### 2026-08-10 03:51 +07 - Reciprocal updates prepared
+
+**Status:** pending merge
+
+**Completed**
+
+- Prepared the AdaptMarket pull request with the complete three-experiment history, current model card, aggregate results, release boundaries, and predecessor artifact index.
+- Archived the six report figures used by the AdaptMarket record with checksums and the source MIT notice.
+- Added the canonical AdaptMarket repository to this README and confirmed that this branch's Attempt #3 resources already link back to it.
+- Opened the AdaptMarket documentation pull request.
+
+**Evidence**
+
+- AdaptMarket pull request: https://github.com/Kitkitkittt/AdaptMarket/pull/1
+- All AdaptMarket relative Markdown links resolve, and all six archived image hashes match the live report assets.
+- The AdaptMarket content review found no factual, release-boundary, placeholder, or provenance issues.
+
+**Decisions**
+
+- Kept the current AdaptMarket corpus, prompts, weights, and per-example evaluation records restricted.
+- Kept predecessor datasets and LoRA adapters labeled separately from the current experiment.
+- Did not add a duplicate report link because this branch's Attempt #3 resource section already points to the canonical repository.
+
+**Next**
+
+- Merge both documentation pull requests and let the production deployment publish Attempt #3.
+
+**Blockers**
+
+- Vercel cannot create a PR preview until `@Kitkitkittt` is added to the deployment team; production deployment remains on the Attempts #1–2 version until merge.
