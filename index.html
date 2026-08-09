@@ -524,16 +524,16 @@
 
           <p>
             Our main challenge was therefore to reconstruct those prompts from the evidence available
-            in each report without leaking the analyst’s final conclusion into the input. If done
-            correctly, the model would need to arrive at the judgment itself rather than simply recover
-            the answer from the source.
+            in each report without leaking the analyst’s final conclusion into the input. If the
+            reconstructed prompt contained only supporting evidence, the model would need to arrive at
+            the judgment itself rather than simply recover the answer from the source.
           </p>
 
           <p>
-            We faced many challenges. We repeatedly refined the data methodology, manually inspected
-            examples, and checked that the resulting tasks still reflected real equity-research
-            workflows. Along the way, we learned a great deal about both finance-data preparation and
-            how to work effectively with <strong>AutoScientist</strong>.
+            To address that constraint, we repeatedly refined the data methodology, manually inspected
+            examples, and checked that the resulting tasks reflected real equity-research workflows.
+            The two attempts below show how that work first established the method, then tested it at a
+            larger scale with <strong>AutoScientist</strong>.
           </p>
 
           <div class="note">
@@ -566,9 +566,9 @@
 
           <p>
             Several early extraction approaches failed for the same reason: they generated plausible
-            tasks that the source report did not actually answer. The version we kept works in reverse.
-            It finds a real analyst conclusion first, removes that conclusion from the available
-            evidence, and then reconstructs only the question that the evidence can support.
+            tasks that the source report did not actually answer. The final extraction method works in
+            reverse: it finds a real analyst conclusion first, removes that conclusion from the
+            available evidence, and then reconstructs only the question that the evidence can support.
           </p>
 
           <figure class="shot">
@@ -591,8 +591,8 @@
           <p>
             Earlier fixed templates asked every example for counterevidence and an invalidation
             condition, even when the source contained neither. In a 50-row review, 45 rows failed
-            this check. We replaced the fixed task with one derived from each conclusion, then used
-            quality gates to reduce the result to a smaller, traceable baseline.
+            the counterevidence-and-invalidation-condition check. We therefore derived each task from
+            its conclusion and applied quality gates to produce a smaller, traceable baseline.
           </p>
 
           <figure>
@@ -609,9 +609,9 @@
           <h3 id="adaptive-data">Adaptive Data</h3>
 
           <p>
-            We uploaded the 589 training rows to Adaption. Its
-            <strong><a href="https://adaptionlabs.ai/adaptive-data">Adaptive Data</a></strong> pipeline expanded
-            them to 27,862 rows, of which 27,405 were used for training. The platform's quality score
+            We uploaded the 589 training rows to Adaption.
+            <strong><a href="https://adaptionlabs.ai/adaptive-data">Adaptive Data</a></strong> expanded
+            them to 27,862 rows, of which 27,405 were used for training. Its quality score
             increased from 5.0 to 9.4, moving the dataset from grade C to grade A.
           </p>
 
@@ -623,8 +623,8 @@
           </figure>
 
           <p>
-            <strong>Adaptive Data</strong> changed the response structure more than the task. The prompt stayed close
-            to the extracted evidence, while the completion became easier to inspect and evaluate.
+            <strong>Adaptive Data</strong> preserved the evidence-based task while making the completion
+            easier to inspect and evaluate.
           </p>
 
           <figure>
@@ -670,14 +670,17 @@
           </figure>
 
           <p>
-            The second result is the stronger one. We constructed the first evaluation distribution;
-            Adaption constructed the broader category evaluation. Winning 77 to 23 on that category
-            supports transfer beyond our own rows. It is a preference result, not an accuracy score.
+            The 77-to-23 Market Analysis result is more informative because Adaption, rather than our
+            team, constructed the broader category evaluation. That preference result supports transfer
+            beyond our own rows; it is not an accuracy score.
           </p>
 
           <h3 id="limitation">Limitations</h3>
 
-          <p>Attempt 1 established a useful signal, but it did not establish a clean benchmark.</p>
+          <p>
+            Attempt 1 established initial evidence that the extraction-and-training workflow could
+            work, but it did not establish a clean benchmark for five reasons:
+          </p>
 
           <ul>
             <li><strong>Narrow source coverage.</strong> The corpus focused on company research, not macro, sector, fund, or fixed-income analysis.</li>
@@ -688,8 +691,8 @@
           </ul>
 
           <p>
-            Attempt 1 established the extraction and training path, but its narrow corpus and
-            contaminated local split made scale the next question.
+            Those limits made a broader test necessary. Attempt 2 therefore asked whether the workflow
+            could cover more finance domains and remain useful at a much larger data scale.
           </p>
 
           <div class="act">
@@ -702,32 +705,28 @@
             Attempt 2 began after an office-hours session with
             <strong><a href="https://www.linkedin.com/in/sararosehooker" target="_blank" rel="noreferrer">Sara Hooker</a></strong>,
             co-founder of Adaption Labs.
-            Sara emphasized the importance of training with substantially more data. That advice
-            changed our next question: instead of continuing to optimize a small proof of concept,
-            we expanded the source corpus and tested whether the full workflow could hold up at scale.
+            Sara emphasized the importance of training with substantially more data. Her advice shifted
+            our focus from optimizing a small proof of concept to testing whether the full workflow
+            could hold up at scale.
           </p>
 
           <p>
-            Attempt 2 addressed the narrow source coverage. We manually expanded the corpus from
-            roughly 1,500 to about 7,000 reports, adding macro outlooks, sector studies, fund reviews,
-            and fixed-income commentary from institutional sources.
-          </p>
-
-          <p>
-            Our source corpus grew significantly, adding more macro-level market research reports.
-            As a result, our training corpus grew from <strong>~500 → 45,000+</strong> samples.
+            To test that question, we expanded the source corpus from roughly 1,500 to about 7,000
+            institutional reports. The expanded corpus added macro outlooks, sector studies, fund
+            reviews, and fixed-income commentary. As a result, our training corpus grew from
+            <strong>~500 → 45,000+</strong> samples.
           </p>
 
           <figure>
-            <div class="scale-chart" role="img" aria-label="Training-row growth from the 589-row Attempt 1 baseline to approximately 19,000 rows of Attempt 1 synthetic data and 45,758 rows of Attempt 2 enhanced data">
+            <div class="scale-chart" role="img" aria-label="Training-row growth from the 589-row Attempt 1 baseline to 27,862 Attempt 1 Adaptive Data rows and 45,758 Attempt 2 enhanced rows">
               <div class="scale-stage">
                 <span class="scale-value">589</span>
                 <span class="scale-bar-space"><i class="scale-bar" style="height:1.3%"></i></span>
                 <span class="scale-label">Attempt #1, Baseline</span>
               </div>
               <div class="scale-stage">
-                <span class="scale-value">~19k</span>
-                <span class="scale-bar-space"><i class="scale-bar" style="height:41.5%"></i></span>
+                <span class="scale-value">27,862</span>
+                <span class="scale-bar-space"><i class="scale-bar" style="height:60.9%"></i></span>
                 <span class="scale-label">Attempt #1, Synthetic Data</span>
               </div>
               <div class="scale-stage">
@@ -736,13 +735,13 @@
                 <span class="scale-label">Attempt #2, Enhanced Data</span>
               </div>
             </div>
-            <figcaption><strong>Figure 7:</strong> Training-data scale across the two attempts: 589 baseline rows, roughly 19,000 synthetic rows, and 45,758 enhanced rows.</figcaption>
+            <figcaption><strong>Figure 7:</strong> Training-data scale across the two attempts: 589 baseline rows, 27,862 Attempt 1 Adaptive Data rows, and 45,758 Attempt 2 enhanced rows.</figcaption>
           </figure>
 
           <p>
-            The broader corpus required a broader task model. Each row records a task family, an asset
-            family, and the relationship between its evidence and conclusion. This taxonomy also adds
-            a task that Attempt 1 lacked: deciding when the evidence is insufficient.
+            The expanded source corpus required a broader task taxonomy. Each training row records a
+            task family, an asset family, and the relationship between evidence and conclusion. This
+            taxonomy also adds a task that Attempt 1 lacked: deciding when the evidence is insufficient.
           </p>
 
           <figure>
@@ -759,15 +758,15 @@
 
           <p>
             More than one third of the rows reward the model for declining to make an unsupported
-            claim. That task matters because fluent synthesis is not enough; an analyst also needs to
-            recognize when the available evidence cannot support a conclusion.
+            claim. Insufficient-evidence tasks matter because fluent synthesis is not enough; an
+            analyst also needs to recognize when the available evidence cannot support a conclusion.
           </p>
 
           <p>
-            <strong>We ran Adaptive Data three times,</strong> using three recipes, and merged the outputs with
-            Combine. The three generations used the same source corpus but expressed each analytical
-            task differently. The combined dataset therefore increased row diversity without
-            pretending that each generated row came from an independent source.
+            <strong>We ran Adaptive Data three times,</strong> using three recipes, and merged the outputs
+            with Adaption’s Combine workflow. The three generations used the same source corpus but
+            expressed each analytical task differently. The combined dataset therefore increased row
+            diversity without implying that each generated row came from an independent source.
           </p>
 
           <div class="table-scroll">
@@ -790,11 +789,11 @@
           </figure>
 
           <p>
-            The larger corpus entered <strong>Adaptive Data</strong> at a higher baseline quality. Each source
-            generation started at 7.0, while the combined dataset started at 8.0 and finished at 9.4.
-            The three generations share the same 1,753 leakage groups, so they represent roughly
-            15,250 unique generated items rather than three independent corpora. The headline scale
-            came from combining broader source coverage with multiple adaptation recipes.
+            The combined dataset entered <strong>Adaptive Data</strong> at a higher baseline quality. Each
+            source generation started at 7.0, while the combined dataset started at 8.0 and finished at
+            9.4. The three generations share the same 1,753 leakage groups, so the 45,758 rows
+            represent roughly 15,250 unique generated items rather than three independent corpora.
+            The final row count came from broader source coverage and multiple adaptation recipes.
           </p>
 
           <h3 id="scale-model">Model</h3>
@@ -810,10 +809,10 @@
           <h3 id="result">Results</h3>
 
           <p>
-            The adapted model won 80 to 20 in the dataset-specific preference evaluation. This makes
-            Attempt 2 the stronger scaling result: the workflow absorbed broader source coverage,
-            reached 45,758 rows, improved data quality from B to A, and retained a large preference
-            margin on its own distribution.
+            On its dataset-specific preference evaluation, the adapted model won 80 to 20. This result
+            shows that the workflow absorbed broader source coverage, reached 45,758 rows, improved
+            data quality from B to A, and retained a large preference margin on its own distribution.
+            It does not establish better generalization than Attempt 1.
           </p>
 
           <figure class="shot">
@@ -824,11 +823,11 @@
           </figure>
 
           <p>
-            Attempt 1 still provides the stronger evidence of external transfer because it includes
-            a 77 to 23 Market Analysis category result. Attempt 2 has no equivalent category result,
-            so we do not claim better generalization. The two attempts answer different questions:
-            Attempt 1 proves transfer beyond its own rows, while Attempt 2 proves that the full data
-            and training workflow can scale across a materially broader finance corpus.
+            Attempt 1 remains the stronger evidence of external transfer because it includes a 77-to-23
+            Market Analysis category result. Attempt 2 has no equivalent category result. The two
+            attempts therefore answer different questions: Attempt 1 tests transfer beyond its own
+            rows, while Attempt 2 tests whether the full data and training workflow can scale across a
+            materially broader finance corpus.
           </p>
 
           <div class="act">
@@ -843,7 +842,7 @@
             the tools we used to expand the training data and automate model training in a practical
             environment. We are especially grateful
             to <a href="https://www.linkedin.com/in/sararosehooker" target="_blank" rel="noreferrer">Sara Hooker</a>
-            for the office-hours advice that pushed us to scale the data, and to
+            for the office-hours advice that pushed us to scale the data. We also thank
             <a href="https://www.linkedin.com/in/ross-giagkoudis-1470a8263/" target="_blank" rel="noreferrer">Ross Giagkoudis</a>
             for being consistently supportive and helpful in Discord throughout the challenge.
           </p>
