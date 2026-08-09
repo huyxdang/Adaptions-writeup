@@ -335,32 +335,27 @@
       .cmp .em { color: var(--accent); font-weight: 500; }
       .table-scroll { margin: 1.8rem 0; overflow-x: auto; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
-      .chat-transform { display: grid; gap: 1.15rem; font-size: 12.5px; line-height: 1.62; }
-      .chat-turn { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 0.65rem; align-items: start; }
-      .chat-turn.source { grid-template-columns: minmax(0, 1fr) 28px; }
-      .chat-turn.source .chat-message { grid-column: 1; }
-      .chat-turn.source .chat-avatar { grid-column: 2; }
-      .chat-avatar { display: grid; width: 28px; height: 28px; place-items: center; border: 1px solid var(--border); border-radius: 50%; color: var(--medium-gray); background: var(--white); font: 500 8px/1 var(--mono); letter-spacing: 0.02em; }
-      .chat-turn.assistant .chat-avatar { border-color: #d9a895; color: var(--accent); background: #fff8f5; }
-      .chat-message { min-width: 0; }
-      .chat-meta { display: flex; align-items: baseline; gap: 0.45rem; margin: 0 0 0.35rem; color: var(--medium-gray); font-size: 10px; line-height: 1.3; }
-      .chat-turn.source .chat-meta { justify-content: flex-end; }
-      .chat-meta strong { color: var(--dark-gray); font-weight: 500; }
-      .chat-meta span { color: var(--light-gray); }
-      .chat-bubble { padding: 0.82rem 0.92rem; border: 1px solid var(--border); border-radius: 0.7rem; color: var(--dark-gray); background: var(--muted-bg); }
-      .chat-turn.source .chat-bubble { border-top-right-radius: 0.2rem; }
-      .chat-turn.assistant .chat-bubble { border-color: #e8c5b7; border-top-left-radius: 0.2rem; background: #fffaf8; }
-      .chat-response-block + .chat-response-block { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid #eed9d0; }
-      .chat-response-title { margin-bottom: 0.18rem; color: var(--accent); font-size: 11px; font-weight: 600; line-height: 1.35; }
-      .chat-response-copy { color: var(--dark-gray); }
-      .chat-stream-cursor { display: inline-block; width: 0.42rem; height: 1em; margin-left: 0.16rem; vertical-align: -0.13em; background: var(--accent); opacity: 0; }
-      .chat-transform.motion-ready .chat-turn.assistant .chat-bubble,
-      .chat-transform.motion-ready .chat-response-block,
-      .chat-transform.motion-ready .chat-stream-cursor { opacity: 0; transform: translateY(8px); }
-      .chat-transform.motion-ready.is-visible .chat-turn.assistant .chat-bubble { opacity: 1; transform: translateY(0); transition: opacity 280ms ease, transform 500ms cubic-bezier(0.16, 1, 0.3, 1); }
-      .chat-transform.motion-ready.is-visible .chat-response-block { opacity: 1; transform: translateY(0); transition: opacity 320ms ease, transform 560ms cubic-bezier(0.16, 1, 0.3, 1); transition-delay: var(--stream-delay); }
-      .chat-transform.motion-ready.is-visible .chat-stream-cursor { opacity: 1; transform: translateY(0); animation: stream-cursor 760ms steps(1, end) 760ms infinite; }
-      @keyframes stream-cursor { 50% { opacity: 0; } }
+      .morph {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+        gap: 0 1.7rem;
+        margin: 1.9rem 0;
+        padding: 1.4rem 0 1.5rem;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        font-size: 12.5px;
+        line-height: 1.72;
+      }
+      .morph-rule { background: var(--border); }
+      .morph-label { display: block; margin-bottom: 0.75rem; color: var(--light-gray); font-size: 9.5px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.15em; }
+      .morph-col.after .morph-label { color: var(--accent); }
+      .morph-text { margin: 0; color: var(--medium-gray); }
+      .morph-col.after .morph-text { color: var(--dark-gray); }
+      .morph-section + .morph-section { margin-top: 0.9rem; }
+      .morph-section-title { margin-bottom: 0.12rem; color: var(--accent); font-size: 11.5px; font-weight: 600; line-height: 1.42; }
+
+      .morph.motion-ready .morph-col.after { opacity: 0; transform: translateY(6px); }
+      .morph.motion-ready.is-visible .morph-col.after { opacity: 1; transform: translateY(0); transition: opacity 340ms ease, transform 560ms cubic-bezier(0.16, 1, 0.3, 1); }
 
       .resource-list { margin-top: 0.35rem; }
       .resource-group { padding: 0.8rem 0; border-top: 1px solid var(--black); }
@@ -485,7 +480,7 @@
               <li><a href="#extract">Extraction</a></li>
               <li><a href="#adaptive-data">Adaptive Data</a></li>
               <li><a href="#autoscientist">AutoScientist</a></li>
-              <li><a href="#limitation">Limitation</a></li>
+              <li><a href="#limitation">Limitations</a></li>
             </ul>
           </li>
           <li class="toc-group">
@@ -511,7 +506,7 @@
                 <li><a href="#extract">Extraction</a></li>
                 <li><a href="#adaptive-data">Adaptive Data</a></li>
                 <li><a href="#autoscientist">AutoScientist</a></li>
-                <li><a href="#limitation">Limitation</a></li>
+                <li><a href="#limitation">Limitations</a></li>
               </ul>
             </li>
             <li class="toc-group">
@@ -650,38 +645,36 @@
 
           <figure>
             <div class="figure-panel">
-              <div class="chat-transform" aria-label="A comparison between a source research excerpt and an Adaptive Data structured response">
-                <div class="chat-turn source">
-                  <div class="chat-message">
-                    <div class="chat-meta"><strong>Equity research report</strong><span>Source excerpt</span></div>
-                    <div class="chat-bubble">
-                      We maintain our BUY rating on PTB, which is premised on its extensive stone mine
-                      portfolio, positive prospects of its new quartz business and long-term growth of
-                      Vietnam’s wooden furniture export industry… We raise our target price by 17% as
-                      we roll it over to YE2021…
-                    </div>
-                  </div>
-                  <span class="chat-avatar" aria-hidden="true">ER</span>
+              <div class="morph" aria-label="The same completion shown before and after Adaptive Data">
+                <div class="morph-stage">
+                  <span class="morph-label">Before</span>
+                  <p class="morph-before">
+                    We maintain our BUY rating on PTB, which is premised on its extensive stone mine
+                    portfolio, positive prospects of its new quartz business and long-term growth of
+                    Vietnam’s wooden furniture export industry… We raise our target price by 17% as
+                    we roll it over to YE2021…
+                  </p>
                 </div>
-                <div class="chat-turn assistant">
-                  <span class="chat-avatar" aria-hidden="true">AD</span>
-                  <div class="chat-message">
-                    <div class="chat-meta"><strong>Adaptive Data</strong><span>Structured response</span></div>
-                    <div class="chat-bubble">
-                      <div class="chat-response-block" style="--stream-delay: 140ms">
-                        <div class="chat-response-title">Observations vs. Forecasts</div>
-                        <div class="chat-response-copy">Observations: PTB held a topping out event in late October 2020. Pre-sales reached ~40% of units, trailing expectations. Forecasts: 2020F NPAT-MI nudged up 2%…</div>
-                      </div>
-                      <div class="chat-response-block" style="--stream-delay: 420ms">
-                        <div class="chat-response-title">Conclusion Supported</div>
-                        <div class="chat-response-copy">The evidence supports the conclusion that PTB’s model is being revised for delayed revenue recognition…<span class="chat-stream-cursor" aria-hidden="true"></span></div>
-                      </div>
-                    </div>
+
+                <div class="morph-step">
+                  <svg class="morph-arrow" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1v7M1.8 5.2 5 8.4l3.2-3.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                  Adaptive Data
+                </div>
+
+                <div class="morph-stage">
+                  <span class="morph-label">After</span>
+                  <div class="morph-section" style="--d: 120ms">
+                    <div class="morph-section-title">Observations vs. Forecasts</div>
+                    <div class="morph-section-copy">Observations: PTB held a topping out event in late October 2020. Pre-sales reached ~40% of units, trailing expectations. Forecasts: 2020F NPAT-MI nudged up 2%…</div>
+                  </div>
+                  <div class="morph-section" style="--d: 300ms">
+                    <div class="morph-section-title">Conclusion Supported</div>
+                    <div class="morph-section-copy">The evidence supports the conclusion that PTB’s model is being revised for delayed revenue recognition…</div>
                   </div>
                 </div>
               </div>
             </div>
-            <figcaption><strong>Figure 5:</strong> The adapted completion turns one dense paragraph into an explicit evidence-to-conclusion response.</figcaption>
+            <figcaption><strong>Figure 5:</strong> One completion, before and after Adaptive Data. The evidence and the task do not change; the answer gains the section structure a judge can check clause by clause. Across the dataset, adapted completions ran 3.9 times longer and 78% carried explicit section headers, where the originals almost never did.</figcaption>
           </figure>
 
           <h3 id="autoscientist">AutoScientist</h3>
@@ -705,18 +698,21 @@
             beyond our own rows; it is not an accuracy score.
           </p>
 
-          <h3 id="limitation">Limitation</h3>
+          <h3 id="limitation">Limitations</h3>
 
           <p>
-            <strong>Narrow source coverage.</strong>
+            <strong>Narrow source coverage.</strong> The initial corpus focused on company-level equity
+            research, so the model may understand a company’s fundamentals but miss how interest rates,
+            inflation, policy changes, commodity prices, or sector-wide events affect its outlook. The
+            next stage is to add institutional market research and macroeconomic news so the model can
+            reason across companies and sectors.
           </p>
 
           <p>
-            The next stage is to combine the dataset with institutional market research and
-            macroeconomic news, allowing the model to move beyond isolated company analysis toward
-            cross-company and cross-sector reasoning. Without this broader context, the model may
-            understand a company’s fundamentals but miss how interest rates, inflation, policy changes,
-            commodity prices, or sector-wide events affect its outlook.
+            <strong>Small seed dataset.</strong> Our initial 589 examples could not provide enough
+            breadth or variation for a robust finance workflow, limiting the range of situations the
+            model could learn to handle. The next stage is to expand both the number of source reports
+            and the resulting training samples.
           </p>
 
           <div class="act">
@@ -1049,19 +1045,19 @@
         scaleObserver.observe(scaleChart);
       }
 
-      const chatTransform = document.querySelector(".chat-transform");
+      const morph = document.querySelector(".morph");
 
-      if (chatTransform && !reduceMotion && "IntersectionObserver" in window) {
-        chatTransform.classList.add("motion-ready");
-        const chatObserver = new IntersectionObserver(
+      if (morph && !reduceMotion && "IntersectionObserver" in window) {
+        morph.classList.add("motion-ready");
+        const morphObserver = new IntersectionObserver(
           ([entry]) => {
             if (!entry.isIntersecting) return;
-            chatTransform.classList.add("is-visible");
-            chatObserver.unobserve(chatTransform);
+            morph.classList.add("is-visible");
+            morphObserver.unobserve(morph);
           },
-          { threshold: 0.45 }
+          { threshold: 0.35 }
         );
-        chatObserver.observe(chatTransform);
+        morphObserver.observe(morph);
       }
     </script>
   </body>
