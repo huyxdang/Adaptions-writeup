@@ -315,11 +315,34 @@
       article .adaption-links a:hover { color: var(--accent); }
       .adaption-links span { color: var(--medium-gray); font-size: 0.61rem; }
 
+      .report-footer {
+        display: grid;
+        grid-template-columns: 200px minmax(0, 660px);
+        column-gap: 64px;
+        max-width: 1188px;
+        margin: 4rem auto 0;
+      }
+      .report-footer-inner { grid-column: 2; padding-top: 1rem; border-top: 1px solid var(--border); }
+      .report-footer-label {
+        margin: 0 0 0.7rem;
+        color: var(--medium-gray);
+        font: 400 0.6rem/1.35 var(--mono);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .report-footer-people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+      .report-footer-name { margin: 0; color: var(--black); font-size: 0.8rem; font-weight: 500; line-height: 1.35; }
+      .report-footer-links { display: flex; flex-wrap: wrap; gap: 0.18rem 0.65rem; margin: 0.35rem 0 0; }
+      .report-footer-links a { color: var(--medium-gray); font-size: 0.68rem; line-height: 1.4; text-decoration: none; transition: color 140ms ease; }
+      .report-footer-links a:hover { color: var(--accent); }
+
       @media (max-width: 1180px) {
         .article-grid { grid-template-columns: minmax(0, 660px); }
         article { grid-column: 1; }
         .toc { display: none; }
         .mobile-toc { display: block; }
+        .report-footer { grid-template-columns: minmax(0, 660px); max-width: 660px; }
+        .report-footer-inner { grid-column: 1; }
       }
 
       @media (max-width: 680px) {
@@ -332,6 +355,8 @@
         .mobile-toc .toc-group ul a { font-size: 14px; }
         .mobile-toc .toc-group ul { padding-left: 1rem; }
         .article-grid { padding-right: 2rem; padding-left: 2rem; }
+        .report-footer { display: block; width: 100%; padding-right: 2rem; padding-left: 2rem; }
+        .report-footer-people { grid-template-columns: 1fr; gap: 0.9rem; }
         .shot { width: 100%; }
         .shot.narrow { width: min(440px, 100%); }
         .flow-step { grid-template-columns: 26px minmax(0, 1fr); }
@@ -357,10 +382,10 @@
         <h1>Training a Finance Model with AutoScientist</h1>
         <p class="subtitle">
           We cleaned 5,000+ institutional-grade finance reports, then optimized both
-          training data and process with Adaption Labs.
+          training data and process with Adaption Labs
         </p>
         <p class="byline">
-          <a href="https://www.linkedin.com/in/kiet-vo-097/">Keith Vo</a> ·
+          <a href="https://www.linkedin.com/in/kiet-vo-097/">Keith Vo</a> &amp;
           <a href="https://huyxdang.com/">Huy X. Dang</a>
         </p>
       </header>
@@ -787,6 +812,29 @@
           </div>
         </article>
       </div>
+
+      <footer class="report-footer" aria-label="Authors">
+        <div class="report-footer-inner">
+          <p class="report-footer-label">Authors</p>
+          <div class="report-footer-people">
+            <section>
+              <p class="report-footer-name">Keith Vo</p>
+              <p class="report-footer-links">
+                <a href="https://www.linkedin.com/in/kiet-vo-097/" target="_blank" rel="noreferrer">LinkedIn</a>
+                <a href="https://github.com/Kitkitkittt" target="_blank" rel="noreferrer">GitHub</a>
+              </p>
+            </section>
+            <section>
+              <p class="report-footer-name">Huy X. Dang</p>
+              <p class="report-footer-links">
+                <a href="https://huyxdang.com/" target="_blank" rel="noreferrer">Website</a>
+                <a href="https://www.linkedin.com/in/huy-x-dang/" target="_blank" rel="noreferrer">LinkedIn</a>
+                <a href="https://github.com/huyxdang" target="_blank" rel="noreferrer">GitHub</a>
+              </p>
+            </section>
+          </div>
+        </div>
+      </footer>
 
     </main>
 
