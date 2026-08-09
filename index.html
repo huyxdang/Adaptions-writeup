@@ -485,7 +485,7 @@
               <li><a href="#extract">Extraction</a></li>
               <li><a href="#adaptive-data">Adaptive Data</a></li>
               <li><a href="#autoscientist">AutoScientist</a></li>
-              <li><a href="#limitation">Limitations</a></li>
+              <li><a href="#limitation">Limitation</a></li>
             </ul>
           </li>
           <li class="toc-group">
@@ -511,7 +511,7 @@
                 <li><a href="#extract">Extraction</a></li>
                 <li><a href="#adaptive-data">Adaptive Data</a></li>
                 <li><a href="#autoscientist">AutoScientist</a></li>
-                <li><a href="#limitation">Limitations</a></li>
+                <li><a href="#limitation">Limitation</a></li>
               </ul>
             </li>
             <li class="toc-group">
@@ -705,24 +705,18 @@
             beyond our own rows; it is not an accuracy score.
           </p>
 
-          <h3 id="limitation">Limitations</h3>
+          <h3 id="limitation">Limitation</h3>
 
           <p>
-            Attempt 1 established initial evidence that the extraction-and-training workflow could
-            work, but it did not establish a clean benchmark for five reasons:
+            <strong>Narrow source coverage.</strong>
           </p>
 
-          <ul>
-            <li><strong>Narrow source coverage.</strong> The corpus focused on company research, not macro, sector, fund, or fixed-income analysis.</li>
-            <li><strong>Aggressive source caps.</strong> The balancing rule discarded 2,320 rows that had already passed every quality gate.</li>
-            <li><strong>A contaminated local split.</strong> We reserved 73 rows, then later trained on the combined file. That split cannot support a clean held-out claim.</li>
-            <li><strong>No final human review.</strong> Automated checks can verify structure, provenance, and leakage, but not economic judgment.</li>
-            <li><strong>Too many variables changed.</strong> The task, corpus, model, and training recipe moved together, so the gain cannot be attributed to one component.</li>
-          </ul>
-
           <p>
-            Those limits made a broader test necessary. Attempt 2 therefore asked whether the workflow
-            could cover more finance domains and remain useful at a much larger data scale.
+            The next stage is to combine the dataset with institutional market research and
+            macroeconomic news, allowing the model to move beyond isolated company analysis toward
+            cross-company and cross-sector reasoning. Without this broader context, the model may
+            understand a company’s fundamentals but miss how interest rates, inflation, policy changes,
+            commodity prices, or sector-wide events affect its outlook.
           </p>
 
           <div class="act">
