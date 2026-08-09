@@ -292,6 +292,40 @@
       .scale-stage:last-child .scale-bar { background: var(--accent); }
       .scale-label { color: var(--medium-gray); font-size: 0.66rem; line-height: 1.35; }
 
+      .scale-chart.motion-ready .scale-bar {
+        transform: scaleY(0);
+        transform-origin: center bottom;
+      }
+      .scale-chart.motion-ready .scale-value,
+      .scale-chart.motion-ready .scale-label {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      .scale-chart.motion-ready.is-visible .scale-bar {
+        transform: scaleY(1);
+        transition: transform 850ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .scale-chart.motion-ready.is-visible .scale-value,
+      .scale-chart.motion-ready.is-visible .scale-label {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 360ms ease, transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .scale-chart.motion-ready.is-visible .scale-stage:nth-child(2) .scale-bar { transition-delay: 120ms; }
+      .scale-chart.motion-ready.is-visible .scale-stage:nth-child(3) .scale-bar { transition-delay: 240ms; }
+      .scale-chart.motion-ready.is-visible .scale-stage:nth-child(1) .scale-value,
+      .scale-chart.motion-ready.is-visible .scale-stage:nth-child(1) .scale-label { transition-delay: 180ms; }
+      .scale-chart.motion-ready.is-visible .scale-stage:nth-child(2) .scale-value,
+      .scale-chart.motion-ready.is-visible .scale-stage:nth-child(2) .scale-label { transition-delay: 300ms; }
+      .scale-chart.motion-ready.is-visible .scale-stage:nth-child(3) .scale-value,
+      .scale-chart.motion-ready.is-visible .scale-stage:nth-child(3) .scale-label { transition-delay: 420ms; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .scale-chart .scale-bar,
+        .scale-chart .scale-value,
+        .scale-chart .scale-label { transition: none !important; }
+      }
+
       .cmp { width: 100%; min-width: 620px; border-collapse: collapse; font-size: 12.5px; }
       .cmp th, .cmp td { padding: 0.62rem 0.55rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
       .cmp thead th { color: var(--medium-gray); font-weight: 400; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.09em; }
@@ -931,6 +965,22 @@
           { rootMargin: "-110px 0px -68% 0px", threshold: 0 }
         );
         headings.forEach((heading) => observer.observe(heading));
+      }
+
+      const scaleChart = document.querySelector(".scale-chart");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (scaleChart && !reduceMotion && "IntersectionObserver" in window) {
+        scaleChart.classList.add("motion-ready");
+        const scaleObserver = new IntersectionObserver(
+          ([entry]) => {
+            if (!entry.isIntersecting) return;
+            scaleChart.classList.add("is-visible");
+            scaleObserver.unobserve(scaleChart);
+          },
+          { threshold: 0.3 }
+        );
+        scaleObserver.observe(scaleChart);
       }
     </script>
   </body>
