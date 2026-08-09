@@ -1,8 +1,8 @@
 # Training a Finance Model with AutoScientist
 
-Standalone technical write-up documenting two attempts to build a Vietnamese equity-research model with Adaption Labs.
+Standalone technical write-up documenting three AutoScientist experiments in evidence-grounded equity and market research with Adaption Labs.
 
-The report covers source-data extraction, Adaptive Data, AutoScientist training, evaluation results, limitations, and the released Hugging Face and Kaggle artifacts.
+The report covers source-data extraction, Adaptive Data, AutoScientist training, evaluation results, limitations, and the public-release status of associated artifacts.
 
 ## Open locally
 

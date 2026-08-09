@@ -93,3 +93,40 @@
 **Blockers**
 
 - None
+
+## Task: Document the AdaptMarket experiment
+
+**Status:** complete
+**Started:** 2026-08-10 02:42 +07
+
+### 2026-08-10 02:48 +07 - AdaptMarket added to the report
+
+**Status:** complete
+
+**Completed**
+
+- Added AdaptMarket as Attempt #3 without rewriting the historical Attempt #1 or Attempt #2 records.
+- Documented the 30 July 2026 full fine-tune of `mistralai/Mixtral-8x7B-Instruct-v0.1` and its platform-reported 85-to-15 on-dataset and 73-to-27 Market Analysis results.
+- Added the public research record and experiment identifiers while preserving the stated release restrictions for data, prompts, weights, and evaluation outputs.
+- Updated the desktop and mobile tables of contents, cross-experiment comparison, repository summary, and resources.
+
+**Evidence**
+
+- AdaptMarket documents full-model supervised fine-tuning, one epoch, disabled LoRA, and a 30 July 2026 experiment record.
+- Before the update, `https://adaptions-writeup.vercel.app/` returned HTTP 200 and passed desktop and 393px mobile checks with all ten figures loaded, no horizontal overflow, and no console errors or warnings.
+- The updated local report passes desktop, 393px mobile, and reduced-motion browser checks with no missing anchors, duplicate IDs, broken images, horizontal overflow, or console errors or warnings.
+- `git diff --check` completed without whitespace errors.
+
+**Decisions**
+
+- Treated AdaptMarket as a third experiment because its base model, full fine-tuning method, identifiers, and evaluations differ from the first two attempts.
+- Kept the new section text-only because AdaptMarket has no cleared public result artifacts.
+- Did not compare preference scores as a direct ranking because the models, data, training methods, and evaluation scopes differ.
+
+**Next**
+
+- Publish the write-up changes so Vercel can deploy Attempt #3.
+
+**Blockers**
+
+- None
