@@ -253,11 +253,47 @@
       .shot figcaption { max-width: 660px; margin-right: auto; margin-left: auto; }
       figcaption strong { color: var(--dark-gray); font-weight: 500; }
 
+      article figure.motion-ready figcaption {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+      article figure.motion-ready.is-visible figcaption {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 360ms ease 260ms, transform 520ms cubic-bezier(0.16, 1, 0.3, 1) 260ms;
+      }
+
+      article figure.motion-ready .image-link {
+        opacity: 0;
+        filter: blur(4px);
+        transform: translateY(10px) scale(0.992);
+        transform-origin: center center;
+      }
+      article figure.motion-ready.is-visible .image-link {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0) scale(1);
+        transition: opacity 480ms ease, filter 700ms ease, transform 760ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
       .flow-step { display: grid; grid-template-columns: 30px 124px minmax(0, 1fr); gap: 0.85rem; padding: 0.85rem 0; }
       .flow-step + .flow-step { border-top: 1px solid var(--border); }
       .flow-number { color: var(--accent); font: 400 10.5px/1.5 var(--mono); }
       .flow-title { color: var(--black); font-size: 12.5px; font-weight: 500; }
       .flow-copy { color: var(--medium-gray); font-size: 12.5px; line-height: 1.52; }
+
+      article figure.motion-ready .flow-step {
+        opacity: 0;
+        transform: translateX(-9px);
+      }
+      article figure.motion-ready.is-visible .flow-step {
+        opacity: 1;
+        transform: translateX(0);
+        transition: opacity 340ms ease, transform 560ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      article figure.motion-ready.is-visible .flow-step:nth-child(2) { transition-delay: 90ms; }
+      article figure.motion-ready.is-visible .flow-step:nth-child(3) { transition-delay: 180ms; }
+      article figure.motion-ready.is-visible .flow-step:nth-child(4) { transition-delay: 270ms; }
 
       .funnel-row { display: grid; grid-template-columns: 160px minmax(0, 1fr) 62px; align-items: center; gap: 0.75rem; padding: 0.4rem 0; }
       .funnel-label { color: var(--medium-gray); font-size: 12px; }
@@ -267,6 +303,30 @@
       .funnel-val { color: var(--medium-gray); font: 400 11.5px/1 var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
       .funnel-row.keep .funnel-val { color: var(--accent); }
 
+      article figure.motion-ready .funnel-bar {
+        transform: scaleX(0);
+        transform-origin: left center;
+      }
+      article figure.motion-ready .funnel-label,
+      article figure.motion-ready .funnel-val {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      article figure.motion-ready.is-visible .funnel-bar {
+        transform: scaleX(1);
+        transition: transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      article figure.motion-ready.is-visible .funnel-label,
+      article figure.motion-ready.is-visible .funnel-val {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 300ms ease, transform 460ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      article figure.motion-ready.is-visible .funnel-row:nth-child(2) > * { transition-delay: 70ms; }
+      article figure.motion-ready.is-visible .funnel-row:nth-child(3) > * { transition-delay: 140ms; }
+      article figure.motion-ready.is-visible .funnel-row:nth-child(4) > * { transition-delay: 210ms; }
+      article figure.motion-ready.is-visible .funnel-row:nth-child(5) > * { transition-delay: 280ms; }
+
       .tax-row { display: grid; grid-template-columns: 200px minmax(0, 1fr) 50px; align-items: center; gap: 0.75rem; padding: 0.32rem 0; }
       .tax-label { color: var(--medium-gray); font-size: 12px; }
       .tax-track { height: 11px; background: var(--muted-bg); overflow: hidden; }
@@ -274,6 +334,29 @@
       .tax-row.lead .tax-fill { background: var(--accent); }
       .tax-val { color: var(--medium-gray); font: 400 11.5px/1 var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
       .tax-row.lead .tax-val { color: var(--accent); }
+
+      article figure.motion-ready .tax-fill {
+        transform: scaleX(0);
+        transform-origin: left center;
+      }
+      article figure.motion-ready .tax-label,
+      article figure.motion-ready .tax-val {
+        opacity: 0;
+      }
+      article figure.motion-ready.is-visible .tax-fill {
+        transform: scaleX(1);
+        transition: transform 760ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      article figure.motion-ready.is-visible .tax-label,
+      article figure.motion-ready.is-visible .tax-val {
+        opacity: 1;
+        transition: opacity 320ms ease;
+      }
+      article figure.motion-ready.is-visible .tax-row:nth-child(2) > * { transition-delay: 60ms; }
+      article figure.motion-ready.is-visible .tax-row:nth-child(3) > * { transition-delay: 120ms; }
+      article figure.motion-ready.is-visible .tax-row:nth-child(4) > * { transition-delay: 180ms; }
+      article figure.motion-ready.is-visible .tax-row:nth-child(5) > * { transition-delay: 240ms; }
+      article figure.motion-ready.is-visible .tax-row:nth-child(6) > * { transition-delay: 300ms; }
 
       .scale-chart {
         display: grid;
@@ -292,33 +375,33 @@
       .scale-stage:last-child .scale-bar { background: var(--accent); }
       .scale-label { color: var(--medium-gray); font-size: 0.66rem; line-height: 1.35; }
 
-      .scale-chart.motion-ready .scale-bar {
+      article figure.motion-ready .scale-chart .scale-bar {
         transform: scaleY(0);
         transform-origin: center bottom;
       }
-      .scale-chart.motion-ready .scale-value,
-      .scale-chart.motion-ready .scale-label {
+      article figure.motion-ready .scale-chart .scale-value,
+      article figure.motion-ready .scale-chart .scale-label {
         opacity: 0;
         transform: translateY(6px);
       }
-      .scale-chart.motion-ready.is-visible .scale-bar {
+      article figure.motion-ready.is-visible .scale-chart .scale-bar {
         transform: scaleY(1);
         transition: transform 850ms cubic-bezier(0.16, 1, 0.3, 1);
       }
-      .scale-chart.motion-ready.is-visible .scale-value,
-      .scale-chart.motion-ready.is-visible .scale-label {
+      article figure.motion-ready.is-visible .scale-chart .scale-value,
+      article figure.motion-ready.is-visible .scale-chart .scale-label {
         opacity: 1;
         transform: translateY(0);
         transition: opacity 360ms ease, transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
       }
-      .scale-chart.motion-ready.is-visible .scale-stage:nth-child(2) .scale-bar { transition-delay: 120ms; }
-      .scale-chart.motion-ready.is-visible .scale-stage:nth-child(3) .scale-bar { transition-delay: 240ms; }
-      .scale-chart.motion-ready.is-visible .scale-stage:nth-child(1) .scale-value,
-      .scale-chart.motion-ready.is-visible .scale-stage:nth-child(1) .scale-label { transition-delay: 180ms; }
-      .scale-chart.motion-ready.is-visible .scale-stage:nth-child(2) .scale-value,
-      .scale-chart.motion-ready.is-visible .scale-stage:nth-child(2) .scale-label { transition-delay: 300ms; }
-      .scale-chart.motion-ready.is-visible .scale-stage:nth-child(3) .scale-value,
-      .scale-chart.motion-ready.is-visible .scale-stage:nth-child(3) .scale-label { transition-delay: 420ms; }
+      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(2) .scale-bar { transition-delay: 120ms; }
+      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(3) .scale-bar { transition-delay: 240ms; }
+      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(1) .scale-value,
+      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(1) .scale-label { transition-delay: 180ms; }
+      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(2) .scale-value,
+      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(2) .scale-label { transition-delay: 300ms; }
+      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(3) .scale-value,
+      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(3) .scale-label { transition-delay: 420ms; }
 
       @media (prefers-reduced-motion: reduce) {
         .scale-chart .scale-bar,
@@ -354,8 +437,8 @@
       .morph-section + .morph-section { margin-top: 0.9rem; }
       .morph-section-title { margin-bottom: 0.12rem; color: var(--accent); font-size: 11.5px; font-weight: 600; line-height: 1.42; }
 
-      .morph.motion-ready .morph-col.after { opacity: 0; transform: translateY(6px); }
-      .morph.motion-ready.is-visible .morph-col.after { opacity: 1; transform: translateY(0); transition: opacity 340ms ease, transform 560ms cubic-bezier(0.16, 1, 0.3, 1); }
+      article figure.motion-ready .morph-col.after { opacity: 0; transform: translateY(6px); }
+      article figure.motion-ready.is-visible .morph-col.after { opacity: 1; transform: translateY(0); transition: opacity 340ms ease 160ms, transform 560ms cubic-bezier(0.16, 1, 0.3, 1) 160ms; }
 
       .resource-list { margin-top: 0.5rem; }
       .resource-group { padding: 1rem 0 0; border-top: 1px solid var(--black); }
@@ -1065,35 +1148,22 @@
         headings.forEach((heading) => observer.observe(heading));
       }
 
-      const scaleChart = document.querySelector(".scale-chart");
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const animatedFigures = [...document.querySelectorAll("article figure")];
 
-      if (scaleChart && !reduceMotion && "IntersectionObserver" in window) {
-        scaleChart.classList.add("motion-ready");
-        const scaleObserver = new IntersectionObserver(
-          ([entry]) => {
-            if (!entry.isIntersecting) return;
-            scaleChart.classList.add("is-visible");
-            scaleObserver.unobserve(scaleChart);
+      if (animatedFigures.length && !reduceMotion && "IntersectionObserver" in window) {
+        animatedFigures.forEach((figure) => figure.classList.add("motion-ready"));
+        const figureObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add("is-visible");
+              figureObserver.unobserve(entry.target);
+            });
           },
-          { threshold: 0.3 }
+          { rootMargin: "0px 0px -8% 0px", threshold: 0.18 }
         );
-        scaleObserver.observe(scaleChart);
-      }
-
-      const morph = document.querySelector(".morph");
-
-      if (morph && !reduceMotion && "IntersectionObserver" in window) {
-        morph.classList.add("motion-ready");
-        const morphObserver = new IntersectionObserver(
-          ([entry]) => {
-            if (!entry.isIntersecting) return;
-            morph.classList.add("is-visible");
-            morphObserver.unobserve(morph);
-          },
-          { threshold: 0.35 }
-        );
-        morphObserver.observe(morph);
+        animatedFigures.forEach((figure) => figureObserver.observe(figure));
       }
 
       document.querySelectorAll(".copy-id").forEach((btn) => {
