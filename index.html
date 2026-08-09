@@ -357,30 +357,66 @@
       .morph.motion-ready .morph-col.after { opacity: 0; transform: translateY(6px); }
       .morph.motion-ready.is-visible .morph-col.after { opacity: 1; transform: translateY(0); transition: opacity 340ms ease, transform 560ms cubic-bezier(0.16, 1, 0.3, 1); }
 
-      .resource-list { margin-top: 0.35rem; }
-      .resource-group { padding: 0.8rem 0; border-top: 1px solid var(--black); }
-      .resource-group + .resource-group { margin-top: 0.35rem; }
-      .resource-group h3 { margin: 0; font-family: var(--sans); font-size: 15px; font-weight: 500; line-height: 20px; }
-      .resource-meta { display: grid; gap: 0.22rem; margin: 0.55rem 0 0; }
-      .resource-meta > div { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 0.55rem; }
-      .resource-meta dt { color: var(--medium-gray); font: 400 0.57rem/1.45 var(--mono); }
-      .resource-meta dd { min-width: 0; margin: 0; color: var(--dark-gray); font: 400 0.57rem/1.45 var(--mono); overflow-wrap: anywhere; }
-      .resource-meta code { font: inherit; }
-      .artifact-list, .adaption-links { margin: 0.55rem 0 0; padding: 0; border-top: 1px solid var(--border); list-style: none; }
-      .artifact-item { display: grid; grid-template-columns: 76px minmax(0, 1fr); align-items: center; gap: 0.55rem; min-height: 34px; border-bottom: 1px solid var(--border); }
-      .artifact-label { color: var(--black); font-size: 0.66rem; }
-      .artifact-platforms { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem 0.65rem; }
-      article .platform-link { display: inline-flex; align-items: center; gap: 0.28rem; padding: 0.16rem 0; color: var(--medium-gray); font-size: 0.61rem; line-height: 1.2; text-decoration: none; white-space: nowrap; }
-      article .platform-link:hover { color: var(--accent); }
-      .brand-mark { display: block; width: 14px; height: 14px; object-fit: contain; }
-      .brand-mark.kaggle-mark { width: 30px; height: 12px; }
-      .resource-pending { color: var(--medium-gray); font-size: 0.61rem; }
-      .adaption-heading { display: flex; align-items: center; gap: 0.45rem; }
-      .adaption-mark { width: 20px; height: 20px; flex: 0 0 auto; }
-      .adaption-links li { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 0.55rem; padding: 0.38rem 0; border-bottom: 1px solid var(--border); }
-      article .adaption-links a { color: var(--black); font-size: 0.66rem; text-decoration: none; }
+      .resource-list { margin-top: 0.5rem; }
+      .resource-group { padding: 1rem 0 0; border-top: 1px solid var(--black); }
+      .resource-group + .resource-group { margin-top: 1.9rem; }
+      .resource-group h3 { margin: 0; font-family: var(--sans); font-size: 15px; font-weight: 600; line-height: 20px; }
+      .resource-meta { display: grid; gap: 0.15rem; margin: 0.5rem 0 0; }
+      .resource-meta > div { display: grid; grid-template-columns: 68px minmax(0, 1fr); gap: 0.7rem; }
+      .resource-meta dt { color: var(--light-gray); font: 400 10px/1.6 var(--mono); }
+      .resource-meta dd { min-width: 0; margin: 0; color: var(--medium-gray); font: 400 10px/1.6 var(--mono); overflow-wrap: anywhere; }
+      .resource-meta code { padding: 0; background: none; font: inherit; }
+
+      .copy-id {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        max-width: 100%;
+        margin: 0;
+        padding: 0.1rem 0;
+        border: 0;
+        background: none;
+        color: var(--medium-gray);
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+        transition: color 140ms ease;
+      }
+      .copy-id:hover { color: var(--black); }
+      .copy-id code { min-width: 0; overflow-wrap: anywhere; }
+      .copy-glyph { display: inline-flex; flex: 0 0 auto; color: var(--highlight-gray); transition: color 140ms ease; }
+      .copy-id:hover .copy-glyph, .copy-id:focus-visible .copy-glyph { color: var(--medium-gray); }
+      .copy-icon { width: 11px; height: 11px; display: block; }
+      .icon-check { display: none; }
+      .copy-id.copied .copy-glyph { color: var(--accent); }
+      .copy-id.copied .icon-copy { display: none; }
+      .copy-id.copied .icon-check { display: block; }
+      .copy-flag {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+
+      .artifact-list, .adaption-links { margin: 0.9rem 0 0; padding: 0; list-style: none; }
+      .artifact-item, .adaption-links li { display: grid; grid-template-columns: 116px minmax(0, 1fr); align-items: center; gap: 1rem; min-height: 42px; border-top: 1px solid var(--border); }
+      .artifact-label, article .adaption-links a { color: var(--black); font-size: 13px; }
+      .artifact-platforms { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 1.5rem; }
+
+      article .platform-link { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--medium-gray); font-size: 12px; line-height: 1; text-decoration: none; white-space: nowrap; transition: color 140ms ease; }
+      article .platform-link:hover { color: var(--black); }
+      .brand-mark { width: 16px; height: 16px; flex: 0 0 auto; object-fit: contain; }
+      .resource-pending { color: var(--light-gray); font-size: 12px; }
+
+      .adaption-heading { display: flex; align-items: center; gap: 0.55rem; }
+      .adaption-mark { width: 19px; height: 19px; flex: 0 0 auto; }
+      article .adaption-links a { text-decoration: none; transition: color 140ms ease; }
       article .adaption-links a:hover { color: var(--accent); }
-      .adaption-links span { color: var(--medium-gray); font-size: 0.61rem; }
+      .adaption-links span { color: var(--medium-gray); font-size: 12px; }
 
       .report-footer {
         display: grid;
@@ -428,6 +464,8 @@
         .shot.narrow { width: min(440px, 100%); }
         .flow-step { grid-template-columns: 26px minmax(0, 1fr); }
         .flow-title, .flow-copy { grid-column: 2; }
+        .morph { grid-template-columns: minmax(0, 1fr); gap: 1.35rem; }
+        .morph-rule { height: 1px; }
         .funnel-row { grid-template-columns: 112px minmax(0, 1fr) 52px; }
         .tax-row { grid-template-columns: 128px minmax(0, 1fr) 44px; }
         .funnel-label, .tax-label { font-size: 11px; }
@@ -644,33 +682,27 @@
           </p>
 
           <figure>
-            <div class="figure-panel">
-              <div class="morph" aria-label="The same completion shown before and after Adaptive Data">
-                <div class="morph-stage">
-                  <span class="morph-label">Before</span>
-                  <p class="morph-before">
-                    We maintain our BUY rating on PTB, which is premised on its extensive stone mine
-                    portfolio, positive prospects of its new quartz business and long-term growth of
-                    Vietnam’s wooden furniture export industry… We raise our target price by 17% as
-                    we roll it over to YE2021…
-                  </p>
-                </div>
+            <div class="morph" aria-label="The same completion shown before and after Adaptive Data">
+              <div class="morph-col">
+                <span class="morph-label">Before</span>
+                <p class="morph-text">
+                  We maintain our BUY rating on PTB, premised on its extensive stone mine portfolio,
+                  its new quartz business and long-term growth in Vietnam’s wooden furniture
+                  exports… We raise our target price by 17% as we roll it over to YE2021…
+                </p>
+              </div>
 
-                <div class="morph-step">
-                  <svg class="morph-arrow" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1v7M1.8 5.2 5 8.4l3.2-3.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" /></svg>
-                  Adaptive Data
-                </div>
+              <div class="morph-rule" aria-hidden="true"></div>
 
-                <div class="morph-stage">
-                  <span class="morph-label">After</span>
-                  <div class="morph-section" style="--d: 120ms">
-                    <div class="morph-section-title">Observations vs. Forecasts</div>
-                    <div class="morph-section-copy">Observations: PTB held a topping out event in late October 2020. Pre-sales reached ~40% of units, trailing expectations. Forecasts: 2020F NPAT-MI nudged up 2%…</div>
-                  </div>
-                  <div class="morph-section" style="--d: 300ms">
-                    <div class="morph-section-title">Conclusion Supported</div>
-                    <div class="morph-section-copy">The evidence supports the conclusion that PTB’s model is being revised for delayed revenue recognition…</div>
-                  </div>
+              <div class="morph-col after">
+                <span class="morph-label">After Adaptive Data</span>
+                <div class="morph-section">
+                  <div class="morph-section-title">Observations vs. Forecasts</div>
+                  <p class="morph-text">PTB held a topping out event in late October 2020. Pre-sales reached ~40% of units, trailing expectations. 2020F NPAT-MI nudged up 2%…</p>
+                </div>
+                <div class="morph-section">
+                  <div class="morph-section-title">Conclusion Supported</div>
+                  <p class="morph-text">The evidence supports the conclusion that PTB’s model is being revised for delayed revenue recognition…</p>
                 </div>
               </div>
             </div>
@@ -722,7 +754,7 @@
           <h3 id="scale-data">Data</h3>
 
           <p>
-            Attempt 2 began after an office-hours session with
+            Attempt #2 began after an office-hours session with
             <strong><a href="https://www.linkedin.com/in/sararosehooker" target="_blank" rel="noreferrer">Sara Hooker</a></strong>,
             co-founder of Adaption Labs.
             Sara emphasized the importance of training with substantially more data. Her advice shifted
@@ -755,13 +787,13 @@
                 <span class="scale-label">Attempt #2, Enhanced Data</span>
               </div>
             </div>
-            <figcaption><strong>Figure 7:</strong> Training-data scale across the two attempts: 589 baseline rows, 27,862 Attempt 1 Adaptive Data rows, and 45,758 Attempt 2 enhanced rows.</figcaption>
+            <figcaption><strong>Figure 7:</strong> Training-data scale across the two attempts: 589 baseline rows, 27,862 Attempt #1 Adaptive Data rows, and 45,758 Attempt #2 enhanced rows.</figcaption>
           </figure>
 
           <p>
             The expanded source corpus required a broader task taxonomy. Each training row records a
             task family, an asset family, and the relationship between evidence and conclusion. This
-            taxonomy also adds a task that Attempt 1 lacked: deciding when the evidence is insufficient.
+            taxonomy also adds a task that Attempt #1 lacked: deciding when the evidence is insufficient.
           </p>
 
           <figure>
@@ -805,7 +837,7 @@
             <a class="image-link" href="assets/a2-adaptive-data.png" aria-label="Open the full-resolution Attempt 2 combined-dataset figure">
               <img src="assets/a2-adaptive-data.png" alt="Adaption quality grade panel showing the Attempt 2 dataset improving from grade B before adaptation to grade A after adaptation" width="1546" height="626" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 9:</strong> The broader Attempt 2 dataset improved from grade B to grade A after Adaptive Data.</figcaption>
+            <figcaption><strong>Figure 9:</strong> The broader Attempt #2 dataset improved from grade B to grade A after Adaptive Data.</figcaption>
           </figure>
 
           <p>
@@ -832,21 +864,21 @@
             On its dataset-specific preference evaluation, the adapted model won 80 to 20. This result
             shows that the workflow absorbed broader source coverage, reached 45,758 rows, improved
             data quality from B to A, and retained a large preference margin on its own distribution.
-            It does not establish better generalization than Attempt 1.
+            It does not establish better generalization than Attempt #1.
           </p>
 
           <figure class="shot">
             <a class="image-link" href="assets/a2-winrate.png" aria-label="Open the full-resolution Attempt 2 evaluation figure">
               <img src="assets/a2-winrate.png" alt="AutoScientist result for the combined dataset: base 20, adapted 80" width="1036" height="760" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 10:</strong> Attempt 2 produced an 80 to 20 dataset-specific preference result. No category-level result was produced.</figcaption>
+            <figcaption><strong>Figure 10:</strong> Attempt #2 produced an 80 to 20 dataset-specific preference result. No category-level result was produced.</figcaption>
           </figure>
 
           <p>
-            Attempt 1 remains the stronger evidence of external transfer because it includes a 77-to-23
-            Market Analysis category result. Attempt 2 has no equivalent category result. The two
-            attempts therefore answer different questions: Attempt 1 tests transfer beyond its own
-            rows, while Attempt 2 tests whether the full data and training workflow can scale across a
+            Attempt #1 remains the stronger evidence of external transfer because it includes a 77-to-23
+            Market Analysis category result. Attempt #2 has no equivalent category result. The two
+            attempts therefore answer different questions: Attempt #1 tests transfer beyond its own
+            rows, while Attempt #2 tests whether the full data and training workflow can scale across a
             materially broader finance corpus.
           </p>
 
@@ -873,15 +905,15 @@
 
           <div class="resource-list">
             <section class="resource-group" aria-labelledby="resource-attempt-1">
-              <h3 id="resource-attempt-1">Attempt 1</h3>
+              <h3 id="resource-attempt-1">Attempt #1</h3>
               <dl class="resource-meta">
                 <div>
                   <dt>Run ID</dt>
-                  <dd><code>adaption_llama_3_3_70b_instru_equity_analysis_small_22ed78c2</code></dd>
+                  <dd><button type="button" class="copy-id" data-copy="adaption_llama_3_3_70b_instru_equity_analysis_small_22ed78c2" aria-label="Copy run ID adaption_llama_3_3_70b_instru_equity_analysis_small_22ed78c2"><code>adaption_llama_3_3_70b_instru_equity_analysis_small_22ed78c2</code><span class="copy-glyph" aria-hidden="true"><svg class="copy-icon icon-copy" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.6" height="6.6" rx="1.3"/><path d="M8 4V2.8A1.3 1.3 0 0 0 6.7 1.5H2.8A1.3 1.3 0 0 0 1.5 2.8v3.9A1.3 1.3 0 0 0 2.8 8H4"/></svg><svg class="copy-icon icon-check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.3 6.3 4.8 8.8 9.9 3.4"/></svg></span><span class="copy-flag" aria-live="polite"></span></button></dd>
                 </div>
                 <div>
                   <dt>Dataset ID</dt>
-                  <dd><code>42acc15b-b6b5-480c-9dcd-e9b8f3ac4647</code></dd>
+                  <dd><button type="button" class="copy-id" data-copy="42acc15b-b6b5-480c-9dcd-e9b8f3ac4647" aria-label="Copy dataset ID 42acc15b-b6b5-480c-9dcd-e9b8f3ac4647"><code>42acc15b-b6b5-480c-9dcd-e9b8f3ac4647</code><span class="copy-glyph" aria-hidden="true"><svg class="copy-icon icon-copy" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.6" height="6.6" rx="1.3"/><path d="M8 4V2.8A1.3 1.3 0 0 0 6.7 1.5H2.8A1.3 1.3 0 0 0 1.5 2.8v3.9A1.3 1.3 0 0 0 2.8 8H4"/></svg><svg class="copy-icon icon-check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.3 6.3 4.8 8.8 9.9 3.4"/></svg></span><span class="copy-flag" aria-live="polite"></span></button></dd>
                 </div>
               </dl>
               <ul class="artifact-list">
@@ -889,11 +921,12 @@
                   <span class="artifact-label">Dataset</span>
                   <span class="artifact-platforms">
                     <a class="platform-link" href="https://huggingface.co/datasets/huyxdang/adaption-equity-analysis-small" target="_blank" rel="noreferrer" aria-label="Open the Attempt 1 dataset on Hugging Face">
-                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="14" height="14" loading="lazy" decoding="async" />
+                      <img class="brand-mark" src="assets/hf-mark.svg" alt="" width="16" height="16" loading="lazy" decoding="async" />
                       Hugging Face
                     </a>
                     <a class="platform-link" href="https://www.kaggle.com/datasets/huydang03/adaption-equity-analysis-small" target="_blank" rel="noreferrer" aria-label="Open the Attempt 1 dataset on Kaggle">
-                      <img class="brand-mark kaggle-mark" src="assets/kaggle.svg" alt="" width="30" height="12" loading="lazy" decoding="async" />
+                      <img class="brand-mark" src="assets/kaggle-mark.svg" alt="" width="16" height="16" loading="lazy" decoding="async" />
+                      Kaggle
                     </a>
                   </span>
                 </li>
@@ -901,11 +934,12 @@
                   <span class="artifact-label">Model</span>
                   <span class="artifact-platforms">
                     <a class="platform-link" href="https://huggingface.co/huyxdang/adaption_vietnam_equity_research_note" target="_blank" rel="noreferrer" aria-label="Open the Attempt 1 model on Hugging Face">
-                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="14" height="14" loading="lazy" decoding="async" />
+                      <img class="brand-mark" src="assets/hf-mark.svg" alt="" width="16" height="16" loading="lazy" decoding="async" />
                       Hugging Face
                     </a>
                     <a class="platform-link" href="https://www.kaggle.com/models/huydang03/adaption-vietnam-equity-research-note/PyTorch/lora" target="_blank" rel="noreferrer" aria-label="Open the Attempt 1 model on Kaggle">
-                      <img class="brand-mark kaggle-mark" src="assets/kaggle.svg" alt="" width="30" height="12" loading="lazy" decoding="async" />
+                      <img class="brand-mark" src="assets/kaggle-mark.svg" alt="" width="16" height="16" loading="lazy" decoding="async" />
+                      Kaggle
                     </a>
                   </span>
                 </li>
@@ -913,15 +947,15 @@
             </section>
 
             <section class="resource-group" aria-labelledby="resource-attempt-2">
-              <h3 id="resource-attempt-2">Attempt 2</h3>
+              <h3 id="resource-attempt-2">Attempt #2</h3>
               <dl class="resource-meta">
                 <div>
                   <dt>Run ID</dt>
-                  <dd><code>adaption_llama_4_scout_17b_16_final_cc7ddeac</code></dd>
+                  <dd><button type="button" class="copy-id" data-copy="adaption_llama_4_scout_17b_16_final_cc7ddeac" aria-label="Copy run ID adaption_llama_4_scout_17b_16_final_cc7ddeac"><code>adaption_llama_4_scout_17b_16_final_cc7ddeac</code><span class="copy-glyph" aria-hidden="true"><svg class="copy-icon icon-copy" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.6" height="6.6" rx="1.3"/><path d="M8 4V2.8A1.3 1.3 0 0 0 6.7 1.5H2.8A1.3 1.3 0 0 0 1.5 2.8v3.9A1.3 1.3 0 0 0 2.8 8H4"/></svg><svg class="copy-icon icon-check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.3 6.3 4.8 8.8 9.9 3.4"/></svg></span><span class="copy-flag" aria-live="polite"></span></button></dd>
                 </div>
                 <div>
                   <dt>Dataset ID</dt>
-                  <dd><code>2243d382-502e-4b8c-9cb0-041ae86d4345</code></dd>
+                  <dd><button type="button" class="copy-id" data-copy="2243d382-502e-4b8c-9cb0-041ae86d4345" aria-label="Copy dataset ID 2243d382-502e-4b8c-9cb0-041ae86d4345"><code>2243d382-502e-4b8c-9cb0-041ae86d4345</code><span class="copy-glyph" aria-hidden="true"><svg class="copy-icon icon-copy" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.6" height="6.6" rx="1.3"/><path d="M8 4V2.8A1.3 1.3 0 0 0 6.7 1.5H2.8A1.3 1.3 0 0 0 1.5 2.8v3.9A1.3 1.3 0 0 0 2.8 8H4"/></svg><svg class="copy-icon icon-check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.3 6.3 4.8 8.8 9.9 3.4"/></svg></span><span class="copy-flag" aria-live="polite"></span></button></dd>
                 </div>
               </dl>
               <ul class="artifact-list">
@@ -929,11 +963,12 @@
                   <span class="artifact-label">Final dataset</span>
                   <span class="artifact-platforms">
                     <a class="platform-link" href="https://huggingface.co/datasets/huyxdang/adaption-market-analysis-final" target="_blank" rel="noreferrer" aria-label="Open the final Attempt 2 dataset on Hugging Face">
-                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="14" height="14" loading="lazy" decoding="async" />
+                      <img class="brand-mark" src="assets/hf-mark.svg" alt="" width="16" height="16" loading="lazy" decoding="async" />
                       Hugging Face
                     </a>
                     <a class="platform-link" href="https://www.kaggle.com/datasets/huydang03/adaption-market-analysis-final" target="_blank" rel="noreferrer" aria-label="Open the final Attempt 2 dataset on Kaggle">
-                      <img class="brand-mark kaggle-mark" src="assets/kaggle.svg" alt="" width="30" height="12" loading="lazy" decoding="async" />
+                      <img class="brand-mark" src="assets/kaggle-mark.svg" alt="" width="16" height="16" loading="lazy" decoding="async" />
+                      Kaggle
                     </a>
                   </span>
                 </li>
@@ -941,11 +976,12 @@
                   <span class="artifact-label">Final model</span>
                   <span class="artifact-platforms">
                     <a class="platform-link" href="https://huggingface.co/huyxdang/adaption-market-analysis-final-model" target="_blank" rel="noreferrer" aria-label="Open the final Attempt 2 model on Hugging Face">
-                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="14" height="14" loading="lazy" decoding="async" />
+                      <img class="brand-mark" src="assets/hf-mark.svg" alt="" width="16" height="16" loading="lazy" decoding="async" />
                       Hugging Face
                     </a>
                     <a class="platform-link" href="https://www.kaggle.com/models/huydang03/adaption-market-analysis-final-model/PyTorch/lora" target="_blank" rel="noreferrer" aria-label="Open the final Attempt 2 model on Kaggle">
-                      <img class="brand-mark kaggle-mark" src="assets/kaggle.svg" alt="" width="30" height="12" loading="lazy" decoding="async" />
+                      <img class="brand-mark" src="assets/kaggle-mark.svg" alt="" width="16" height="16" loading="lazy" decoding="async" />
+                      Kaggle
                     </a>
                   </span>
                 </li>
@@ -1059,6 +1095,33 @@
         );
         morphObserver.observe(morph);
       }
+
+      document.querySelectorAll(".copy-id").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const value = btn.dataset.copy;
+          try {
+            await navigator.clipboard.writeText(value);
+          } catch {
+            const ta = document.createElement("textarea");
+            ta.value = value;
+            ta.setAttribute("readonly", "");
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand("copy"); } catch {}
+            ta.remove();
+          }
+          const flag = btn.querySelector(".copy-flag");
+          btn.classList.add("copied");
+          flag.textContent = "Copied";
+          clearTimeout(btn.copyTimer);
+          btn.copyTimer = setTimeout(() => {
+            btn.classList.remove("copied");
+            flag.textContent = "";
+          }, 1600);
+        });
+      });
     </script>
   </body>
 </html>
