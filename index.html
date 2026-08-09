@@ -3,12 +3,35 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#fafafa" />
+    <meta name="theme-color" content="#ffffff" />
     <title>Training a Finance Model with AutoScientist</title>
     <meta
       name="description"
       content="We cleaned 5,000+ institutional-grade finance reports, then optimized both training data and process with Adaption Labs."
     />
+    <link rel="canonical" href="https://huyxdang.github.io/Adaptions-writeup/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Huy X. Dang" />
+    <meta property="og:title" content="Training a Finance Model with AutoScientist" />
+    <meta
+      property="og:description"
+      content="We cleaned 5,000+ institutional-grade finance reports, then optimized both training data and process with Adaption Labs."
+    />
+    <meta property="og:url" content="https://huyxdang.github.io/Adaptions-writeup/" />
+    <meta property="og:image" content="https://huyxdang.github.io/Adaptions-writeup/assets/adaptive-liquid-pixel.png" />
+    <meta property="og:image:secure_url" content="https://huyxdang.github.io/Adaptions-writeup/assets/adaptive-liquid-pixel.png" />
+    <meta property="og:image:width" content="1672" />
+    <meta property="og:image:height" content="941" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="An iridescent liquid form transforming from a precise pixel grid into fine computational particles" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Training a Finance Model with AutoScientist" />
+    <meta
+      name="twitter:description"
+      content="We cleaned 5,000+ institutional-grade finance reports, then optimized both training data and process with Adaption Labs."
+    />
+    <meta name="twitter:image" content="https://huyxdang.github.io/Adaptions-writeup/assets/adaptive-liquid-pixel.png" />
+    <meta name="twitter:image:alt" content="An iridescent liquid form transforming from a precise pixel grid into fine computational particles" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,7 +47,7 @@
         --light-gray: #8a817b;
         --highlight-gray: #cfc8c2;
         --border: #e7e1db;
-        --white: #fdfbf9;
+        --white: #ffffff;
         --card: #ffffff;
         --muted-bg: #f7f3ef;
         --accent: #b23b2a;
@@ -72,14 +95,6 @@
 
       .article-header { max-width: 790px; margin: 0 auto 3.6rem; padding: 0 2rem; text-align: center; }
 
-      .eyebrow {
-        margin: 0 0 1.1rem;
-        color: var(--accent);
-        font: 500 0.66rem/1.3 var(--mono);
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-      }
-
       h1 {
         margin: 0;
         font-family: var(--serif);
@@ -112,28 +127,14 @@
       .hero { width: min(calc(100% - 2rem), 1000px); margin: 0 auto 2.1rem; }
       .hero img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: var(--radius); background: #fafafa; }
 
-      .experiment-strip {
-        max-width: 660px;
-        margin: 0 auto 3.2rem;
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        border-top: 1px solid var(--border);
-        border-bottom: 1px solid var(--border);
-      }
-      .experiment-strip a { display: block; padding: 1.05rem 0; color: var(--black); text-decoration: none; }
-      .experiment-strip a + a { padding-left: 1.25rem; border-left: 1px solid var(--border); }
-      .experiment-strip a:first-child { padding-right: 1.25rem; }
-      .experiment-strip a:hover strong { color: var(--accent); }
-      .experiment-label { display: block; margin-bottom: 0.38rem; color: var(--accent); font: 500 0.64rem/1.2 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
-      .experiment-strip strong { display: block; font-family: var(--serif); font-size: 1.04rem; font-weight: 500; line-height: 1.35; transition: color 140ms ease; }
-      .experiment-strip small { display: block; margin-top: 0.22rem; color: var(--medium-gray); font-size: 0.67rem; line-height: 1.5; }
-
       .mobile-toc {
         display: none;
         max-width: 660px;
-        margin: 0 auto 2.3rem;
+        margin: 0 auto 3rem;
         color: var(--medium-gray);
-        font-size: 0.78rem;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 1.4;
       }
 
       .mobile-toc summary {
@@ -149,74 +150,65 @@
       .mobile-toc[open] summary::after { content: "−"; }
       .mobile-toc ul { padding: 0; list-style: none; }
       .mobile-toc > .toc-tree { margin: 1rem 0 0; }
-      .mobile-toc .toc-group + .toc-group { margin-top: 1.05rem; }
-      .mobile-toc .toc-section { color: var(--black); font-family: var(--serif); font-size: 0.98rem; font-weight: 500; text-decoration: none; }
-      .mobile-toc .toc-group ul { margin: 0.55rem 0 0; padding-left: 0.8rem; border-left: 1px solid var(--border); }
-      .mobile-toc .toc-group li + li { margin-top: 0.42rem; }
-      .mobile-toc .toc-group ul a { color: var(--medium-gray); font-size: 0.72rem; text-decoration: none; }
+      .mobile-toc .toc-group + .toc-group { margin-top: 1.2rem; }
+      .mobile-toc .toc-section { color: var(--black); font-size: 13px; font-weight: 400; text-decoration: none; }
+      .mobile-toc .toc-group ul { margin: 0.55rem 0 0; padding-left: 0.9rem; }
+      .mobile-toc .toc-group li + li { margin-top: 0.45rem; }
+      .mobile-toc .toc-group ul a { color: #676767; font-size: 13px; text-decoration: none; }
 
       .article-grid {
         display: grid;
-        grid-template-columns: 180px minmax(0, 660px) 180px;
-        justify-content: center;
-        column-gap: 3.25rem;
-        padding: 0 1.5rem;
+        grid-template-columns: 200px minmax(0, 660px);
+        column-gap: 64px;
+        max-width: 1188px;
+        margin: 0 auto;
       }
 
-      .toc { grid-column: 1; position: sticky; top: 82px; align-self: start; font-size: 0.72rem; line-height: 1.45; }
+      .toc { grid-column: 1; position: sticky; top: 82px; align-self: start; font-size: 13px; font-weight: 400; line-height: 1.4; }
       .toc ul { margin: 0; padding: 0; list-style: none; }
       .toc li { position: relative; }
-      .toc > .toc-tree > .toc-group + .toc-group { margin-top: 1.45rem; }
-      .toc .toc-section { color: var(--dark-gray); font-family: var(--serif); font-size: 0.84rem; font-weight: 500; line-height: 1.35; }
-      .toc .toc-group ul { margin-top: 0.68rem; padding-left: 0.72rem; border-left: 1px solid var(--border); }
-      .toc .toc-group ul li + li { margin-top: 0.5rem; }
-      .toc .toc-group ul a { font-size: 0.66rem; line-height: 1.4; }
+      .toc > .toc-tree > .toc-group + .toc-group { margin-top: 1.2rem; }
+      .toc .toc-section { color: var(--black); font-size: 13px; font-weight: 400; line-height: 1.4; }
+      .toc .toc-group ul { margin-top: 0.55rem; padding-left: 0.9rem; }
+      .toc .toc-group ul li + li { margin-top: 0.45rem; }
+      .toc .toc-group ul a { color: #676767; font-size: 13px; line-height: 1.4; }
       .toc a { position: relative; display: inline-block; color: var(--medium-gray); text-decoration: none; transition: color 140ms ease; }
       .toc a:hover, .toc a.active { color: var(--black); }
       .toc .toc-group:has(a.active) > .toc-section { color: var(--black); }
-      .toc a.active::before { content: ""; position: absolute; top: 0.52em; left: -0.8rem; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+      .toc a.active::before { content: ""; position: absolute; top: 0.52em; left: -0.9rem; width: 4px; height: 4px; border-radius: 50%; background: var(--black); }
 
-      article { grid-column: 2; min-width: 0; font-size: 17px; line-height: 1.72; letter-spacing: -0.006em; }
-      article p { margin: 0 0 1.42rem; }
+      article { grid-column: 2; min-width: 0; font-size: 17px; font-weight: 300; line-height: 28px; letter-spacing: 0; }
+      article p { margin: 0 0 24px; }
 
-      .act { margin: 4rem 0 1.7rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+      .act { margin: 41.6px 0 24px; padding: 0; border: 0; }
 
 
       article h2 {
         margin: 0;
-        font-family: var(--serif);
-        font-size: 2rem;
-        font-weight: 500;
-        line-height: 1.2;
-        letter-spacing: -0.025em;
+        font-family: var(--sans);
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 30px;
+        letter-spacing: 0;
         scroll-margin-top: 90px;
       }
 
       article h3 {
-        margin: 3rem 0 1rem;
+        margin: 38.4px 0 16px;
         color: var(--black);
         font-family: var(--sans);
-        font-size: 1.15rem;
-        font-weight: 600;
-        line-height: 1.35;
-        letter-spacing: -0.018em;
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 25px;
+        letter-spacing: 0;
         scroll-margin-top: 90px;
       }
 
-      .act + h3 { margin-top: 2rem; }
+      .act + h3 { margin-top: 38.4px; }
 
       article a { color: var(--black); text-decoration: underline; text-decoration-color: var(--light-gray); text-decoration-thickness: 1px; text-underline-offset: 3px; }
       article a:hover { color: var(--accent); text-decoration-color: var(--accent); }
 
-      article blockquote {
-        margin: 1.8rem 0;
-        padding: 1.05rem 1.35rem;
-        background: var(--muted-bg);
-        border-left: 2px solid var(--accent-light);
-        color: var(--dark-gray);
-      }
-
-      article blockquote p { margin: 0; }
       article ul { margin: 0 0 1.3rem; padding-left: 1.3rem; }
       article li { margin-bottom: 0.5rem; }
       article li::marker { color: var(--light-gray); }
@@ -224,7 +216,7 @@
 
       code { padding: 0.1em 0.32em; background: var(--muted-bg); font-family: var(--mono); font-size: 0.8em; font-weight: 400; }
 
-      .lede { font-family: var(--serif); font-size: 21px; line-height: 1.55; letter-spacing: -0.016em; }
+      .lede { font-family: var(--sans); font-size: 17px; font-weight: 300; line-height: 28px; letter-spacing: 0; }
 
       .note {
         margin: 1.8rem 0;
@@ -242,19 +234,18 @@
 
       .figure-panel { padding: 1.25rem 1.35rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); }
 
-      .shot { width: min(920px, calc(100vw - 3rem)); margin-left: 50%; transform: translateX(-50%); }
+      .shot { width: 100%; }
 
       .shot img {
         display: block;
         width: 100%;
         height: auto;
         object-fit: contain;
-        border: 1px solid var(--border);
         border-radius: var(--radius);
         background: var(--card);
       }
       article .image-link { display: block; text-decoration: none; }
-      article .image-link:hover img { border-color: #bdb4ae; }
+      article .image-link:hover img { opacity: 0.94; }
 
       .shot.narrow { width: min(470px, calc(100vw - 3rem)); }
 
@@ -303,7 +294,7 @@
       .release-attempt { margin-top: 2.75rem; padding-top: 1.1rem; border-top: 2px solid var(--black); }
       .release-head { display: grid; grid-template-columns: 86px minmax(0, 1fr) auto; align-items: baseline; gap: 1rem; padding-bottom: 1rem; }
       .release-number { color: var(--accent); font: 500 0.65rem/1.2 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
-      .release-head h3 { margin: 0; font-family: var(--serif); font-size: 1.25rem; font-weight: 500; line-height: 1.35; }
+      .release-head h3 { margin: 0; font-family: var(--sans); font-size: 20px; font-weight: 500; line-height: 25px; }
       .release-head p { margin: 0; color: var(--medium-gray); font: 400 0.68rem/1.45 var(--mono); text-align: right; }
       .release-rows { border-bottom: 1px solid var(--border); }
       .release-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 1rem; min-height: 51px; padding: 0.55rem 0; border-top: 1px solid var(--border); }
@@ -333,19 +324,20 @@
         .article-shell { padding-top: 3.7rem; }
         .article-header { margin-bottom: 2.4rem; padding: 0 1.15rem; }
         .hero { width: calc(100% - 1rem); margin-bottom: 1.5rem; }
-        .experiment-strip, .mobile-toc { width: calc(100% - 2.3rem); }
-        .experiment-strip { grid-template-columns: 1fr; margin-bottom: 2.6rem; }
-        .experiment-strip a:first-child { padding-right: 0; }
-        .experiment-strip a + a { padding-left: 0; border-top: 1px solid var(--border); border-left: 0; }
-        .article-grid { padding-right: 1.15rem; padding-left: 1.15rem; }
-        .shot { width: calc(100vw - 1.25rem); }
-        .shot.narrow { width: min(440px, calc(100vw - 2.3rem)); }
+        .mobile-toc { width: 100%; padding-right: 2rem; padding-left: 2rem; font-size: 14px; }
+        .mobile-toc summary { font-size: 14px; }
+        .mobile-toc .toc-section,
+        .mobile-toc .toc-group ul a { font-size: 14px; }
+        .mobile-toc .toc-group ul { padding-left: 1rem; }
+        .article-grid { padding-right: 2rem; padding-left: 2rem; }
+        .shot { width: 100%; }
+        .shot.narrow { width: min(440px, 100%); }
         .flow-step { grid-template-columns: 26px minmax(0, 1fr); }
         .flow-title, .flow-copy { grid-column: 2; }
         .funnel-row { grid-template-columns: 112px minmax(0, 1fr) 52px; }
         .tax-row { grid-template-columns: 128px minmax(0, 1fr) 44px; }
         .funnel-label, .tax-label { font-size: 11px; }
-        article h2 { font-size: 1.75rem; }
+        article h2 { font-size: 24px; }
         .release-head { grid-template-columns: 78px 1fr; }
         .release-head p { grid-column: 2; text-align: left; }
         .release-row { grid-template-columns: 1fr; gap: 0.25rem; padding: 0.68rem 0; }
@@ -369,7 +361,6 @@
     <a class="skip-link" href="#article">Skip to report</a>
     <main class="article-shell">
       <header class="article-header">
-        <p class="eyebrow">AutoScientist Challenge · Field report</p>
         <h1>Training a Finance Model with AutoScientist</h1>
         <p class="subtitle">
           We cleaned 5,000+ institutional-grade finance reports, then optimized both
@@ -391,37 +382,25 @@
         />
       </figure>
 
-      <div class="experiment-strip" aria-label="Experiment overview">
-        <a href="#first-time">
-          <span class="experiment-label">Attempt 01 · Prove</span>
-          <strong>Can finished reports become training data?</strong>
-          <small>589 extracted → 27,862 adapted · external preference 77 / 23</small>
-        </a>
-        <a href="#scale">
-          <span class="experiment-label">Attempt 02 · Scale</span>
-          <strong>Can the same method handle a larger corpus?</strong>
-          <small>45,758 rows · three generations · own-data preference 80 / 20</small>
-        </a>
-      </div>
-
       <details class="mobile-toc">
         <summary>Contents</summary>
         <ul class="toc-tree">
           <li class="toc-group">
-            <a class="toc-section" href="#first-time">Attempt 1: Prove the method</a>
+            <a class="toc-section" href="#first-time">Attempt #1: Prove the Method</a>
             <ul>
-              <li><a href="#source-data">Answers without prompts</a></li>
-              <li><a href="#extract">Reconstruct the question</a></li>
-              <li><a href="#adaptive-data">Expand the seed</a></li>
-              <li><a href="#autoscientist">Train and compare</a></li>
-              <li><a href="#limitations">What this could not prove</a></li>
+              <li><a href="#source-data">Source data</a></li>
+              <li><a href="#extract">Extract</a></li>
+              <li><a href="#adaptive-data">Adaptive Data</a></li>
+              <li><a href="#autoscientist">AutoScientist</a></li>
+              <li><a href="#limitation">Limitation</a></li>
             </ul>
           </li>
           <li class="toc-group">
-            <a class="toc-section" href="#scale">Attempt 2: Scale the pipeline</a>
+            <a class="toc-section" href="#scale">Attempt #2: Scaling</a>
             <ul>
-              <li><a href="#more-data">Widen the source corpus</a></li>
-              <li><a href="#results">More data, incomplete evidence</a></li>
+              <li><a href="#scale-data">Scale Data</a></li>
+              <li><a href="#scale-model">Scale Model</a></li>
+              <li><a href="#result">Result</a></li>
             </ul>
           </li>
           <li class="toc-group"><a class="toc-section" href="#resources">Resources</a></li>
@@ -432,20 +411,21 @@
         <nav class="toc" aria-label="Table of contents">
           <ul class="toc-tree">
             <li class="toc-group">
-              <a class="toc-section" href="#first-time">Attempt 1: Prove the method</a>
+              <a class="toc-section" href="#first-time">Attempt #1: Prove the Method</a>
               <ul>
-                <li><a href="#source-data">Answers without prompts</a></li>
-                <li><a href="#extract">Reconstruct the question</a></li>
-                <li><a href="#adaptive-data">Expand the seed</a></li>
-                <li><a href="#autoscientist">Train and compare</a></li>
-                <li><a href="#limitations">What this could not prove</a></li>
+                <li><a href="#source-data">Source data</a></li>
+                <li><a href="#extract">Extract</a></li>
+                <li><a href="#adaptive-data">Adaptive Data</a></li>
+                <li><a href="#autoscientist">AutoScientist</a></li>
+                <li><a href="#limitation">Limitation</a></li>
               </ul>
             </li>
             <li class="toc-group">
-              <a class="toc-section" href="#scale">Attempt 2: Scale the pipeline</a>
+              <a class="toc-section" href="#scale">Attempt #2: Scaling</a>
               <ul>
-                <li><a href="#more-data">Widen the source corpus</a></li>
-                <li><a href="#results">More data, incomplete evidence</a></li>
+                <li><a href="#scale-data">Scale Data</a></li>
+                <li><a href="#scale-model">Scale Model</a></li>
+                <li><a href="#result">Result</a></li>
               </ul>
             </li>
             <li class="toc-group"><a class="toc-section" href="#resources">Resources</a></li>
@@ -454,17 +434,16 @@
 
         <article id="article">
           <p class="lede">
-            Equity reports contain the answers we wanted a model to produce, but not the questions
-            needed to train it. We had to reconstruct that missing half of the conversation without
-            letting the answer leak back into the prompt.
+            Institutional finance reports contain the judgments we wanted a model to make, but not
+            the prompts needed to train that behavior. Our core challenge was to reconstruct each
+            prompt from supporting evidence without leaking the analyst's conclusion.
           </p>
 
           <p>
-            We tested the method twice. Attempt 1 turned 589 extracted examples into 27,862 adapted
-            rows and produced a model preferred 77 to 23 on <a href="https://adaptionlabs.ai/">Adaption</a>'s
-            broader Market Analysis evaluation. Attempt 2 widened the source corpus and produced
-            45,758 rows across three generations. This report shows the pipeline, the evidence, and
-            the limits.
+            We tested that pipeline twice. Attempt 1 asked whether a small, carefully extracted seed
+            could produce useful model behavior. Attempt 2 asked whether the same process could scale
+            to a broader finance corpus. The two attempts produced different kinds of evidence, so we
+            report their results separately.
           </p>
 
           <div class="note">
@@ -474,10 +453,10 @@
           </div>
 
           <div class="act">
-            <h2 id="first-time">Attempt 1: Prove the method</h2>
+            <h2 id="first-time">Attempt #1: Prove the Method</h2>
           </div>
 
-          <h3 id="source-data">The source: answers without prompts</h3>
+          <h3 id="source-data">Source data</h3>
 
           <p>
             We started with roughly 1,500 sell-side reports on Vietnamese listed companies, published
@@ -493,10 +472,10 @@
             requires both the instruction and the answer.
           </p>
 
-          <h3 id="extract">Extract: reconstruct the question</h3>
+          <h3 id="extract">Extract</h3>
 
           <p>
-            Our first five extraction approaches failed for the same reason: they generated plausible
+            Several early extraction approaches failed for the same reason: they generated plausible
             tasks that the source report did not actually answer. The version we kept works in reverse.
             It finds a real analyst conclusion first, removes that conclusion from the available
             evidence, and then reconstructs only the question that the evidence can support.
@@ -513,21 +492,10 @@
           </figure>
 
           <p>
-            A fixed template exposed the problem clearly. It required counterevidence and an
-            invalidation condition even when the source conclusion contained neither:
-          </p>
-
-          <blockquote>
-            <p>
-              The v1 template demanded counterevidence and an invalidation condition on every row;
-              45 of 50 accepted completions supplied neither.
-            </p>
-          </blockquote>
-
-          <p>
-            In a 50-row review, 45 accepted rows asked for unsupported content. Deriving the task from
-            each conclusion removed that mismatch. The remaining quality gates then reduced the data
-            to a smaller, traceable baseline.
+            Earlier fixed templates asked every example for counterevidence and an invalidation
+            condition, even when the source contained neither. In a 50-row review, 45 rows failed
+            this check. We replaced the fixed task with one derived from each conclusion, then used
+            quality gates to reduce the result to a smaller, traceable baseline.
           </p>
 
           <figure>
@@ -541,7 +509,7 @@
             <figcaption><strong>Figure 2:</strong> Capping, identity checks, and deduplication reduced 3,136 eligible rows to 739: 589 train, 77 validation, and 73 held out.</figcaption>
           </figure>
 
-          <h3 id="adaptive-data">Adaptive Data: expand the seed</h3>
+          <h3 id="adaptive-data">Adaptive Data</h3>
 
           <p>
             We uploaded the 589 training rows to Adaption. Its
@@ -589,7 +557,7 @@
             <figcaption><strong>Figure 4:</strong> The adapted completion turns one dense paragraph into an explicit evidence-to-conclusion response.</figcaption>
           </figure>
 
-          <h3 id="autoscientist">AutoScientist: train and compare</h3>
+          <h3 id="autoscientist">AutoScientist</h3>
 
           <p>
             AutoScientist trained a LoRA adapter on <code>Llama-3.3-70B-Instruct</code>. The run used
@@ -607,10 +575,10 @@
           <p>
             The second result is the stronger one. We constructed the first evaluation distribution;
             Adaption constructed the broader category evaluation. Winning 77 to 23 on that category
-            is evidence that the behavior transferred beyond our own rows.
+            supports transfer beyond our own rows. It is a preference result, not an accuracy score.
           </p>
 
-          <h3 id="limitations">Limitations: what this run could not prove</h3>
+          <h3 id="limitation">Limitation</h3>
 
           <p>Attempt 1 established a useful signal, but it did not establish a clean benchmark.</p>
 
@@ -622,11 +590,16 @@
             <li><strong>Too many variables changed.</strong> The task, corpus, model, and training recipe moved together, so the gain cannot be attributed to one component.</li>
           </ul>
 
+          <p>
+            Attempt 1 established the extraction and training path, but its narrow corpus and
+            contaminated local split made scale the next question.
+          </p>
+
           <div class="act">
-            <h2 id="scale">Attempt 2: Scale the pipeline</h2>
+            <h2 id="scale">Attempt #2: Scaling</h2>
           </div>
 
-          <h3 id="more-data">More data: widen the source corpus</h3>
+          <h3 id="scale-data">Scale Data</h3>
 
           <p>
             Attempt 2 addressed the narrow source coverage. We manually expanded the corpus from
@@ -684,20 +657,28 @@
             <figcaption><strong>Figure 7:</strong> Combine produced one 45,758-row training dataset with three traceable source generations.</figcaption>
           </figure>
 
-          <h3 id="results">Results: more data, incomplete evidence</h3>
-
           <p>
             The larger corpus entered Adaptive Data at a higher baseline quality. Each source
             generation started at 7.0, while the combined dataset started at 8.0 and finished at 9.4.
             The three generations share the same 1,753 leakage groups, so they represent roughly
-            15,250 unique source items rather than three independent corpora. The row count grew 78
-            times; the unique source material grew about 26 times.
+            15,250 unique generated items rather than three independent corpora. The row count grew
+            78 times; the unique underlying material grew about 26 times.
           </p>
 
+          <h3 id="scale-model">Scale Model</h3>
+
           <p>
-            AutoScientist trained <code>Llama 4 Scout 17B</code> on the combined set. The adapted model
-            won 80 to 20 on the dataset-specific preference evaluation. The exact training
-            configuration was not retained in the current export.
+            AutoScientist trained <code>Llama 4 Scout 17B</code> on the 45,758-row combined dataset.
+            We retained the run and its outcome, but not the complete training configuration. That
+            missing record prevents a controlled training-recipe comparison with Attempt 1.
+          </p>
+
+          <h3 id="result">Result</h3>
+
+          <p>
+            The adapted model won 80 to 20 in the dataset-specific preference evaluation. Unlike
+            Attempt 1, Attempt 2 produced no broader Market Analysis category result. It therefore
+            demonstrates fit to its own distribution, not external transfer.
           </p>
 
           <figure class="shot narrow">
@@ -708,22 +689,10 @@
           </figure>
 
           <p>
-            This result is not directly equivalent to Attempt 1. Attempt 2 did not produce the broader
-            Market Analysis category score, so it shows fit to its own distribution but not external
-            transfer. Attempt 1 therefore remains the stronger reported model result.
-          </p>
-
-          <p>
-            The next experiment is straightforward: freeze a genuinely unseen evaluation set, train
-            each generation separately, then train on the combination. That ablation would show
-            whether Combine adds useful diversity or repeats the same signal three times.
-          </p>
-
-          <p>
-            The two attempts answer different questions. Attempt 1 shows that answer-first extraction
-            can transfer beyond its own dataset. Attempt 2 shows that the same workflow can support a
-            much broader source corpus and multiple data-generation recipes. It does not yet show that
-            the larger model generalizes better.
+            Attempt 1 remains the stronger reported model result. A clean next experiment would freeze
+            a genuinely unseen evaluation set, train each generation separately, and then train on
+            their combination. That comparison would show whether Combine adds useful diversity or
+            repeats the same signal. Attempt 2 proves workflow breadth, not better generalization.
           </p>
 
           <div class="act">
@@ -731,8 +700,7 @@
           </div>
 
           <p>
-            Public artifacts are grouped by attempt below. Attempt 1 currently has Hugging Face
-            dataset and model links. Attempt 2 has four datasets mirrored on Hugging Face and Kaggle.
+            Public artifacts are grouped by attempt below.
           </p>
 
           <div class="release-index">
@@ -864,7 +832,7 @@
             <a href="https://adaptionlabs.ai/blog/autoscientist-challenge">Challenge rules</a>
             <a href="https://adaptionlabs.ai/app/dataset/42acc15b-b6b5-480c-9dcd-e9b8f3ac4647">Attempt 1 on Adaption</a>
             <a href="https://adaptionlabs.ai/app/dataset/2243d382-502e-4b8c-9cb0-041ae86d4345">Attempt 2 on Adaption</a>
-            <a href="https://github.com/Kitkitkittt/AdaptMarket">Separate Mixtral experiment code</a>
+            <a href="https://github.com/Kitkitkittt/AdaptMarket">AdaptMarket repository</a>
           </nav>
 
           <p class="pending-callout">
