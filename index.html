@@ -290,28 +290,29 @@
       .excerpt-body { color: var(--dark-gray); }
       .excerpt-body em { color: var(--accent); font-style: normal; font-weight: 500; }
 
-      .release-index { margin-top: 2.5rem; }
-      .release-attempt { margin-top: 2.75rem; padding-top: 1.1rem; border-top: 2px solid var(--black); }
-      .release-head { display: grid; grid-template-columns: 86px minmax(0, 1fr) auto; align-items: baseline; gap: 1rem; padding-bottom: 1rem; }
-      .release-number { color: var(--accent); font: 500 0.65rem/1.2 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
-      .release-head h3 { margin: 0; font-family: var(--sans); font-size: 20px; font-weight: 500; line-height: 25px; }
-      .release-head p { margin: 0; color: var(--medium-gray); font: 400 0.68rem/1.45 var(--mono); text-align: right; }
+      .release-index { margin-top: 0.5rem; }
+      .release-attempt { margin-top: 1.35rem; padding-top: 0.65rem; border-top: 1px solid var(--black); }
+      .release-head { display: grid; grid-template-columns: 70px minmax(0, 1fr) auto; align-items: baseline; gap: 0.65rem; padding-bottom: 0.55rem; }
+      .release-number { color: var(--accent); font: 500 0.58rem/1.2 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; }
+      .release-head h3 { margin: 0; font-family: var(--sans); font-size: 15px; font-weight: 500; line-height: 20px; }
+      .release-head p { margin: 0; color: var(--medium-gray); font: 400 0.58rem/1.35 var(--mono); text-align: right; }
       .release-rows { border-bottom: 1px solid var(--border); }
-      .release-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 1rem; min-height: 51px; padding: 0.55rem 0; border-top: 1px solid var(--border); }
-      .release-ident { display: grid; grid-template-columns: 58px minmax(0, 1fr) auto; align-items: baseline; gap: 0.7rem; min-width: 0; }
-      .release-kind { color: var(--medium-gray); font: 400 0.63rem/1.3 var(--mono); text-transform: uppercase; }
-      .release-name { min-width: 0; color: var(--black); font-size: 0.75rem; line-height: 1.45; overflow-wrap: anywhere; }
-      .release-count { color: var(--medium-gray); font: 400 0.68rem/1.2 var(--mono); white-space: nowrap; }
-      .release-actions { display: flex; align-items: center; justify-content: flex-end; gap: 0.2rem; }
-      article .platform-link { display: inline-flex; align-items: center; gap: 0.38rem; min-height: 32px; padding: 0.25rem 0.42rem; border-radius: 4px; color: var(--medium-gray); font-size: 0.64rem; line-height: 1; text-decoration: none; white-space: nowrap; }
+      .release-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 0.65rem; min-height: 38px; padding: 0.28rem 0; border-top: 1px solid var(--border); }
+      .release-ident { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; align-items: baseline; gap: 0.45rem; min-width: 0; }
+      .release-kind { color: var(--medium-gray); font: 400 0.56rem/1.25 var(--mono); text-transform: uppercase; }
+      .release-name { min-width: 0; color: var(--black); font-size: 0.68rem; line-height: 1.35; overflow-wrap: anywhere; }
+      .release-count { color: var(--medium-gray); font: 400 0.58rem/1.2 var(--mono); white-space: nowrap; }
+      .release-actions { display: flex; align-items: center; justify-content: flex-end; gap: 0.1rem; }
+      article .platform-link { display: inline-flex; align-items: center; gap: 0.3rem; min-height: 28px; padding: 0.18rem 0.3rem; border-radius: 4px; color: var(--medium-gray); font-size: 0.58rem; line-height: 1; text-decoration: none; white-space: nowrap; }
       article .platform-link:hover { background: var(--muted-bg); color: var(--black); }
-      .brand-mark { display: block; width: 17px; height: 17px; object-fit: contain; }
-      .release-run { margin: 0.8rem 0 0; color: var(--medium-gray); font: 400 0.65rem/1.65 var(--mono); overflow-wrap: anywhere; }
-      .release-note { margin: 0.55rem 0 0; color: var(--medium-gray); font-size: 0.7rem; line-height: 1.55; }
-      .project-links { display: flex; flex-wrap: wrap; gap: 0.25rem 1.15rem; margin-top: 2.8rem; padding: 0.9rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-      article .project-links a { color: var(--medium-gray); font-size: 0.7rem; text-decoration: none; }
+      .brand-mark { display: block; width: 14px; height: 14px; object-fit: contain; }
+      .release-meta { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 0.75rem; margin-top: 0.45rem; }
+      .release-run { margin: 0; color: var(--medium-gray); font: 400 0.56rem/1.45 var(--mono); overflow-wrap: anywhere; }
+      .release-note { margin: 0; color: var(--medium-gray); font-size: 0.59rem; line-height: 1.45; text-align: right; }
+      .project-links { display: flex; flex-wrap: wrap; gap: 0.2rem 0.85rem; margin-top: 1.25rem; padding: 0.55rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+      article .project-links a { color: var(--medium-gray); font-size: 0.61rem; text-decoration: none; }
       article .project-links a:hover { color: var(--accent); }
-      .pending-callout { margin-top: 1.1rem; color: var(--medium-gray); font-size: 0.72rem; line-height: 1.55; }
+      .pending-callout { margin-top: 0.55rem; color: var(--medium-gray); font-size: 0.61rem; line-height: 1.45; }
 
       @media (max-width: 1180px) {
         .article-grid { grid-template-columns: minmax(0, 660px); }
@@ -338,17 +339,18 @@
         .tax-row { grid-template-columns: 128px minmax(0, 1fr) 44px; }
         .funnel-label, .tax-label { font-size: 11px; }
         article h2 { font-size: 24px; }
-        .release-head { grid-template-columns: 78px 1fr; }
+        .release-head { grid-template-columns: 62px 1fr; }
         .release-head p { grid-column: 2; text-align: left; }
-        .release-row { grid-template-columns: 1fr; gap: 0.25rem; padding: 0.68rem 0; }
-        .release-actions { justify-content: flex-start; padding-left: 58px; }
-        .release-ident { grid-template-columns: 50px minmax(0, 1fr) auto; gap: 0.5rem; }
+        .release-row { grid-template-columns: minmax(0, 1fr) auto; gap: 0.35rem; padding: 0.25rem 0; }
+        .release-actions { justify-content: flex-end; padding-left: 0; }
+        .release-ident { grid-template-columns: 44px minmax(0, 1fr) auto; gap: 0.35rem; }
+        .platform-link span { display: none; }
+        .release-meta { grid-template-columns: 1fr; gap: 0.15rem; }
+        .release-note { text-align: left; }
       }
 
       @media (max-width: 390px) {
-        .platform-link span { display: none; }
-        .release-actions { padding-left: 50px; }
-        .release-count { font-size: 0.62rem; }
+        .release-count { font-size: 0.54rem; }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -699,10 +701,6 @@
             <h2 id="resources">Resources</h2>
           </div>
 
-          <p>
-            Public artifacts are grouped by attempt below.
-          </p>
-
           <div class="release-index">
             <section class="release-attempt" aria-labelledby="release-attempt-1">
               <header class="release-head">
@@ -740,8 +738,10 @@
                 </div>
               </div>
 
-              <p class="release-run">Run · adaption_llama_3_3_70b_instru_equity_analysis_small_22ed78c2</p>
-              <p class="release-note">The current reference includes no Attempt 1 Kaggle mirror.</p>
+              <div class="release-meta">
+                <p class="release-run">Run · adaption_llama_3_3_70b_instru_equity_analysis_small_22ed78c2</p>
+                <p class="release-note">No Attempt 1 Kaggle mirror.</p>
+              </div>
             </section>
 
             <section class="release-attempt" aria-labelledby="release-attempt-2">
@@ -822,8 +822,10 @@
                 </div>
               </div>
 
-              <p class="release-run">Run · adaption_llama_4_scout_17b_16_final_cc7ddeac</p>
-              <p class="release-note">No public Attempt 2 weights link is available in the current reference.</p>
+              <div class="release-meta">
+                <p class="release-run">Run · adaption_llama_4_scout_17b_16_final_cc7ddeac</p>
+                <p class="release-note">No public Attempt 2 weights.</p>
+              </div>
             </section>
           </div>
 
