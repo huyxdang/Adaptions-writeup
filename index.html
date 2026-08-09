@@ -290,29 +290,30 @@
       .excerpt-body { color: var(--dark-gray); }
       .excerpt-body em { color: var(--accent); font-style: normal; font-weight: 500; }
 
-      .release-index { margin-top: 0.5rem; }
-      .release-attempt { margin-top: 1.35rem; padding-top: 0.65rem; border-top: 1px solid var(--black); }
-      .release-head { display: grid; grid-template-columns: 70px minmax(0, 1fr) auto; align-items: baseline; gap: 0.65rem; padding-bottom: 0.55rem; }
-      .release-number { color: var(--accent); font: 500 0.58rem/1.2 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; }
-      .release-head h3 { margin: 0; font-family: var(--sans); font-size: 15px; font-weight: 500; line-height: 20px; }
-      .release-head p { margin: 0; color: var(--medium-gray); font: 400 0.58rem/1.35 var(--mono); text-align: right; }
-      .release-rows { border-bottom: 1px solid var(--border); }
-      .release-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 0.65rem; min-height: 38px; padding: 0.28rem 0; border-top: 1px solid var(--border); }
-      .release-ident { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; align-items: baseline; gap: 0.45rem; min-width: 0; }
-      .release-kind { color: var(--medium-gray); font: 400 0.56rem/1.25 var(--mono); text-transform: uppercase; }
-      .release-name { min-width: 0; color: var(--black); font-size: 0.68rem; line-height: 1.35; overflow-wrap: anywhere; }
-      .release-count { color: var(--medium-gray); font: 400 0.58rem/1.2 var(--mono); white-space: nowrap; }
-      .release-actions { display: flex; align-items: center; justify-content: flex-end; gap: 0.1rem; }
-      article .platform-link { display: inline-flex; align-items: center; gap: 0.3rem; min-height: 28px; padding: 0.18rem 0.3rem; border-radius: 4px; color: var(--medium-gray); font-size: 0.58rem; line-height: 1; text-decoration: none; white-space: nowrap; }
-      article .platform-link:hover { background: var(--muted-bg); color: var(--black); }
+      .resource-list { margin-top: 0.35rem; }
+      .resource-group { padding: 0.8rem 0; border-top: 1px solid var(--black); }
+      .resource-group + .resource-group { margin-top: 0.35rem; }
+      .resource-group h3 { margin: 0; font-family: var(--sans); font-size: 15px; font-weight: 500; line-height: 20px; }
+      .resource-meta { display: grid; gap: 0.22rem; margin: 0.55rem 0 0; }
+      .resource-meta > div { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 0.55rem; }
+      .resource-meta dt { color: var(--medium-gray); font: 400 0.57rem/1.45 var(--mono); }
+      .resource-meta dd { min-width: 0; margin: 0; color: var(--dark-gray); font: 400 0.57rem/1.45 var(--mono); overflow-wrap: anywhere; }
+      .resource-meta code { font: inherit; }
+      .artifact-list, .adaption-links { margin: 0.55rem 0 0; padding: 0; border-top: 1px solid var(--border); list-style: none; }
+      .artifact-item { display: grid; grid-template-columns: 76px minmax(0, 1fr); align-items: center; gap: 0.55rem; min-height: 34px; border-bottom: 1px solid var(--border); }
+      .artifact-label { color: var(--black); font-size: 0.66rem; }
+      .artifact-platforms { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem 0.65rem; }
+      article .platform-link { display: inline-flex; align-items: center; gap: 0.28rem; padding: 0.16rem 0; color: var(--medium-gray); font-size: 0.61rem; line-height: 1.2; text-decoration: none; white-space: nowrap; }
+      article .platform-link:hover { color: var(--accent); }
       .brand-mark { display: block; width: 14px; height: 14px; object-fit: contain; }
-      .release-meta { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 0.75rem; margin-top: 0.45rem; }
-      .release-run { margin: 0; color: var(--medium-gray); font: 400 0.56rem/1.45 var(--mono); overflow-wrap: anywhere; }
-      .release-note { margin: 0; color: var(--medium-gray); font-size: 0.59rem; line-height: 1.45; text-align: right; }
-      .project-links { display: flex; flex-wrap: wrap; gap: 0.2rem 0.85rem; margin-top: 1.25rem; padding: 0.55rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-      article .project-links a { color: var(--medium-gray); font-size: 0.61rem; text-decoration: none; }
-      article .project-links a:hover { color: var(--accent); }
-      .pending-callout { margin-top: 0.55rem; color: var(--medium-gray); font-size: 0.61rem; line-height: 1.45; }
+      .brand-mark.kaggle-mark { width: 30px; height: 12px; }
+      .resource-pending { color: var(--medium-gray); font-size: 0.61rem; }
+      .adaption-heading { display: flex; align-items: center; gap: 0.45rem; }
+      .adaption-mark { width: 20px; height: 20px; flex: 0 0 auto; }
+      .adaption-links li { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 0.55rem; padding: 0.38rem 0; border-bottom: 1px solid var(--border); }
+      article .adaption-links a { color: var(--black); font-size: 0.66rem; text-decoration: none; }
+      article .adaption-links a:hover { color: var(--accent); }
+      .adaption-links span { color: var(--medium-gray); font-size: 0.61rem; }
 
       @media (max-width: 1180px) {
         .article-grid { grid-template-columns: minmax(0, 660px); }
@@ -339,18 +340,8 @@
         .tax-row { grid-template-columns: 128px minmax(0, 1fr) 44px; }
         .funnel-label, .tax-label { font-size: 11px; }
         article h2 { font-size: 24px; }
-        .release-head { grid-template-columns: 62px 1fr; }
-        .release-head p { grid-column: 2; text-align: left; }
-        .release-row { grid-template-columns: minmax(0, 1fr) auto; gap: 0.35rem; padding: 0.25rem 0; }
-        .release-actions { justify-content: flex-end; padding-left: 0; }
-        .release-ident { grid-template-columns: 44px minmax(0, 1fr) auto; gap: 0.35rem; }
-        .platform-link span { display: none; }
-        .release-meta { grid-template-columns: 1fr; gap: 0.15rem; }
-        .release-note { text-align: left; }
-      }
-
-      @media (max-width: 390px) {
-        .release-count { font-size: 0.54rem; }
+        .resource-meta > div, .artifact-item { grid-template-columns: 68px minmax(0, 1fr); }
+        .adaption-links li { grid-template-columns: 92px minmax(0, 1fr); }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -369,8 +360,8 @@
           training data and process with Adaption Labs.
         </p>
         <p class="byline">
-          <a href="https://huyxdang.com/">Huy X. Dang</a> ·
-          <a href="https://www.linkedin.com/in/kiet-vo-097/">Keith Vo</a>
+          <a href="https://www.linkedin.com/in/kiet-vo-097/">Keith Vo</a> ·
+          <a href="https://huyxdang.com/">Huy X. Dang</a>
         </p>
       </header>
 
@@ -442,10 +433,11 @@
           </p>
 
           <p>
-            We tested that pipeline twice. Attempt 1 asked whether a small, carefully extracted seed
-            could produce useful model behavior. Attempt 2 asked whether the same process could scale
-            to a broader finance corpus. The two attempts produced different kinds of evidence, so we
-            report their results separately.
+            We developed this work as part of Adaption Labs' <a href="https://adaptionlabs.ai/blog/autoscientist">AutoScientist Challenge</a>.
+            We then tested the pipeline twice. Attempt 1 asked whether a small, carefully extracted
+            seed could produce useful model behavior. Attempt 2 asked whether the same process could
+            scale to a broader finance corpus. The two attempts produced different kinds of evidence,
+            so we report their results separately.
           </p>
 
           <div class="note">
@@ -455,10 +447,10 @@
           </div>
 
           <div class="act">
-            <h2 id="first-time">Attempt #1: Prove the Method</h2>
+            <h2 id="first-time">Attempt #1: Proof of Concept</h2>
           </div>
 
-          <h3 id="source-data">Source data</h3>
+          <h3 id="source-data">Data</h3>
 
           <p>
             We started with roughly 1,500 sell-side reports on Vietnamese listed companies, published
@@ -474,7 +466,7 @@
             requires both the instruction and the answer.
           </p>
 
-          <h3 id="extract">Extract</h3>
+          <h3 id="extract">Extraction</h3>
 
           <p>
             Several early extraction approaches failed for the same reason: they generated plausible
@@ -515,7 +507,7 @@
 
           <p>
             We uploaded the 589 training rows to Adaption. Its
-            <a href="https://adaptionlabs.ai/blog/autoscientist">Adaptive Data</a> pipeline expanded
+            <a href="https://adaptionlabs.ai/adaptive-data">Adaptive Data</a> pipeline expanded
             them to 27,862 rows, of which 27,405 were used for training. The platform's quality score
             increased from 5.0 to 9.4, moving the dataset from grade C to grade A.
           </p>
@@ -580,7 +572,7 @@
             supports transfer beyond our own rows. It is a preference result, not an accuracy score.
           </p>
 
-          <h3 id="limitation">Limitation</h3>
+          <h3 id="limitation">Limitations</h3>
 
           <p>Attempt 1 established a useful signal, but it did not establish a clean benchmark.</p>
 
@@ -601,7 +593,7 @@
             <h2 id="scale">Attempt #2: Scaling</h2>
           </div>
 
-          <h3 id="scale-data">Scale Data</h3>
+          <h3 id="scale-data">Data</h3>
 
           <p>
             Attempt 2 addressed the narrow source coverage. We manually expanded the corpus from
@@ -667,7 +659,7 @@
             78 times; the unique underlying material grew about 26 times.
           </p>
 
-          <h3 id="scale-model">Scale Model</h3>
+          <h3 id="scale-model">Model</h3>
 
           <p>
             AutoScientist trained <code>Llama 4 Scout 17B</code> on the 45,758-row combined dataset.
@@ -675,7 +667,7 @@
             missing record prevents a controlled training-recipe comparison with Attempt 1.
           </p>
 
-          <h3 id="result">Result</h3>
+          <h3 id="result">Results</h3>
 
           <p>
             The adapted model won 80 to 20 in the dataset-specific preference evaluation. Unlike
@@ -701,148 +693,101 @@
             <h2 id="resources">Resources</h2>
           </div>
 
-          <div class="release-index">
-            <section class="release-attempt" aria-labelledby="release-attempt-1">
-              <header class="release-head">
-                <span class="release-number">Attempt 01</span>
-                <h3 id="release-attempt-1">Small, domain-evaluated run</h3>
-                <p>589 seed · 27,405 train</p>
-              </header>
-
-              <div class="release-rows">
-                <div class="release-row">
-                  <div class="release-ident">
-                    <span class="release-kind">Dataset</span>
-                    <span class="release-name">adaption-equity-analysis-small</span>
-                    <span class="release-count">27,862</span>
-                  </div>
-                  <div class="release-actions">
+          <div class="resource-list">
+            <section class="resource-group" aria-labelledby="resource-attempt-1">
+              <h3 id="resource-attempt-1">Attempt 1</h3>
+              <dl class="resource-meta">
+                <div>
+                  <dt>Run ID</dt>
+                  <dd><code>adaption_llama_3_3_70b_instru_equity_analysis_small_22ed78c2</code></dd>
+                </div>
+                <div>
+                  <dt>Dataset ID</dt>
+                  <dd><code>42acc15b-b6b5-480c-9dcd-e9b8f3ac4647</code></dd>
+                </div>
+              </dl>
+              <ul class="artifact-list">
+                <li class="artifact-item">
+                  <span class="artifact-label">Dataset</span>
+                  <span class="artifact-platforms">
                     <a class="platform-link" href="https://huggingface.co/datasets/huyxdang/adaption-equity-analysis-small" target="_blank" rel="noreferrer" aria-label="Open the Attempt 1 dataset on Hugging Face">
-                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="17" height="16" loading="lazy" decoding="async" />
-                      <span>Hugging Face</span>
+                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="14" height="14" loading="lazy" decoding="async" />
+                      Hugging Face
                     </a>
-                  </div>
-                </div>
-                <div class="release-row">
-                  <div class="release-ident">
-                    <span class="release-kind">Model</span>
-                    <span class="release-name">adaption_vietnam_equity_research_note</span>
-                    <span class="release-count">LoRA</span>
-                  </div>
-                  <div class="release-actions">
+                    <a class="platform-link" href="https://www.kaggle.com/datasets/huydang03/adaption-equity-analysis-small" target="_blank" rel="noreferrer" aria-label="Open the Attempt 1 dataset on Kaggle">
+                      <img class="brand-mark kaggle-mark" src="assets/kaggle.svg" alt="" width="30" height="12" loading="lazy" decoding="async" />
+                    </a>
+                  </span>
+                </li>
+                <li class="artifact-item">
+                  <span class="artifact-label">Model</span>
+                  <span class="artifact-platforms">
                     <a class="platform-link" href="https://huggingface.co/huyxdang/adaption_vietnam_equity_research_note" target="_blank" rel="noreferrer" aria-label="Open the Attempt 1 model on Hugging Face">
-                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="17" height="16" loading="lazy" decoding="async" />
-                      <span>Hugging Face</span>
+                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="14" height="14" loading="lazy" decoding="async" />
+                      Hugging Face
                     </a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="release-meta">
-                <p class="release-run">Run · adaption_llama_3_3_70b_instru_equity_analysis_small_22ed78c2</p>
-                <p class="release-note">No Attempt 1 Kaggle mirror.</p>
-              </div>
+                    <a class="platform-link" href="https://www.kaggle.com/models/huydang03/adaption-vietnam-equity-research-note/PyTorch/lora" target="_blank" rel="noreferrer" aria-label="Open the Attempt 1 model on Kaggle">
+                      <img class="brand-mark kaggle-mark" src="assets/kaggle.svg" alt="" width="30" height="12" loading="lazy" decoding="async" />
+                    </a>
+                  </span>
+                </li>
+              </ul>
             </section>
 
-            <section class="release-attempt" aria-labelledby="release-attempt-2">
-              <header class="release-head">
-                <span class="release-number">Attempt 02</span>
-                <h3 id="release-attempt-2">Larger, multi-generation run</h3>
-                <p>45,758 combined</p>
-              </header>
+            <section class="resource-group" aria-labelledby="resource-attempt-2">
+              <h3 id="resource-attempt-2">Attempt 2</h3>
+              <dl class="resource-meta">
+                <div>
+                  <dt>Run ID</dt>
+                  <dd><code>adaption_llama_4_scout_17b_16_final_cc7ddeac</code></dd>
+                </div>
+                <div>
+                  <dt>Dataset ID</dt>
+                  <dd><code>2243d382-502e-4b8c-9cb0-041ae86d4345</code></dd>
+                </div>
+              </dl>
+              <ul class="artifact-list">
+                <li class="artifact-item">
+                  <span class="artifact-label">Final dataset</span>
+                  <span class="artifact-platforms">
+                    <a class="platform-link" href="https://huggingface.co/datasets/huyxdang/adaption-market-analysis-final" target="_blank" rel="noreferrer" aria-label="Open the final Attempt 2 dataset on Hugging Face">
+                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="14" height="14" loading="lazy" decoding="async" />
+                      Hugging Face
+                    </a>
+                    <a class="platform-link" href="https://www.kaggle.com/datasets/huydang03/adaption-market-analysis-final" target="_blank" rel="noreferrer" aria-label="Open the final Attempt 2 dataset on Kaggle">
+                      <img class="brand-mark kaggle-mark" src="assets/kaggle.svg" alt="" width="30" height="12" loading="lazy" decoding="async" />
+                    </a>
+                  </span>
+                </li>
+                <li class="artifact-item">
+                  <span class="artifact-label">Final model</span>
+                  <span class="resource-pending">Not available yet</span>
+                </li>
+              </ul>
+            </section>
 
-              <div class="release-rows">
-                <div class="release-row">
-                  <div class="release-ident">
-                    <span class="release-kind">Combined</span>
-                    <span class="release-name">adaption-market-analysis-final</span>
-                    <span class="release-count">45,758</span>
-                  </div>
-                  <div class="release-actions">
-                    <a class="platform-link" href="https://huggingface.co/datasets/huyxdang/adaption-market-analysis-final" target="_blank" rel="noreferrer" aria-label="Open the combined Attempt 2 dataset on Hugging Face">
-                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="17" height="16" loading="lazy" decoding="async" />
-                      <span>Hugging Face</span>
-                    </a>
-                    <a class="platform-link" href="https://www.kaggle.com/datasets/huydang03/adaption-market-analysis-final" target="_blank" rel="noreferrer" aria-label="Open the combined Attempt 2 dataset on Kaggle">
-                      <img class="brand-mark" src="https://cdn.simpleicons.org/kaggle/20BEFF" alt="" width="17" height="17" loading="lazy" decoding="async" />
-                      <span>Kaggle</span>
-                    </a>
-                  </div>
-                </div>
-                <div class="release-row">
-                  <div class="release-ident">
-                    <span class="release-kind">Gen. 01</span>
-                    <span class="release-name">adaption-market-analysis-1</span>
-                    <span class="release-count">15,252</span>
-                  </div>
-                  <div class="release-actions">
-                    <a class="platform-link" href="https://huggingface.co/datasets/huyxdang/adaption-market-analysis-1" target="_blank" rel="noreferrer" aria-label="Open Attempt 2 generation 1 on Hugging Face">
-                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="17" height="16" loading="lazy" decoding="async" />
-                      <span>Hugging Face</span>
-                    </a>
-                    <a class="platform-link" href="https://www.kaggle.com/datasets/huydang03/adaption-market-analysis-1" target="_blank" rel="noreferrer" aria-label="Open Attempt 2 generation 1 on Kaggle">
-                      <img class="brand-mark" src="https://cdn.simpleicons.org/kaggle/20BEFF" alt="" width="17" height="17" loading="lazy" decoding="async" />
-                      <span>Kaggle</span>
-                    </a>
-                  </div>
-                </div>
-                <div class="release-row">
-                  <div class="release-ident">
-                    <span class="release-kind">Gen. 02</span>
-                    <span class="release-name">adaption-market-analysis-2</span>
-                    <span class="release-count">15,253</span>
-                  </div>
-                  <div class="release-actions">
-                    <a class="platform-link" href="https://huggingface.co/datasets/huyxdang/adaption-market-analysis-2" target="_blank" rel="noreferrer" aria-label="Open Attempt 2 generation 2 on Hugging Face">
-                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="17" height="16" loading="lazy" decoding="async" />
-                      <span>Hugging Face</span>
-                    </a>
-                    <a class="platform-link" href="https://www.kaggle.com/datasets/huydang03/adaption-market-analysis-2" target="_blank" rel="noreferrer" aria-label="Open Attempt 2 generation 2 on Kaggle">
-                      <img class="brand-mark" src="https://cdn.simpleicons.org/kaggle/20BEFF" alt="" width="17" height="17" loading="lazy" decoding="async" />
-                      <span>Kaggle</span>
-                    </a>
-                  </div>
-                </div>
-                <div class="release-row">
-                  <div class="release-ident">
-                    <span class="release-kind">Gen. 03</span>
-                    <span class="release-name">adaption-market-analysis-3</span>
-                    <span class="release-count">15,197</span>
-                  </div>
-                  <div class="release-actions">
-                    <a class="platform-link" href="https://huggingface.co/datasets/huyxdang/adaption-market-analysis-3" target="_blank" rel="noreferrer" aria-label="Open Attempt 2 generation 3 on Hugging Face">
-                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="17" height="16" loading="lazy" decoding="async" />
-                      <span>Hugging Face</span>
-                    </a>
-                    <a class="platform-link" href="https://www.kaggle.com/datasets/huydang03/adaption-market-analysis-3" target="_blank" rel="noreferrer" aria-label="Open Attempt 2 generation 3 on Kaggle">
-                      <img class="brand-mark" src="https://cdn.simpleicons.org/kaggle/20BEFF" alt="" width="17" height="17" loading="lazy" decoding="async" />
-                      <span>Kaggle</span>
-                    </a>
-                  </div>
-                </div>
+            <section class="resource-group" aria-labelledby="adaption-labs-resources">
+              <div class="adaption-heading">
+                <svg class="adaption-mark" viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M8.808 2.427c0 .627.586 1.213 1.306 1.213.72 0 1.625-.018 2.817 0 2.232.019 2.345 1.214 4.006 1.214a2.426 2.426 0 1 0 0-4.854c-1.665 0-1.778 1.195-4.006 1.213-1.192.019-2.08 0-2.817 0-.738 0-1.306.532-1.306 1.214ZM2.421 19.401a2.424 2.424 0 1 0 0-4.854 2.424 2.424 0 0 0 0 4.854Zm7.256 0a2.424 2.424 0 1 0 0-4.854 2.424 2.424 0 0 0 0 4.854Zm7.26 0a2.424 2.424 0 1 0 0-4.854 2.424 2.424 0 0 0 0 4.854ZM5.613 3.637a1.212 1.212 0 1 0 0-2.427 1.212 1.212 0 0 0 0 2.427Zm-4.402 0a1.212 1.212 0 1 0 0-2.427 1.212 1.212 0 0 0 0 2.427Zm15.726 8.49a2.424 2.424 0 1 0 0-4.853 2.424 2.424 0 0 0 0 4.853ZM0 9.701c0 .645.567 1.213 1.247 1.213h4.402c2.232 0 2.345 1.214 4.025 1.214a2.427 2.427 0 1 0 0-4.854c-1.683 0-1.796 1.213-4.025 1.213H1.247C.567 8.487 0 9.056 0 9.701Z" fill="currentColor" />
+                </svg>
+                <h3 id="adaption-labs-resources">Adaption Labs</h3>
               </div>
-
-              <div class="release-meta">
-                <p class="release-run">Run · adaption_llama_4_scout_17b_16_final_cc7ddeac</p>
-                <p class="release-note">No public Attempt 2 weights.</p>
-              </div>
+              <ul class="adaption-links">
+                <li>
+                  <a href="https://adaptionlabs.ai/adaptive-data" target="_blank" rel="noreferrer">Adaptive Data</a>
+                  <span>Generate &amp; synthesize training data</span>
+                </li>
+                <li>
+                  <a href="https://adaptionlabs.ai/auto-scientist" target="_blank" rel="noreferrer">AutoScientist</a>
+                  <span>Automate LLM training</span>
+                </li>
+              </ul>
             </section>
           </div>
-
-          <nav class="project-links" aria-label="Project and platform links">
-            <a href="https://adaptionlabs.ai/blog/autoscientist">AutoScientist</a>
-            <a href="https://adaptionlabs.ai/blog/autoscientist-challenge">Challenge rules</a>
-            <a href="https://adaptionlabs.ai/app/dataset/42acc15b-b6b5-480c-9dcd-e9b8f3ac4647">Attempt 1 on Adaption</a>
-            <a href="https://adaptionlabs.ai/app/dataset/2243d382-502e-4b8c-9cb0-041ae86d4345">Attempt 2 on Adaption</a>
-            <a href="https://github.com/Kitkitkittt/AdaptMarket">AdaptMarket repository</a>
-          </nav>
-
-          <p class="pending-callout">
-            Release status: the datasets above are public. Required weights exports and a verified
-            base-vs-adapted demo are still pending.
-          </p>
         </article>
       </div>
+
     </main>
 
     <script>
