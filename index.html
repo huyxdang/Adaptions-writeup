@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#fafafa" />
+    <title>Training a Finance Model with AutoScientist</title>
+    <meta
+      name="description"
+      content="We cleaned 5,000+ institutional-grade finance reports, then optimized both training data and process with Adaption Labs."
+    />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&amp;family=DM+Mono:wght@400;500&amp;family=Lora:ital,wght@0,400;0,500;1,400&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --black: #282828;
+        --dark-gray: #49433f;
+        --medium-gray: #6b625d;
+        --light-gray: #8a817b;
+        --highlight-gray: #cfc8c2;
+        --border: #e7e1db;
+        --white: #fdfbf9;
+        --card: #ffffff;
+        --muted-bg: #f7f3ef;
+        --accent: #b23b2a;
+        --accent-medium: #c85a3d;
+        --accent-light: #e6a68d;
+
+        --serif: "Lora", "Iowan Old Style", "Palatino Linotype", serif;
+        --sans: "Be Vietnam Pro", ui-sans-serif, system-ui, -apple-system, sans-serif;
+        --mono: "DM Mono", ui-monospace, monospace;
+        --radius: 0.5rem;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background: var(--white);
+        color: var(--black);
+        font-family: var(--sans);
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a { color: inherit; }
+      img { max-width: 100%; }
+
+      .skip-link {
+        position: fixed;
+        z-index: 100;
+        top: 0.75rem;
+        left: 0.75rem;
+        padding: 0.65rem 0.8rem;
+        background: var(--black);
+        color: var(--card);
+        font-size: 0.75rem;
+        text-decoration: none;
+        transform: translateY(-160%);
+      }
+      .skip-link:focus { transform: translateY(0); }
+      :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+      .article-shell { min-height: 100vh; padding: 4.8rem 0 6rem; }
+
+      .article-header { max-width: 790px; margin: 0 auto 3.6rem; padding: 0 2rem; text-align: center; }
+
+      .eyebrow {
+        margin: 0 0 1.1rem;
+        color: var(--accent);
+        font: 500 0.66rem/1.3 var(--mono);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: var(--serif);
+        font-size: clamp(2.65rem, 5.2vw, 4rem);
+        font-weight: 400;
+        line-height: 1.03;
+        letter-spacing: -0.035em;
+      }
+
+      .subtitle {
+        margin: 1.35rem auto 0;
+        max-width: 33rem;
+        color: var(--dark-gray);
+        font-size: 1.05rem;
+        line-height: 1.62;
+        letter-spacing: -0.008em;
+      }
+
+      .byline { margin: 1.45rem 0 0; color: var(--medium-gray); font-size: 0.75rem; }
+      .byline a {
+        color: var(--dark-gray);
+        text-decoration: underline;
+        text-decoration-color: var(--light-gray);
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+        transition: color 140ms ease, text-decoration-color 140ms ease;
+      }
+      .byline a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+      .hero { width: min(calc(100% - 2rem), 1000px); margin: 0 auto 2.1rem; }
+      .hero img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: var(--radius); background: #fafafa; }
+
+      .experiment-strip {
+        max-width: 660px;
+        margin: 0 auto 3.2rem;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+      .experiment-strip a { display: block; padding: 1.05rem 0; color: var(--black); text-decoration: none; }
+      .experiment-strip a + a { padding-left: 1.25rem; border-left: 1px solid var(--border); }
+      .experiment-strip a:first-child { padding-right: 1.25rem; }
+      .experiment-strip a:hover strong { color: var(--accent); }
+      .experiment-label { display: block; margin-bottom: 0.38rem; color: var(--accent); font: 500 0.64rem/1.2 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
+      .experiment-strip strong { display: block; font-family: var(--serif); font-size: 1.04rem; font-weight: 500; line-height: 1.35; transition: color 140ms ease; }
+      .experiment-strip small { display: block; margin-top: 0.22rem; color: var(--medium-gray); font-size: 0.67rem; line-height: 1.5; }
+
+      .mobile-toc {
+        display: none;
+        max-width: 660px;
+        margin: 0 auto 2.3rem;
+        color: var(--medium-gray);
+        font-size: 0.78rem;
+      }
+
+      .mobile-toc summary {
+        cursor: pointer;
+        list-style: none;
+        padding: 0.7rem 0;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .mobile-toc summary::-webkit-details-marker { display: none; }
+      .mobile-toc summary::after { content: "+"; float: right; color: var(--light-gray); }
+      .mobile-toc[open] summary::after { content: "−"; }
+      .mobile-toc ul { padding: 0; list-style: none; }
+      .mobile-toc > .toc-tree { margin: 1rem 0 0; }
+      .mobile-toc .toc-group + .toc-group { margin-top: 1.05rem; }
+      .mobile-toc .toc-section { color: var(--black); font-family: var(--serif); font-size: 0.98rem; font-weight: 500; text-decoration: none; }
+      .mobile-toc .toc-group ul { margin: 0.55rem 0 0; padding-left: 0.8rem; border-left: 1px solid var(--border); }
+      .mobile-toc .toc-group li + li { margin-top: 0.42rem; }
+      .mobile-toc .toc-group ul a { color: var(--medium-gray); font-size: 0.72rem; text-decoration: none; }
+
+      .article-grid {
+        display: grid;
+        grid-template-columns: 180px minmax(0, 660px) 180px;
+        justify-content: center;
+        column-gap: 3.25rem;
+        padding: 0 1.5rem;
+      }
+
+      .toc { grid-column: 1; position: sticky; top: 82px; align-self: start; font-size: 0.72rem; line-height: 1.45; }
+      .toc ul { margin: 0; padding: 0; list-style: none; }
+      .toc li { position: relative; }
+      .toc > .toc-tree > .toc-group + .toc-group { margin-top: 1.45rem; }
+      .toc .toc-section { color: var(--dark-gray); font-family: var(--serif); font-size: 0.84rem; font-weight: 500; line-height: 1.35; }
+      .toc .toc-group ul { margin-top: 0.68rem; padding-left: 0.72rem; border-left: 1px solid var(--border); }
+      .toc .toc-group ul li + li { margin-top: 0.5rem; }
+      .toc .toc-group ul a { font-size: 0.66rem; line-height: 1.4; }
+      .toc a { position: relative; display: inline-block; color: var(--medium-gray); text-decoration: none; transition: color 140ms ease; }
+      .toc a:hover, .toc a.active { color: var(--black); }
+      .toc .toc-group:has(a.active) > .toc-section { color: var(--black); }
+      .toc a.active::before { content: ""; position: absolute; top: 0.52em; left: -0.8rem; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+
+      article { grid-column: 2; min-width: 0; font-size: 17px; line-height: 1.72; letter-spacing: -0.006em; }
+      article p { margin: 0 0 1.42rem; }
+
+      .act { margin: 4rem 0 1.7rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+
+
+      article h2 {
+        margin: 0;
+        font-family: var(--serif);
+        font-size: 2rem;
+        font-weight: 500;
+        line-height: 1.2;
+        letter-spacing: -0.025em;
+        scroll-margin-top: 90px;
+      }
+
+      article h3 {
+        margin: 3rem 0 1rem;
+        color: var(--black);
+        font-family: var(--sans);
+        font-size: 1.15rem;
+        font-weight: 600;
+        line-height: 1.35;
+        letter-spacing: -0.018em;
+        scroll-margin-top: 90px;
+      }
+
+      .act + h3 { margin-top: 2rem; }
+
+      article a { color: var(--black); text-decoration: underline; text-decoration-color: var(--light-gray); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+      article a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+      article blockquote {
+        margin: 1.8rem 0;
+        padding: 1.05rem 1.35rem;
+        background: var(--muted-bg);
+        border-left: 2px solid var(--accent-light);
+        color: var(--dark-gray);
+      }
+
+      article blockquote p { margin: 0; }
+      article ul { margin: 0 0 1.3rem; padding-left: 1.3rem; }
+      article li { margin-bottom: 0.5rem; }
+      article li::marker { color: var(--light-gray); }
+      article strong { font-weight: 600; color: var(--black); }
+
+      code { padding: 0.1em 0.32em; background: var(--muted-bg); font-family: var(--mono); font-size: 0.8em; font-weight: 400; }
+
+      .lede { font-family: var(--serif); font-size: 21px; line-height: 1.55; letter-spacing: -0.016em; }
+
+      .note {
+        margin: 1.8rem 0;
+        padding: 1rem 1.15rem;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        font-size: 0.8125rem;
+        line-height: 1.6;
+        color: var(--medium-gray);
+      }
+
+      .note strong { color: var(--black); font-weight: 500; }
+
+      figure { margin: 2rem 0 2.25rem; padding: 0; }
+
+      .figure-panel { padding: 1.25rem 1.35rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); }
+
+      .shot { width: min(920px, calc(100vw - 3rem)); margin-left: 50%; transform: translateX(-50%); }
+
+      .shot img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--card);
+      }
+      article .image-link { display: block; text-decoration: none; }
+      article .image-link:hover img { border-color: #bdb4ae; }
+
+      .shot.narrow { width: min(470px, calc(100vw - 3rem)); }
+
+      figcaption { margin-top: 0.85rem; font-size: 12.5px; line-height: 1.55; color: var(--medium-gray); }
+      .shot figcaption { max-width: 660px; margin-right: auto; margin-left: auto; }
+      figcaption strong { color: var(--dark-gray); font-weight: 500; }
+
+      .flow-step { display: grid; grid-template-columns: 30px 124px minmax(0, 1fr); gap: 0.85rem; padding: 0.85rem 0; }
+      .flow-step + .flow-step { border-top: 1px solid var(--border); }
+      .flow-number { color: var(--accent); font: 400 10.5px/1.5 var(--mono); }
+      .flow-title { color: var(--black); font-size: 12.5px; font-weight: 500; }
+      .flow-copy { color: var(--medium-gray); font-size: 12.5px; line-height: 1.52; }
+
+      .funnel-row { display: grid; grid-template-columns: 160px minmax(0, 1fr) 62px; align-items: center; gap: 0.75rem; padding: 0.4rem 0; }
+      .funnel-label { color: var(--medium-gray); font-size: 12px; }
+      .funnel-bar { height: 12px; background: var(--highlight-gray); }
+      .funnel-row.keep .funnel-bar { background: var(--accent); }
+      .funnel-row.drop .funnel-bar { background: var(--border); }
+      .funnel-val { color: var(--medium-gray); font: 400 11.5px/1 var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
+      .funnel-row.keep .funnel-val { color: var(--accent); }
+
+      .tax-row { display: grid; grid-template-columns: 200px minmax(0, 1fr) 50px; align-items: center; gap: 0.75rem; padding: 0.32rem 0; }
+      .tax-label { color: var(--medium-gray); font-size: 12px; }
+      .tax-track { height: 11px; background: var(--muted-bg); overflow: hidden; }
+      .tax-fill { display: block; height: 100%; background: #bdb4ae; }
+      .tax-row.lead .tax-fill { background: var(--accent); }
+      .tax-val { color: var(--medium-gray); font: 400 11.5px/1 var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
+      .tax-row.lead .tax-val { color: var(--accent); }
+
+      .cmp { width: 100%; min-width: 620px; border-collapse: collapse; font-size: 12.5px; }
+      .cmp th, .cmp td { padding: 0.62rem 0.55rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+      .cmp thead th { color: var(--medium-gray); font-weight: 400; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.09em; }
+      .cmp tbody th { color: var(--medium-gray); font-weight: 400; }
+      .cmp td { color: var(--black); font-variant-numeric: tabular-nums; }
+      .cmp tr:last-child th, .cmp tr:last-child td { border-bottom: 0; }
+      .cmp .em { color: var(--accent); font-weight: 500; }
+      .table-scroll { margin: 1.8rem 0; overflow-x: auto; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+      .excerpt { font-size: 12.5px; line-height: 1.62; }
+      .excerpt-col + .excerpt-col { margin-top: 1.15rem; padding-top: 1.15rem; border-top: 1px solid var(--border); }
+      .excerpt-label { margin-bottom: 0.55rem; color: var(--medium-gray); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; }
+      .excerpt-body { color: var(--dark-gray); }
+      .excerpt-body em { color: var(--accent); font-style: normal; font-weight: 500; }
+
+      .release-index { margin-top: 2.5rem; }
+      .release-attempt { margin-top: 2.75rem; padding-top: 1.1rem; border-top: 2px solid var(--black); }
+      .release-head { display: grid; grid-template-columns: 86px minmax(0, 1fr) auto; align-items: baseline; gap: 1rem; padding-bottom: 1rem; }
+      .release-number { color: var(--accent); font: 500 0.65rem/1.2 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
+      .release-head h3 { margin: 0; font-family: var(--serif); font-size: 1.25rem; font-weight: 500; line-height: 1.35; }
+      .release-head p { margin: 0; color: var(--medium-gray); font: 400 0.68rem/1.45 var(--mono); text-align: right; }
+      .release-rows { border-bottom: 1px solid var(--border); }
+      .release-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 1rem; min-height: 51px; padding: 0.55rem 0; border-top: 1px solid var(--border); }
+      .release-ident { display: grid; grid-template-columns: 58px minmax(0, 1fr) auto; align-items: baseline; gap: 0.7rem; min-width: 0; }
+      .release-kind { color: var(--medium-gray); font: 400 0.63rem/1.3 var(--mono); text-transform: uppercase; }
+      .release-name { min-width: 0; color: var(--black); font-size: 0.75rem; line-height: 1.45; overflow-wrap: anywhere; }
+      .release-count { color: var(--medium-gray); font: 400 0.68rem/1.2 var(--mono); white-space: nowrap; }
+      .release-actions { display: flex; align-items: center; justify-content: flex-end; gap: 0.2rem; }
+      article .platform-link { display: inline-flex; align-items: center; gap: 0.38rem; min-height: 32px; padding: 0.25rem 0.42rem; border-radius: 4px; color: var(--medium-gray); font-size: 0.64rem; line-height: 1; text-decoration: none; white-space: nowrap; }
+      article .platform-link:hover { background: var(--muted-bg); color: var(--black); }
+      .brand-mark { display: block; width: 17px; height: 17px; object-fit: contain; }
+      .release-run { margin: 0.8rem 0 0; color: var(--medium-gray); font: 400 0.65rem/1.65 var(--mono); overflow-wrap: anywhere; }
+      .release-note { margin: 0.55rem 0 0; color: var(--medium-gray); font-size: 0.7rem; line-height: 1.55; }
+      .project-links { display: flex; flex-wrap: wrap; gap: 0.25rem 1.15rem; margin-top: 2.8rem; padding: 0.9rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+      article .project-links a { color: var(--medium-gray); font-size: 0.7rem; text-decoration: none; }
+      article .project-links a:hover { color: var(--accent); }
+      .pending-callout { margin-top: 1.1rem; color: var(--medium-gray); font-size: 0.72rem; line-height: 1.55; }
+
+      @media (max-width: 1180px) {
+        .article-grid { grid-template-columns: minmax(0, 660px); }
+        article { grid-column: 1; }
+        .toc { display: none; }
+        .mobile-toc { display: block; }
+      }
+
+      @media (max-width: 680px) {
+        .article-shell { padding-top: 3.7rem; }
+        .article-header { margin-bottom: 2.4rem; padding: 0 1.15rem; }
+        .hero { width: calc(100% - 1rem); margin-bottom: 1.5rem; }
+        .experiment-strip, .mobile-toc { width: calc(100% - 2.3rem); }
+        .experiment-strip { grid-template-columns: 1fr; margin-bottom: 2.6rem; }
+        .experiment-strip a:first-child { padding-right: 0; }
+        .experiment-strip a + a { padding-left: 0; border-top: 1px solid var(--border); border-left: 0; }
+        .article-grid { padding-right: 1.15rem; padding-left: 1.15rem; }
+        .shot { width: calc(100vw - 1.25rem); }
+        .shot.narrow { width: min(440px, calc(100vw - 2.3rem)); }
+        .flow-step { grid-template-columns: 26px minmax(0, 1fr); }
+        .flow-title, .flow-copy { grid-column: 2; }
+        .funnel-row { grid-template-columns: 112px minmax(0, 1fr) 52px; }
+        .tax-row { grid-template-columns: 128px minmax(0, 1fr) 44px; }
+        .funnel-label, .tax-label { font-size: 11px; }
+        article h2 { font-size: 1.75rem; }
+        .release-head { grid-template-columns: 78px 1fr; }
+        .release-head p { grid-column: 2; text-align: left; }
+        .release-row { grid-template-columns: 1fr; gap: 0.25rem; padding: 0.68rem 0; }
+        .release-actions { justify-content: flex-start; padding-left: 58px; }
+        .release-ident { grid-template-columns: 50px minmax(0, 1fr) auto; gap: 0.5rem; }
+      }
+
+      @media (max-width: 390px) {
+        .platform-link span { display: none; }
+        .release-actions { padding-left: 50px; }
+        .release-count { font-size: 0.62rem; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { transition-duration: 0.01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#article">Skip to report</a>
+    <main class="article-shell">
+      <header class="article-header">
+        <p class="eyebrow">AutoScientist Challenge · Field report</p>
+        <h1>Training a Finance Model with AutoScientist</h1>
+        <p class="subtitle">
+          We cleaned 5,000+ institutional-grade finance reports, then optimized both
+          training data and process with Adaption Labs.
+        </p>
+        <p class="byline">
+          <a href="https://huyxdang.com/">Huy X. Dang</a> ·
+          <a href="https://www.linkedin.com/in/kiet-vo-097/">Keith Vo</a>
+        </p>
+      </header>
+
+      <figure class="hero">
+        <img
+          src="assets/adaptive-liquid-pixel.png"
+          alt="An iridescent liquid form transforming from a precise pixel grid into fine computational particles"
+          width="1672"
+          height="941"
+          fetchpriority="high"
+        />
+      </figure>
+
+      <div class="experiment-strip" aria-label="Experiment overview">
+        <a href="#first-time">
+          <span class="experiment-label">Attempt 01 · Prove</span>
+          <strong>Can finished reports become training data?</strong>
+          <small>589 extracted → 27,862 adapted · external preference 77 / 23</small>
+        </a>
+        <a href="#scale">
+          <span class="experiment-label">Attempt 02 · Scale</span>
+          <strong>Can the same method handle a larger corpus?</strong>
+          <small>45,758 rows · three generations · own-data preference 80 / 20</small>
+        </a>
+      </div>
+
+      <details class="mobile-toc">
+        <summary>Contents</summary>
+        <ul class="toc-tree">
+          <li class="toc-group">
+            <a class="toc-section" href="#first-time">Attempt 1: Prove the method</a>
+            <ul>
+              <li><a href="#source-data">Answers without prompts</a></li>
+              <li><a href="#extract">Reconstruct the question</a></li>
+              <li><a href="#adaptive-data">Expand the seed</a></li>
+              <li><a href="#autoscientist">Train and compare</a></li>
+              <li><a href="#limitations">What this could not prove</a></li>
+            </ul>
+          </li>
+          <li class="toc-group">
+            <a class="toc-section" href="#scale">Attempt 2: Scale the pipeline</a>
+            <ul>
+              <li><a href="#more-data">Widen the source corpus</a></li>
+              <li><a href="#results">More data, incomplete evidence</a></li>
+            </ul>
+          </li>
+          <li class="toc-group"><a class="toc-section" href="#resources">Resources</a></li>
+        </ul>
+      </details>
+
+      <div class="article-grid">
+        <nav class="toc" aria-label="Table of contents">
+          <ul class="toc-tree">
+            <li class="toc-group">
+              <a class="toc-section" href="#first-time">Attempt 1: Prove the method</a>
+              <ul>
+                <li><a href="#source-data">Answers without prompts</a></li>
+                <li><a href="#extract">Reconstruct the question</a></li>
+                <li><a href="#adaptive-data">Expand the seed</a></li>
+                <li><a href="#autoscientist">Train and compare</a></li>
+                <li><a href="#limitations">What this could not prove</a></li>
+              </ul>
+            </li>
+            <li class="toc-group">
+              <a class="toc-section" href="#scale">Attempt 2: Scale the pipeline</a>
+              <ul>
+                <li><a href="#more-data">Widen the source corpus</a></li>
+                <li><a href="#results">More data, incomplete evidence</a></li>
+              </ul>
+            </li>
+            <li class="toc-group"><a class="toc-section" href="#resources">Resources</a></li>
+          </ul>
+        </nav>
+
+        <article id="article">
+          <p class="lede">
+            Equity reports contain the answers we wanted a model to produce, but not the questions
+            needed to train it. We had to reconstruct that missing half of the conversation without
+            letting the answer leak back into the prompt.
+          </p>
+
+          <p>
+            We tested the method twice. Attempt 1 turned 589 extracted examples into 27,862 adapted
+            rows and produced a model preferred 77 to 23 on <a href="https://adaptionlabs.ai/">Adaption</a>'s
+            broader Market Analysis evaluation. Attempt 2 widened the source corpus and produced
+            45,758 rows across three generations. This report shows the pipeline, the evidence, and
+            the limits.
+          </p>
+
+          <div class="note">
+            <strong>Reading the numbers.</strong> Every score reported here is a pairwise preference:
+            the share of comparisons in which a judge chose the adapted model’s answer over the base
+            model’s. A score of 77 therefore does not mean 77% correct.
+          </div>
+
+          <div class="act">
+            <h2 id="first-time">Attempt 1: Prove the method</h2>
+          </div>
+
+          <h3 id="source-data">The source: answers without prompts</h3>
+
+          <p>
+            We started with roughly 1,500 sell-side reports on Vietnamese listed companies, published
+            between 2011 and 2026. The collection included earnings reviews, valuation updates, and
+            target-price revisions written by professional analysts. It did not include model-written
+            text, blogs, or forum posts.
+          </p>
+
+          <p>
+            These reports contained the language we wanted the model to learn, but not the training
+            structure we needed. An analyst writes a conclusion and the evidence behind it; the report
+            does not record the instruction that produced that conclusion. Supervised fine-tuning
+            requires both the instruction and the answer.
+          </p>
+
+          <h3 id="extract">Extract: reconstruct the question</h3>
+
+          <p>
+            Our first five extraction approaches failed for the same reason: they generated plausible
+            tasks that the source report did not actually answer. The version we kept works in reverse.
+            It finds a real analyst conclusion first, removes that conclusion from the available
+            evidence, and then reconstructs only the question that the evidence can support.
+          </p>
+
+          <figure>
+            <div class="figure-panel">
+              <div class="flow-step"><span class="flow-number">01</span><span class="flow-title">Find a judgment</span><span class="flow-copy">Detect phrases such as “we expect” and “in our view,” then capture a 90- to 320-word span inside one paragraph.</span></div>
+              <div class="flow-step"><span class="flow-number">02</span><span class="flow-title">Strip the answer</span><span class="flow-copy">Delete every judgment sentence from every other paragraph. What survives is factual-only text, and only that text may enter the prompt.</span></div>
+              <div class="flow-step"><span class="flow-number">03</span><span class="flow-title">Rank evidence</span><span class="flow-copy">Score the surviving paragraphs on shared figures, similarity and proximity. Any paragraph above 72% similarity is leakage. Keep six.</span></div>
+              <div class="flow-step"><span class="flow-number">04</span><span class="flow-title">Derive the ask</span><span class="flow-copy">Identify the analytical moves in the conclusion, such as direction, valuation, or counterevidence, and ask only for those moves.</span></div>
+            </div>
+            <figcaption><strong>Figure 1:</strong> Answer-first extraction. The conclusion becomes the target, while evidence from the same report becomes the prompt.</figcaption>
+          </figure>
+
+          <p>
+            A fixed template exposed the problem clearly. It required counterevidence and an
+            invalidation condition even when the source conclusion contained neither:
+          </p>
+
+          <blockquote>
+            <p>
+              The v1 template demanded counterevidence and an invalidation condition on every row;
+              45 of 50 accepted completions supplied neither.
+            </p>
+          </blockquote>
+
+          <p>
+            In a 50-row review, 45 accepted rows asked for unsupported content. Deriving the task from
+            each conclusion removed that mismatch. The remaining quality gates then reduced the data
+            to a smaller, traceable baseline.
+          </p>
+
+          <figure>
+            <div class="figure-panel">
+              <div class="funnel-row"><span class="funnel-label">Candidate spans</span><span class="funnel-bar" style="width:100%"></span><span class="funnel-val">3,281</span></div>
+              <div class="funnel-row"><span class="funnel-label">Passed every gate</span><span class="funnel-bar" style="width:95.6%"></span><span class="funnel-val">3,136</span></div>
+              <div class="funnel-row drop"><span class="funnel-label">Cut by per-source cap</span><span class="funnel-bar" style="width:70.7%"></span><span class="funnel-val">−2,320</span></div>
+              <div class="funnel-row"><span class="funnel-label">Post-cap candidates</span><span class="funnel-bar" style="width:24.9%"></span><span class="funnel-val">816</span></div>
+              <div class="funnel-row keep"><span class="funnel-label">Final baseline</span><span class="funnel-bar" style="width:22.5%"></span><span class="funnel-val">739</span></div>
+            </div>
+            <figcaption><strong>Figure 2:</strong> Capping, identity checks, and deduplication reduced 3,136 eligible rows to 739: 589 train, 77 validation, and 73 held out.</figcaption>
+          </figure>
+
+          <h3 id="adaptive-data">Adaptive Data: expand the seed</h3>
+
+          <p>
+            We uploaded the 589 training rows to Adaption. Its
+            <a href="https://adaptionlabs.ai/blog/autoscientist">Adaptive Data</a> pipeline expanded
+            them to 27,862 rows, of which 27,405 were used for training. The platform's quality score
+            increased from 5.0 to 9.4, moving the dataset from grade C to grade A.
+          </p>
+
+          <figure class="shot">
+            <a class="image-link" href="assets/a1-quality.png" aria-label="Open the full-resolution Attempt 1 quality figure">
+              <img src="assets/a1-quality.png" alt="Adaption quality panel: original text 5.0, adaptive text 9.4, +88.0% relative improvement" width="1435" height="864" loading="lazy" decoding="async" />
+            </a>
+            <figcaption><strong>Figure 3:</strong> Adaption measured the original text at 5.0 and the adapted text at 9.4.</figcaption>
+          </figure>
+
+          <p>
+            Adaptive Data changed the response structure more than the task. The prompt stayed close
+            to the extracted evidence, while the completion became easier to inspect and evaluate.
+          </p>
+
+          <figure>
+            <div class="figure-panel">
+              <div class="excerpt">
+                <div class="excerpt-col">
+                  <div class="excerpt-label">Before: authentic analyst prose</div>
+                  <div class="excerpt-body">
+                    We maintain our BUY rating on PTB, which is premised on its extensive stone mine
+                    portfolio, positive prospects of its new quartz business and long-term growth of
+                    Vietnam’s wooden furniture export industry… We raise our target price by 17% as
+                    we roll it over to YE2021…
+                  </div>
+                </div>
+                <div class="excerpt-col">
+                  <div class="excerpt-label">After Adaptive Data</div>
+                  <div class="excerpt-body">
+                    <em>Observations vs. Forecasts</em>. Observations: PTB held a topping out event
+                    in late October 2020. Pre-sales reached ~40% of units, trailing expectations.
+                    Forecasts: 2020F NPAT-MI nudged up 2%…<br /><br />
+                    <em>Conclusion Supported</em>. The evidence supports the conclusion that PTB’s
+                    model is being revised for delayed revenue recognition…
+                  </div>
+                </div>
+              </div>
+            </div>
+            <figcaption><strong>Figure 4:</strong> The adapted completion turns one dense paragraph into an explicit evidence-to-conclusion response.</figcaption>
+          </figure>
+
+          <h3 id="autoscientist">AutoScientist: train and compare</h3>
+
+          <p>
+            AutoScientist trained a LoRA adapter on <code>Llama-3.3-70B-Instruct</code>. The run used
+            rank 16, alpha 32, all linear layers, two epochs at <code>1e-4</code>, 382 steps, and loss
+            on completions only. It produced two preference evaluations.
+          </p>
+
+          <figure class="shot">
+            <a class="image-link" href="assets/a1-winrates.png" aria-label="Open the full-resolution Attempt 1 evaluation figure">
+              <img src="assets/a1-winrates.png" alt="Training win rates: base 16 vs adapted 84 on our dataset; base 23 vs adapted 77 across the Market analysis category" width="3140" height="960" loading="lazy" decoding="async" />
+            </a>
+            <figcaption><strong>Figure 5:</strong> The adapted model won 84 to 16 on our dataset and 77 to 23 across Adaption's Market Analysis category.</figcaption>
+          </figure>
+
+          <p>
+            The second result is the stronger one. We constructed the first evaluation distribution;
+            Adaption constructed the broader category evaluation. Winning 77 to 23 on that category
+            is evidence that the behavior transferred beyond our own rows.
+          </p>
+
+          <h3 id="limitations">Limitations: what this run could not prove</h3>
+
+          <p>Attempt 1 established a useful signal, but it did not establish a clean benchmark.</p>
+
+          <ul>
+            <li><strong>Narrow source coverage.</strong> The corpus focused on company research, not macro, sector, fund, or fixed-income analysis.</li>
+            <li><strong>Aggressive source caps.</strong> The balancing rule discarded 2,320 rows that had already passed every quality gate.</li>
+            <li><strong>A contaminated local split.</strong> We reserved 73 rows, then later trained on the combined file. That split cannot support a clean held-out claim.</li>
+            <li><strong>No final human review.</strong> Automated checks can verify structure, provenance, and leakage, but not economic judgment.</li>
+            <li><strong>Too many variables changed.</strong> The task, corpus, model, and training recipe moved together, so the gain cannot be attributed to one component.</li>
+          </ul>
+
+          <div class="act">
+            <h2 id="scale">Attempt 2: Scale the pipeline</h2>
+          </div>
+
+          <h3 id="more-data">More data: widen the source corpus</h3>
+
+          <p>
+            Attempt 2 addressed the narrow source coverage. We manually expanded the corpus from
+            roughly 1,500 to about 7,000 reports, adding macro outlooks, sector studies, fund reviews,
+            and fixed-income commentary from institutional sources.
+          </p>
+
+          <p>
+            The broader corpus required a broader task model. Each row records a task family, an asset
+            family, and the relationship between its evidence and conclusion. This taxonomy also adds
+            a task that Attempt 1 lacked: deciding when the evidence is insufficient.
+          </p>
+
+          <figure>
+            <div class="figure-panel">
+              <div class="tax-row lead"><span class="tax-label">Insufficient evidence</span><span class="tax-track"><i class="tax-fill" style="width:100%"></i></span><span class="tax-val">36.2%</span></div>
+              <div class="tax-row"><span class="tax-label">Market state interpretation</span><span class="tax-track"><i class="tax-fill" style="width:85%"></i></span><span class="tax-val">30.9%</span></div>
+              <div class="tax-row"><span class="tax-label">Actual vs. forward-looking</span><span class="tax-track"><i class="tax-fill" style="width:47%"></i></span><span class="tax-val">17.0%</span></div>
+              <div class="tax-row"><span class="tax-label">Driver transmission</span><span class="tax-track"><i class="tax-fill" style="width:37%"></i></span><span class="tax-val">13.7%</span></div>
+              <div class="tax-row"><span class="tax-label">Comparative analysis</span><span class="tax-track"><i class="tax-fill" style="width:4%"></i></span><span class="tax-val">1.5%</span></div>
+              <div class="tax-row"><span class="tax-label">Fund &amp; benchmark</span><span class="tax-track"><i class="tax-fill" style="width:1%"></i></span><span class="tax-val">0.4%</span></div>
+            </div>
+            <figcaption><strong>Figure 6:</strong> Insufficient-evidence tasks account for 36.2% of the combined dataset.</figcaption>
+          </figure>
+
+          <p>
+            More than one third of the rows reward the model for declining to make an unsupported
+            claim. That task matters because fluent synthesis is not enough; an analyst also needs to
+            recognize when the available evidence cannot support a conclusion.
+          </p>
+
+          <p>
+            We ran Adaptive Data three times, using three recipes, and merged the outputs with
+            Combine. The three generations used the same source corpus but expressed each analytical
+            task differently. The combined dataset therefore increased row diversity without
+            pretending that each generated row came from an independent source.
+          </p>
+
+          <div class="table-scroll">
+            <table class="cmp">
+              <thead><tr><th>Generation</th><th>Rows</th><th>Recipe</th><th>Quality</th></tr></thead>
+              <tbody>
+                <tr><th>Dataset 1</th><td>15,252</td><td>Completion rewritten only</td><td>7.0 → 9.2</td></tr>
+                <tr><th>Dataset 2</th><td>15,253</td><td>Prompt and completion, with response constraints</td><td>7.0 → 9.5</td></tr>
+                <tr><th>Dataset 3</th><td>15,197</td><td>Same recipe, independent variant</td><td>7.0 → 9.5</td></tr>
+                <tr><th>Combined</th><td class="em">45,758</td><td>45,702 from the three, plus 56</td><td>8.0 → 9.4</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <figure class="shot">
+            <a class="image-link" href="assets/a2-adaptive-data.png" aria-label="Open the full-resolution Attempt 2 combined-dataset figure">
+              <img src="assets/a2-adaptive-data.png" alt="Adaption panel for the combined Final dataset: 45,758 rows, 100% market-analysis, with an Original datasets link showing its three sources" width="3118" height="1006" loading="lazy" decoding="async" />
+            </a>
+            <figcaption><strong>Figure 7:</strong> Combine produced one 45,758-row training dataset with three traceable source generations.</figcaption>
+          </figure>
+
+          <h3 id="results">Results: more data, incomplete evidence</h3>
+
+          <p>
+            The larger corpus entered Adaptive Data at a higher baseline quality. Each source
+            generation started at 7.0, while the combined dataset started at 8.0 and finished at 9.4.
+            The three generations share the same 1,753 leakage groups, so they represent roughly
+            15,250 unique source items rather than three independent corpora. The row count grew 78
+            times; the unique source material grew about 26 times.
+          </p>
+
+          <p>
+            AutoScientist trained <code>Llama 4 Scout 17B</code> on the combined set. The adapted model
+            won 80 to 20 on the dataset-specific preference evaluation. The exact training
+            configuration was not retained in the current export.
+          </p>
+
+          <figure class="shot narrow">
+            <a class="image-link" href="assets/a2-winrate.png" aria-label="Open the full-resolution Attempt 2 evaluation figure">
+              <img src="assets/a2-winrate.png" alt="AutoScientist result for the combined dataset: base 20, adapted 80" width="1010" height="1426" loading="lazy" decoding="async" />
+            </a>
+            <figcaption><strong>Figure 8:</strong> Attempt 2 produced an 80 to 20 dataset-specific preference result. No category-level result was produced.</figcaption>
+          </figure>
+
+          <p>
+            This result is not directly equivalent to Attempt 1. Attempt 2 did not produce the broader
+            Market Analysis category score, so it shows fit to its own distribution but not external
+            transfer. Attempt 1 therefore remains the stronger reported model result.
+          </p>
+
+          <p>
+            The next experiment is straightforward: freeze a genuinely unseen evaluation set, train
+            each generation separately, then train on the combination. That ablation would show
+            whether Combine adds useful diversity or repeats the same signal three times.
+          </p>
+
+          <p>
+            The two attempts answer different questions. Attempt 1 shows that answer-first extraction
+            can transfer beyond its own dataset. Attempt 2 shows that the same workflow can support a
+            much broader source corpus and multiple data-generation recipes. It does not yet show that
+            the larger model generalizes better.
+          </p>
+
+          <div class="act">
+            <h2 id="resources">Resources</h2>
+          </div>
+
+          <p>
+            Public artifacts are grouped by attempt below. Attempt 1 currently has Hugging Face
+            dataset and model links. Attempt 2 has four datasets mirrored on Hugging Face and Kaggle.
+          </p>
+
+          <div class="release-index">
+            <section class="release-attempt" aria-labelledby="release-attempt-1">
+              <header class="release-head">
+                <span class="release-number">Attempt 01</span>
+                <h3 id="release-attempt-1">Small, domain-evaluated run</h3>
+                <p>589 seed · 27,405 train</p>
+              </header>
+
+              <div class="release-rows">
+                <div class="release-row">
+                  <div class="release-ident">
+                    <span class="release-kind">Dataset</span>
+                    <span class="release-name">adaption-equity-analysis-small</span>
+                    <span class="release-count">27,862</span>
+                  </div>
+                  <div class="release-actions">
+                    <a class="platform-link" href="https://huggingface.co/datasets/huyxdang/adaption-equity-analysis-small" target="_blank" rel="noreferrer" aria-label="Open the Attempt 1 dataset on Hugging Face">
+                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="17" height="16" loading="lazy" decoding="async" />
+                      <span>Hugging Face</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="release-row">
+                  <div class="release-ident">
+                    <span class="release-kind">Model</span>
+                    <span class="release-name">adaption_vietnam_equity_research_note</span>
+                    <span class="release-count">LoRA</span>
+                  </div>
+                  <div class="release-actions">
+                    <a class="platform-link" href="https://huggingface.co/huyxdang/adaption_vietnam_equity_research_note" target="_blank" rel="noreferrer" aria-label="Open the Attempt 1 model on Hugging Face">
+                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="17" height="16" loading="lazy" decoding="async" />
+                      <span>Hugging Face</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <p class="release-run">Run · adaption_llama_3_3_70b_instru_equity_analysis_small_22ed78c2</p>
+              <p class="release-note">The current reference includes no Attempt 1 Kaggle mirror.</p>
+            </section>
+
+            <section class="release-attempt" aria-labelledby="release-attempt-2">
+              <header class="release-head">
+                <span class="release-number">Attempt 02</span>
+                <h3 id="release-attempt-2">Larger, multi-generation run</h3>
+                <p>45,758 combined</p>
+              </header>
+
+              <div class="release-rows">
+                <div class="release-row">
+                  <div class="release-ident">
+                    <span class="release-kind">Combined</span>
+                    <span class="release-name">adaption-market-analysis-final</span>
+                    <span class="release-count">45,758</span>
+                  </div>
+                  <div class="release-actions">
+                    <a class="platform-link" href="https://huggingface.co/datasets/huyxdang/adaption-market-analysis-final" target="_blank" rel="noreferrer" aria-label="Open the combined Attempt 2 dataset on Hugging Face">
+                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="17" height="16" loading="lazy" decoding="async" />
+                      <span>Hugging Face</span>
+                    </a>
+                    <a class="platform-link" href="https://www.kaggle.com/datasets/huydang03/adaption-market-analysis-final" target="_blank" rel="noreferrer" aria-label="Open the combined Attempt 2 dataset on Kaggle">
+                      <img class="brand-mark" src="https://cdn.simpleicons.org/kaggle/20BEFF" alt="" width="17" height="17" loading="lazy" decoding="async" />
+                      <span>Kaggle</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="release-row">
+                  <div class="release-ident">
+                    <span class="release-kind">Gen. 01</span>
+                    <span class="release-name">adaption-market-analysis-1</span>
+                    <span class="release-count">15,252</span>
+                  </div>
+                  <div class="release-actions">
+                    <a class="platform-link" href="https://huggingface.co/datasets/huyxdang/adaption-market-analysis-1" target="_blank" rel="noreferrer" aria-label="Open Attempt 2 generation 1 on Hugging Face">
+                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="17" height="16" loading="lazy" decoding="async" />
+                      <span>Hugging Face</span>
+                    </a>
+                    <a class="platform-link" href="https://www.kaggle.com/datasets/huydang03/adaption-market-analysis-1" target="_blank" rel="noreferrer" aria-label="Open Attempt 2 generation 1 on Kaggle">
+                      <img class="brand-mark" src="https://cdn.simpleicons.org/kaggle/20BEFF" alt="" width="17" height="17" loading="lazy" decoding="async" />
+                      <span>Kaggle</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="release-row">
+                  <div class="release-ident">
+                    <span class="release-kind">Gen. 02</span>
+                    <span class="release-name">adaption-market-analysis-2</span>
+                    <span class="release-count">15,253</span>
+                  </div>
+                  <div class="release-actions">
+                    <a class="platform-link" href="https://huggingface.co/datasets/huyxdang/adaption-market-analysis-2" target="_blank" rel="noreferrer" aria-label="Open Attempt 2 generation 2 on Hugging Face">
+                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="17" height="16" loading="lazy" decoding="async" />
+                      <span>Hugging Face</span>
+                    </a>
+                    <a class="platform-link" href="https://www.kaggle.com/datasets/huydang03/adaption-market-analysis-2" target="_blank" rel="noreferrer" aria-label="Open Attempt 2 generation 2 on Kaggle">
+                      <img class="brand-mark" src="https://cdn.simpleicons.org/kaggle/20BEFF" alt="" width="17" height="17" loading="lazy" decoding="async" />
+                      <span>Kaggle</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="release-row">
+                  <div class="release-ident">
+                    <span class="release-kind">Gen. 03</span>
+                    <span class="release-name">adaption-market-analysis-3</span>
+                    <span class="release-count">15,197</span>
+                  </div>
+                  <div class="release-actions">
+                    <a class="platform-link" href="https://huggingface.co/datasets/huyxdang/adaption-market-analysis-3" target="_blank" rel="noreferrer" aria-label="Open Attempt 2 generation 3 on Hugging Face">
+                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="17" height="16" loading="lazy" decoding="async" />
+                      <span>Hugging Face</span>
+                    </a>
+                    <a class="platform-link" href="https://www.kaggle.com/datasets/huydang03/adaption-market-analysis-3" target="_blank" rel="noreferrer" aria-label="Open Attempt 2 generation 3 on Kaggle">
+                      <img class="brand-mark" src="https://cdn.simpleicons.org/kaggle/20BEFF" alt="" width="17" height="17" loading="lazy" decoding="async" />
+                      <span>Kaggle</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <p class="release-run">Run · adaption_llama_4_scout_17b_16_final_cc7ddeac</p>
+              <p class="release-note">No public Attempt 2 weights link is available in the current reference.</p>
+            </section>
+          </div>
+
+          <nav class="project-links" aria-label="Project and platform links">
+            <a href="https://adaptionlabs.ai/blog/autoscientist">AutoScientist</a>
+            <a href="https://adaptionlabs.ai/blog/autoscientist-challenge">Challenge rules</a>
+            <a href="https://adaptionlabs.ai/app/dataset/42acc15b-b6b5-480c-9dcd-e9b8f3ac4647">Attempt 1 on Adaption</a>
+            <a href="https://adaptionlabs.ai/app/dataset/2243d382-502e-4b8c-9cb0-041ae86d4345">Attempt 2 on Adaption</a>
+            <a href="https://github.com/Kitkitkittt/AdaptMarket">Separate Mixtral experiment code</a>
+          </nav>
+
+          <p class="pending-callout">
+            Release status: the datasets above are public. Required weights exports and a verified
+            base-vs-adapted demo are still pending.
+          </p>
+        </article>
+      </div>
+    </main>
+
+    <script>
+      const links = [...document.querySelectorAll(".toc a")];
+      const headings = links
+        .map((link) => document.querySelector(link.getAttribute("href")))
+        .filter(Boolean);
+
+      const setActive = (id) => {
+        links.forEach((link) => {
+          const active = link.getAttribute("href") === `#${id}`;
+          link.classList.toggle("active", active);
+          if (active) link.setAttribute("aria-current", "location");
+          else link.removeAttribute("aria-current");
+        });
+      };
+
+      if (headings.length) {
+        setActive(headings[0].id);
+        const observer = new IntersectionObserver(
+          (entries) => {
+            const current = entries
+              .filter((entry) => entry.isIntersecting)
+              .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+            if (current) setActive(current.target.id);
+          },
+          { rootMargin: "-110px 0px -68% 0px", threshold: 0 }
+        );
+        headings.forEach((heading) => observer.observe(heading));
+      }
+    </script>
+  </body>
+</html>
