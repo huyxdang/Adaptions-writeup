@@ -511,7 +511,7 @@
             <a href="https://www.linkedin.com/in/kiet-vo-097/" target="_blank" rel="noreferrer">Keith</a>
             and <a href="https://huyxdang.com/" target="_blank" rel="noreferrer">Huy</a> both work in
             finance, and we entered <a href="https://adaptionlabs.ai/" target="_blank" rel="noreferrer">Adaption Labs</a>’
-            <a href="https://adaptionlabs.ai/blog/autoscientist" target="_blank" rel="noreferrer">AutoScientist Challenge</a>
+            <strong><a href="https://adaptionlabs.ai/blog/autoscientist" target="_blank" rel="noreferrer">AutoScientist Challenge</a></strong>
             with a practical goal: train a model that could actually be useful in our day-to-day work.
           </p>
 
@@ -533,7 +533,7 @@
             We faced many challenges. We repeatedly refined the data methodology, manually inspected
             examples, and checked that the resulting tasks still reflected real equity-research
             workflows. Along the way, we learned a great deal about both finance-data preparation and
-            how to work effectively with AutoScientist.
+            how to work effectively with <strong>AutoScientist</strong>.
           </p>
 
           <div class="note">
@@ -610,7 +610,7 @@
 
           <p>
             We uploaded the 589 training rows to Adaption. Its
-            <a href="https://adaptionlabs.ai/adaptive-data">Adaptive Data</a> pipeline expanded
+            <strong><a href="https://adaptionlabs.ai/adaptive-data">Adaptive Data</a></strong> pipeline expanded
             them to 27,862 rows, of which 27,405 were used for training. The platform's quality score
             increased from 5.0 to 9.4, moving the dataset from grade C to grade A.
           </p>
@@ -623,7 +623,7 @@
           </figure>
 
           <p>
-            Adaptive Data changed the response structure more than the task. The prompt stayed close
+            <strong>Adaptive Data</strong> changed the response structure more than the task. The prompt stayed close
             to the extracted evidence, while the completion became easier to inspect and evaluate.
           </p>
 
@@ -657,7 +657,7 @@
           <h3 id="autoscientist">AutoScientist</h3>
 
           <p>
-            AutoScientist trained a LoRA adapter on <code>Llama-3.3-70B-Instruct</code>. The run used
+            <strong>AutoScientist</strong> trained a LoRA adapter on <code>Llama-3.3-70B-Instruct</code>. The run used
             rank 16, alpha 32, all linear layers, two epochs at <code>1e-4</code>, 382 steps, and loss
             on completions only. It produced two preference evaluations.
           </p>
@@ -759,7 +759,7 @@
           </p>
 
           <p>
-            We ran Adaptive Data three times, using three recipes, and merged the outputs with
+            <strong>We ran Adaptive Data three times,</strong> using three recipes, and merged the outputs with
             Combine. The three generations used the same source corpus but expressed each analytical
             task differently. The combined dataset therefore increased row diversity without
             pretending that each generated row came from an independent source.
@@ -785,7 +785,7 @@
           </figure>
 
           <p>
-            The larger corpus entered Adaptive Data at a higher baseline quality. Each source
+            The larger corpus entered <strong>Adaptive Data</strong> at a higher baseline quality. Each source
             generation started at 7.0, while the combined dataset started at 8.0 and finished at 9.4.
             The three generations share the same 1,753 leakage groups, so they represent roughly
             15,250 unique generated items rather than three independent corpora. The headline scale
@@ -795,7 +795,7 @@
           <h3 id="scale-model">Model</h3>
 
           <p>
-            AutoScientist trained a LoRA adapter for <code>Llama 4 Scout 17B</code> on the 45,758-row
+            <strong>AutoScientist</strong> trained a LoRA adapter for <code>Llama 4 Scout 17B</code> on the 45,758-row
             combined dataset. The released adapter records rank 32, alpha 64, dropout 0.05, and the
             <code>q_proj</code>, <code>k_proj</code>, <code>v_proj</code>, and <code>o_proj</code>
             targets. Trainer state records two epochs, 168 steps, and a peak learning rate of
@@ -832,9 +832,9 @@
 
           <p>
             We thank <a href="https://adaptionlabs.ai/" target="_blank" rel="noreferrer">Adaption Labs</a>
-            for hosting the <a href="https://adaptionlabs.ai/blog/autoscientist" target="_blank" rel="noreferrer">AutoScientist Challenge</a>
-            and for building <a href="https://adaptionlabs.ai/adaptive-data" target="_blank" rel="noreferrer">Adaptive Data</a>
-            and <a href="https://adaptionlabs.ai/auto-scientist" target="_blank" rel="noreferrer">AutoScientist</a>,
+            for hosting the <strong><a href="https://adaptionlabs.ai/blog/autoscientist" target="_blank" rel="noreferrer">AutoScientist Challenge</a></strong>
+            and for building <strong><a href="https://adaptionlabs.ai/adaptive-data" target="_blank" rel="noreferrer">Adaptive Data</a></strong>
+            and <strong><a href="https://adaptionlabs.ai/auto-scientist" target="_blank" rel="noreferrer">AutoScientist</a></strong>,
             the tools we used to expand the training data and automate model training in a practical
             environment. We are especially grateful
             to <a href="https://www.linkedin.com/in/sararosehooker" target="_blank" rel="noreferrer">Sara Hooker</a>
