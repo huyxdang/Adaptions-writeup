@@ -275,6 +275,23 @@
       .tax-val { color: var(--medium-gray); font: 400 11.5px/1 var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
       .tax-row.lead .tax-val { color: var(--accent); }
 
+      .scale-chart {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        align-items: end;
+        gap: 1.2rem;
+        min-height: 225px;
+        padding: 1rem 0 0.65rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .scale-stage { display: grid; grid-template-rows: 24px 164px auto; gap: 0.4rem; min-width: 0; text-align: center; }
+      .scale-value { align-self: end; color: var(--black); font: 500 0.72rem/1.2 var(--mono); }
+      .scale-bar-space { display: flex; align-items: end; justify-content: center; }
+      .scale-bar { display: block; width: min(76px, 70%); min-height: 4px; background: var(--highlight-gray); }
+      .scale-stage:nth-child(2) .scale-bar { background: var(--accent-light); }
+      .scale-stage:last-child .scale-bar { background: var(--accent); }
+      .scale-label { color: var(--medium-gray); font-size: 0.66rem; line-height: 1.35; }
+
       .cmp { width: 100%; min-width: 620px; border-collapse: collapse; font-size: 12.5px; }
       .cmp th, .cmp td { padding: 0.62rem 0.55rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
       .cmp thead th { color: var(--medium-gray); font-weight: 400; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.09em; }
@@ -364,6 +381,9 @@
         .funnel-row { grid-template-columns: 112px minmax(0, 1fr) 52px; }
         .tax-row { grid-template-columns: 128px minmax(0, 1fr) 44px; }
         .funnel-label, .tax-label { font-size: 11px; }
+        .scale-chart { gap: 0.65rem; min-height: 205px; }
+        .scale-stage { grid-template-rows: 24px 145px auto; }
+        .scale-bar { width: min(58px, 72%); }
         article h2 { font-size: 24px; }
         .resource-meta > div, .artifact-item { grid-template-columns: 68px minmax(0, 1fr); }
         .adaption-links li { grid-template-columns: 92px minmax(0, 1fr); }
@@ -414,7 +434,7 @@
             </ul>
           </li>
           <li class="toc-group">
-            <a class="toc-section" href="#scale">Attempt #2: Scaling</a>
+            <a class="toc-section" href="#scale">Attempt #2: Scaling 50x</a>
             <ul>
               <li><a href="#scale-data">Data</a></li>
               <li><a href="#scale-model">Model</a></li>
@@ -439,7 +459,7 @@
               </ul>
             </li>
             <li class="toc-group">
-              <a class="toc-section" href="#scale">Attempt #2: Scaling</a>
+              <a class="toc-section" href="#scale">Attempt #2: Scaling 50x</a>
               <ul>
                 <li><a href="#scale-data">Data</a></li>
                 <li><a href="#scale-model">Model</a></li>
@@ -459,6 +479,12 @@
 
           <p>
             We developed this work as part of Adaption Labs' <a href="https://adaptionlabs.ai/blog/autoscientist">AutoScientist Challenge</a>.
+            Both authors work in finance: Keith Vo works directly as an equity researcher, while Huy
+            X. Dang builds AI systems in finance. That combination shaped both the task design and
+            the standard we used for analyst-style outputs.
+          </p>
+
+          <p>
             We then tested the pipeline twice. Attempt 1 asked whether a small, carefully extracted
             seed could produce useful model behavior. Attempt 2 asked whether the same process could
             scale to a broader finance corpus. The two attempts produced different kinds of evidence,
@@ -500,6 +526,13 @@
             evidence, and then reconstructs only the question that the evidence can support.
           </p>
 
+          <figure class="shot">
+            <a class="image-link" href="assets/extraction-doc-to-prompt.png" aria-label="Open the full-resolution document-to-prompt extraction illustration">
+              <img src="assets/extraction-doc-to-prompt.png" alt="A stack of institutional finance reports is separated into evidence fragments and transformed into a prompt and analyst response" width="1672" height="941" loading="lazy" decoding="async" />
+            </a>
+            <figcaption><strong>Figure 1:</strong> The extraction path turns report pages into evidence fragments, then reconstructs a supported prompt and analyst-style answer.</figcaption>
+          </figure>
+
           <figure>
             <div class="figure-panel">
               <div class="flow-step"><span class="flow-number">01</span><span class="flow-title">Find a judgment</span><span class="flow-copy">Detect phrases such as “we expect” and “in our view,” then capture a 90- to 320-word span inside one paragraph.</span></div>
@@ -507,7 +540,7 @@
               <div class="flow-step"><span class="flow-number">03</span><span class="flow-title">Rank evidence</span><span class="flow-copy">Score the surviving paragraphs on shared figures, similarity and proximity. Any paragraph above 72% similarity is leakage. Keep six.</span></div>
               <div class="flow-step"><span class="flow-number">04</span><span class="flow-title">Derive the ask</span><span class="flow-copy">Identify the analytical moves in the conclusion, such as direction, valuation, or counterevidence, and ask only for those moves.</span></div>
             </div>
-            <figcaption><strong>Figure 1:</strong> Answer-first extraction. The conclusion becomes the target, while evidence from the same report becomes the prompt.</figcaption>
+            <figcaption><strong>Figure 2:</strong> Answer-first extraction. The conclusion becomes the target, while evidence from the same report becomes the prompt.</figcaption>
           </figure>
 
           <p>
@@ -525,7 +558,7 @@
               <div class="funnel-row"><span class="funnel-label">Post-cap candidates</span><span class="funnel-bar" style="width:24.9%"></span><span class="funnel-val">816</span></div>
               <div class="funnel-row keep"><span class="funnel-label">Final baseline</span><span class="funnel-bar" style="width:22.5%"></span><span class="funnel-val">739</span></div>
             </div>
-            <figcaption><strong>Figure 2:</strong> Capping, identity checks, and deduplication reduced 3,136 eligible rows to 739: 589 train, 77 validation, and 73 held out.</figcaption>
+            <figcaption><strong>Figure 3:</strong> Capping, identity checks, and deduplication reduced 3,136 eligible rows to 739: 589 train, 77 validation, and 73 held out.</figcaption>
           </figure>
 
           <h3 id="adaptive-data">Adaptive Data</h3>
@@ -541,7 +574,7 @@
             <a class="image-link" href="assets/a1-quality.png" aria-label="Open the full-resolution Attempt 1 quality figure">
               <img src="assets/a1-quality.png" alt="Adaption quality panel: original text 5.0, adaptive text 9.4, +88.0% relative improvement" width="1435" height="864" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 3:</strong> Adaption measured the original text at 5.0 and the adapted text at 9.4.</figcaption>
+            <figcaption><strong>Figure 4:</strong> Adaption measured the original text at 5.0 and the adapted text at 9.4.</figcaption>
           </figure>
 
           <p>
@@ -573,7 +606,7 @@
                 </div>
               </div>
             </div>
-            <figcaption><strong>Figure 4:</strong> The adapted completion turns one dense paragraph into an explicit evidence-to-conclusion response.</figcaption>
+            <figcaption><strong>Figure 5:</strong> The adapted completion turns one dense paragraph into an explicit evidence-to-conclusion response.</figcaption>
           </figure>
 
           <h3 id="autoscientist">AutoScientist</h3>
@@ -586,9 +619,9 @@
 
           <figure class="shot">
             <a class="image-link" href="assets/a1-winrates.png" aria-label="Open the full-resolution Attempt 1 evaluation figure">
-              <img src="assets/a1-winrates.png" alt="Training win rates: base 16 vs adapted 84 on our dataset; base 23 vs adapted 77 across the Market analysis category" width="3140" height="960" loading="lazy" decoding="async" />
+              <img src="assets/a1-winrates.png" alt="Training win rates: base 16 vs adapted 84 on our dataset; base 23 vs adapted 77 across the Market analysis category" width="2814" height="1012" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 5:</strong> The adapted model won 84 to 16 on our dataset and 77 to 23 across Adaption's Market Analysis category.</figcaption>
+            <figcaption><strong>Figure 6:</strong> The adapted model won 84 to 16 on our dataset and 77 to 23 across Adaption's Market Analysis category.</figcaption>
           </figure>
 
           <p>
@@ -615,7 +648,7 @@
           </p>
 
           <div class="act">
-            <h2 id="scale">Attempt #2: Scaling</h2>
+            <h2 id="scale">Attempt #2: Scaling 50x</h2>
           </div>
 
           <h3 id="scale-data">Data</h3>
@@ -625,6 +658,27 @@
             roughly 1,500 to about 7,000 reports, adding macro outlooks, sector studies, fund reviews,
             and fixed-income commentary from institutional sources.
           </p>
+
+          <figure>
+            <div class="scale-chart" role="img" aria-label="Training-row growth from 589 seed rows to approximately 19,000 synthetic rows and 45,758 final combined rows">
+              <div class="scale-stage">
+                <span class="scale-value">589</span>
+                <span class="scale-bar-space"><i class="scale-bar" style="height:1.3%"></i></span>
+                <span class="scale-label">Seed baseline</span>
+              </div>
+              <div class="scale-stage">
+                <span class="scale-value">~19k</span>
+                <span class="scale-bar-space"><i class="scale-bar" style="height:41.5%"></i></span>
+                <span class="scale-label">Synthetic working set</span>
+              </div>
+              <div class="scale-stage">
+                <span class="scale-value">45,758</span>
+                <span class="scale-bar-space"><i class="scale-bar" style="height:100%"></i></span>
+                <span class="scale-label">Final combined</span>
+              </div>
+            </div>
+            <figcaption><strong>Figure 7:</strong> The scale story in rows: 589 seed examples, roughly 19,000 in the intermediate synthetic working set, and 45,758 in Final.</figcaption>
+          </figure>
 
           <p>
             The broader corpus required a broader task model. Each row records a task family, an asset
@@ -641,7 +695,7 @@
               <div class="tax-row"><span class="tax-label">Comparative analysis</span><span class="tax-track"><i class="tax-fill" style="width:4%"></i></span><span class="tax-val">1.5%</span></div>
               <div class="tax-row"><span class="tax-label">Fund &amp; benchmark</span><span class="tax-track"><i class="tax-fill" style="width:1%"></i></span><span class="tax-val">0.4%</span></div>
             </div>
-            <figcaption><strong>Figure 6:</strong> Insufficient-evidence tasks account for 36.2% of the combined dataset.</figcaption>
+            <figcaption><strong>Figure 8:</strong> Insufficient-evidence tasks account for 36.2% of the combined dataset.</figcaption>
           </figure>
 
           <p>
@@ -671,47 +725,51 @@
 
           <figure class="shot">
             <a class="image-link" href="assets/a2-adaptive-data.png" aria-label="Open the full-resolution Attempt 2 combined-dataset figure">
-              <img src="assets/a2-adaptive-data.png" alt="Adaption panel for the combined Final dataset: 45,758 rows, 100% market-analysis, with an Original datasets link showing its three sources" width="3118" height="1006" loading="lazy" decoding="async" />
+              <img src="assets/a2-adaptive-data.png" alt="Adaption quality grade panel showing the Attempt 2 dataset improving from grade B before adaptation to grade A after adaptation" width="1546" height="626" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 7:</strong> Combine produced one 45,758-row training dataset with three traceable source generations.</figcaption>
+            <figcaption><strong>Figure 9:</strong> The broader Attempt 2 dataset improved from grade B to grade A after Adaptive Data.</figcaption>
           </figure>
 
           <p>
             The larger corpus entered Adaptive Data at a higher baseline quality. Each source
             generation started at 7.0, while the combined dataset started at 8.0 and finished at 9.4.
             The three generations share the same 1,753 leakage groups, so they represent roughly
-            15,250 unique generated items rather than three independent corpora. The row count grew
-            78 times; the unique underlying material grew about 26 times.
+            15,250 unique generated items rather than three independent corpora. The headline scale
+            came from combining broader source coverage with multiple adaptation recipes.
           </p>
 
           <h3 id="scale-model">Model</h3>
 
           <p>
-            AutoScientist trained <code>Llama 4 Scout 17B</code> on the 45,758-row combined dataset.
-            We retained the run and its outcome, but not the complete training configuration. That
-            missing record prevents a controlled training-recipe comparison with Attempt 1.
+            AutoScientist trained a LoRA adapter for <code>Llama 4 Scout 17B</code> on the 45,758-row
+            combined dataset. The released adapter records rank 32, alpha 64, dropout 0.05, and the
+            <code>q_proj</code>, <code>k_proj</code>, <code>v_proj</code>, and <code>o_proj</code>
+            targets. Trainer state records two epochs, 168 steps, and a peak learning rate of
+            <code>2e-5</code>.
           </p>
 
           <h3 id="result">Results</h3>
 
           <p>
-            The adapted model won 80 to 20 in the dataset-specific preference evaluation. Unlike
-            Attempt 1, Attempt 2 produced no broader Market Analysis category result. It therefore
-            demonstrates fit to its own distribution, not external transfer.
+            The adapted model won 80 to 20 in the dataset-specific preference evaluation. This makes
+            Attempt 2 the stronger scaling result: the workflow absorbed broader source coverage,
+            reached 45,758 rows, improved data quality from B to A, and retained a large preference
+            margin on its own distribution.
           </p>
 
-          <figure class="shot narrow">
+          <figure class="shot">
             <a class="image-link" href="assets/a2-winrate.png" aria-label="Open the full-resolution Attempt 2 evaluation figure">
-              <img src="assets/a2-winrate.png" alt="AutoScientist result for the combined dataset: base 20, adapted 80" width="1010" height="1426" loading="lazy" decoding="async" />
+              <img src="assets/a2-winrate.png" alt="AutoScientist result for the combined dataset: base 20, adapted 80" width="1036" height="760" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 8:</strong> Attempt 2 produced an 80 to 20 dataset-specific preference result. No category-level result was produced.</figcaption>
+            <figcaption><strong>Figure 10:</strong> Attempt 2 produced an 80 to 20 dataset-specific preference result. No category-level result was produced.</figcaption>
           </figure>
 
           <p>
-            Attempt 1 remains the stronger reported model result. A clean next experiment would freeze
-            a genuinely unseen evaluation set, train each generation separately, and then train on
-            their combination. That comparison would show whether Combine adds useful diversity or
-            repeats the same signal. Attempt 2 proves workflow breadth, not better generalization.
+            Attempt 1 still provides the stronger evidence of external transfer because it includes
+            a 77 to 23 Market Analysis category result. Attempt 2 has no equivalent category result,
+            so we do not claim better generalization. The two attempts answer different questions:
+            Attempt 1 proves transfer beyond its own rows, while Attempt 2 proves that the full data
+            and training workflow can scale across a materially broader finance corpus.
           </p>
 
           <div class="act">
@@ -786,7 +844,15 @@
                 </li>
                 <li class="artifact-item">
                   <span class="artifact-label">Final model</span>
-                  <span class="resource-pending">Not available yet</span>
+                  <span class="artifact-platforms">
+                    <a class="platform-link" href="https://huggingface.co/huyxdang/adaption-market-analysis-final-model" target="_blank" rel="noreferrer" aria-label="Open the final Attempt 2 model on Hugging Face">
+                      <img class="brand-mark" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="" width="14" height="14" loading="lazy" decoding="async" />
+                      Hugging Face
+                    </a>
+                    <a class="platform-link" href="https://www.kaggle.com/models/huydang03/adaption-market-analysis-final-model/PyTorch/lora" target="_blank" rel="noreferrer" aria-label="Open the final Attempt 2 model on Kaggle">
+                      <img class="brand-mark kaggle-mark" src="assets/kaggle.svg" alt="" width="30" height="12" loading="lazy" decoding="async" />
+                    </a>
+                  </span>
                 </li>
               </ul>
             </section>
