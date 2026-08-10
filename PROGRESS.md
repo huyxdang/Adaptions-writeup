@@ -93,3 +93,141 @@
 **Blockers**
 
 - None
+
+## Task: Full website publicity and credibility audit
+
+**Status:** complete
+**Started:** 2026-08-10 09:31 +07
+
+### Scope
+
+- Audit the complete report across writing, evidence, structure, visual communication, skimmability, accessibility, and publicity value.
+- Optimize the editorial recommendations for a dual goal: demonstrate that Adaption Labs' products worked while establishing Keith Vo and Huy X. Dang as credible finance practitioners.
+- Preserve factual distinctions between dataset-specific preference results, category-level transfer evidence, source-document counts, and generated training-row counts.
+
+### Plan
+
+- Ground reviewers in the official positioning of Adaptive Data, AutoScientist, and the challenge.
+- Run independent writing/credibility, visual/skimmability, and publicity/structure audits.
+- Inspect the live rendered page and synthesize the findings into a prioritized improvement plan without editing the site.
+
+### 2026-08-10 09:36 +07 - Audit context established
+
+**Status:** in progress
+
+**Completed**
+
+- Reviewed the current article, project reference sheet, and official Adaption Labs product pages.
+- Defined the central case-study claim: Adaptive Data increased dataset scale and measured quality; AutoScientist produced adapted models preferred over their base models on the reported evaluations.
+
+**Evidence**
+
+- Attempt #1 reports 589 seed rows, 27,862 adapted rows, quality 5.0 to 9.4, an 84-to-16 dataset preference result, and a 77-to-23 Market Analysis category result.
+- Attempt #2 reports about 7,000 source reports, 45,758 combined rows, quality 8.0 to 9.4, and an 80-to-20 dataset-specific preference result, with no category-level result.
+- Adaption Labs describes Adaptive Data as a way to optimize and expand datasets and AutoScientist as a system that co-optimizes data and training recipes.
+
+**Decisions**
+
+- Reviewers will treat the page as an evidence-led customer case study, not generic promotional copy.
+- Recommendations must preserve the distinction between source reports, seed examples, generated rows, and preference win rates.
+
+**Next**
+
+- Collect three independent audit reports and inspect the rendered page for a final synthesis.
+
+**Blockers**
+
+- None
+
+### 2026-08-10 10:02 +07 - Audit complete
+
+**Status:** complete
+
+**Completed**
+
+- Collected independent writing/credibility, visual/skimmability, and publicity/structure reviews.
+- Audited the rendered public page at desktop and mobile widths.
+- Consolidated the findings and sequenced recommendations in `AUDIT.md`.
+
+**Evidence**
+
+- Reviewers independently estimated current skim comprehension at approximately 60–70%, below the 80% goal.
+- Desktop and mobile renders had no horizontal overflow or console errors.
+- Official Adaption sources confirmed the intended division of labor: Adaptive Data shapes the data, while AutoScientist automates and co-optimizes training.
+
+**Decisions**
+
+- Preserve the approved title, hero, typography, two-attempt structure, extraction explanation, and evaluation caveats.
+- Prioritize credibility blockers before adding the new at-a-glance visual and responsive result graphics.
+
+**Next**
+
+- Implement the P0 items after user approval.
+
+**Blockers**
+
+- None
+
+## Task: Apply approved credibility corrections
+
+**Status:** complete
+**Started:** 2026-08-10 09:47 +07
+
+### Scope
+
+- Retain “Scaling 50x” as the chosen public-facing framing.
+- Replace the unsupported Figure 5 before/after comparison with a genuinely matched example.
+- Replace “external transfer” with accurately scoped category-evaluation language.
+- Attribute data-quality measurements as the Adaption platform quality score and separate them from preference evaluations.
+- Repair canonical, social-preview, and challenge URLs.
+- Label Keith Vo as Equity Research and Huy X. Dang as AI in Finance.
+- Re-verify all four Hugging Face releases and capture the remaining audit work in a separate backlog.
+
+### 2026-08-10 09:47 +07 - Corrections started
+
+**Status:** in progress
+
+**Completed**
+
+- Split matched-pair tracing, Hugging Face verification, and wording/backlog review into independent read-only checks.
+- Confirmed that the public-facing 50x label is an explicit editorial choice and will remain unchanged.
+
+**Next**
+
+- Apply the verified copy, metadata, author-role, and Figure 5 changes.
+- Render and test the updated page at desktop and mobile widths.
+
+**Blockers**
+
+- Waiting for matched-pair provenance and independent Hugging Face verification.
+
+### 2026-08-10 09:57 +07 - Corrections complete
+
+**Status:** complete
+
+**Completed**
+
+- Retained the 50x section label and documented it as an intentional editorial choice.
+- Replaced Figure 5 with excerpts from one verified PTB row whose original and enhanced completions share an identical prompt.
+- Replaced “external transfer” with broader-category evaluation language and separated model preferences from dataset quality measurements.
+- Labeled all 0–10 dataset scores as Adaption platform quality scores and disclosed that the rubric is not public.
+- Repaired the production canonical, Open Graph, social-image, and Challenge links.
+- Added Keith Vo’s Equity Research role and Huy X. Dang’s AI in Finance role to the byline, introduction, and footer.
+- Created `NEXT_IMPROVEMENTS.md` for the unimplemented audit recommendations.
+- Re-verified the two datasets and two models through their exact Hugging Face API endpoints.
+
+**Evidence**
+
+- All four Hugging Face API endpoints returned HTTP 200 after the network switched to the hotspot.
+- The matched PTB row has stable identifier `MA2_3bddd9966556ba63efafe373`; its prompt hashes identically before and after adaptation, and `enhanced_prompt` is null.
+- Playwright confirmed the production canonical and Open Graph URLs, both role labels, three instances of “Attempt #2: Scaling 50x,” two corrected Challenge links, and no obsolete preview URL.
+- Desktop and 393px mobile renders have no horizontal overflow; Figure 5 reveals both columns; the browser console reported zero errors or warnings.
+- `git diff --check` completed without whitespace errors.
+
+**Next**
+
+- Work through `NEXT_IMPROVEMENTS.md` one item at a time after prioritization.
+
+**Blockers**
+
+- None

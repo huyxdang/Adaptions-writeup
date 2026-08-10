@@ -9,17 +9,17 @@
       name="description"
       content="We cleaned 5,000+ institutional-grade finance reports, then optimized both training data and process with Adaption Labs."
     />
-    <link rel="canonical" href="https://adaptions-writeup-git-main-huyxdangs-projects.vercel.app/" />
+    <link rel="canonical" href="https://adaptions-writeup.vercel.app/" />
     <meta property="og:type" content="article" />
-    <meta property="og:site_name" content="Huy X. Dang" />
+    <meta property="og:site_name" content="Keith Vo &amp; Huy X. Dang" />
     <meta property="og:title" content="Training a Finance Model with AutoScientist" />
     <meta
       property="og:description"
       content="We cleaned 5,000+ institutional-grade finance reports, then optimized both training data and process with Adaption Labs."
     />
-    <meta property="og:url" content="https://adaptions-writeup-git-main-huyxdangs-projects.vercel.app/" />
-    <meta property="og:image" content="https://adaptions-writeup-git-main-huyxdangs-projects.vercel.app/assets/adaptive-liquid-pixel.jpg" />
-    <meta property="og:image:secure_url" content="https://adaptions-writeup-git-main-huyxdangs-projects.vercel.app/assets/adaptive-liquid-pixel.jpg" />
+    <meta property="og:url" content="https://adaptions-writeup.vercel.app/" />
+    <meta property="og:image" content="https://adaptions-writeup.vercel.app/assets/adaptive-liquid-pixel.jpg" />
+    <meta property="og:image:secure_url" content="https://adaptions-writeup.vercel.app/assets/adaptive-liquid-pixel.jpg" />
     <meta property="og:image:width" content="1672" />
     <meta property="og:image:height" content="941" />
     <meta property="og:image:type" content="image/jpeg" />
@@ -30,7 +30,7 @@
       name="twitter:description"
       content="We cleaned 5,000+ institutional-grade finance reports, then optimized both training data and process with Adaption Labs."
     />
-    <meta name="twitter:image" content="https://adaptions-writeup-git-main-huyxdangs-projects.vercel.app/assets/adaptive-liquid-pixel.jpg" />
+    <meta name="twitter:image" content="https://adaptions-writeup.vercel.app/assets/adaptive-liquid-pixel.jpg" />
     <meta name="twitter:image:alt" content="An iridescent liquid form transforming from a precise pixel grid into fine computational particles" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -113,7 +113,17 @@
         letter-spacing: -0.008em;
       }
 
-      .byline { margin: 1.45rem 0 0; color: var(--medium-gray); font-size: 0.75rem; }
+      .byline {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+        margin: 1.45rem 0 0;
+        color: var(--medium-gray);
+        font-size: 0.75rem;
+      }
+      .byline-person { display: inline-flex; align-items: baseline; }
+      .byline-and { color: var(--highlight-gray); }
       .byline a {
         color: var(--dark-gray);
         text-decoration: underline;
@@ -543,6 +553,7 @@
         .article-grid { padding-right: 2rem; padding-left: 2rem; }
         .report-footer { display: block; width: 100%; padding-right: 2rem; padding-left: 2rem; }
         .report-footer-people { grid-template-columns: 1fr; gap: 0.9rem; }
+        .byline { flex-wrap: wrap; gap: 0.35rem 0.5rem; }
         .shot { width: 100%; }
         .shot.narrow { width: min(440px, 100%); }
         .flow-step { grid-template-columns: 26px minmax(0, 1fr); }
@@ -576,8 +587,9 @@
           training data and process with Adaption Labs
         </p>
         <p class="byline">
-          <a href="https://www.linkedin.com/in/kiet-vo-097/">Keith Vo</a> &amp;
-          <a href="https://huyxdang.com/">Huy X. Dang</a>
+          <span class="byline-person"><a href="https://www.linkedin.com/in/kiet-vo-097/">Keith Vo</a></span>
+          <span class="byline-and">&amp;</span>
+          <span class="byline-person"><a href="https://huyxdang.com/">Huy X. Dang</a></span>
         </p>
       </header>
 
@@ -646,9 +658,9 @@
         <article id="article">
           <p class="lede">
             <a href="https://www.linkedin.com/in/kiet-vo-097/" target="_blank" rel="noreferrer">Keith</a>
-            and <a href="https://huyxdang.com/" target="_blank" rel="noreferrer">Huy</a> both work in
-            finance, and we entered <a href="https://adaptionlabs.ai/" target="_blank" rel="noreferrer">Adaption Labs</a>’
-            <strong><a href="https://adaptionlabs.ai/blog/autoscientist" target="_blank" rel="noreferrer">AutoScientist Challenge</a></strong>
+            works in equity research, while <a href="https://huyxdang.com/" target="_blank" rel="noreferrer">Huy</a>
+            works in AI in finance. We entered <a href="https://adaptionlabs.ai/" target="_blank" rel="noreferrer">Adaption Labs</a>’
+            <strong><a href="https://adaptionlabs.ai/blog/autoscientist-challenge" target="_blank" rel="noreferrer">AutoScientist Challenge</a></strong>
             with a practical goal: train a model that could actually be useful in our day-to-day work.
           </p>
 
@@ -674,9 +686,12 @@
           </p>
 
           <div class="note">
-            <strong>Reading the numbers.</strong> Every score reported here is a pairwise preference:
-            the share of comparisons in which a judge chose the adapted model’s answer over the base
-            model’s. A score of 77 therefore does not mean 77% correct.
+            <strong>Reading the numbers.</strong> The 84:16, 77:23, and 80:20 results are pairwise
+            preferences: the share of comparisons in which a judge chose the adapted model’s answer
+            over the base model’s. A result of 77:23 therefore does not mean 77% correct. Adaption
+            describes its category test sets as in-house and held out. Separately, the 5.0 → 9.4,
+            7.0 → 9.2/9.5, and 8.0 → 9.4 figures are <strong>Adaption platform quality scores</strong>
+            for the datasets. Adaption does not publish the scoring rubric.
           </div>
 
           <div class="act">
@@ -748,7 +763,7 @@
           <p>
             We uploaded the 589 training rows to Adaption.
             <strong><a href="https://adaptionlabs.ai/adaptive-data">Adaptive Data</a></strong> expanded
-            them to 27,862 rows, of which 27,405 were used for training. Its quality score
+            them to 27,862 rows, of which 27,405 were used for training. The Adaption platform quality score
             increased from 5.0 to 9.4, moving the dataset from grade C to grade A.
           </p>
 
@@ -756,22 +771,23 @@
             <a class="image-link" href="assets/a1-quality.png" aria-label="Open the full-resolution Attempt 1 quality figure">
               <img src="assets/a1-quality.png" alt="Adaption quality panel: original text 5.0, adaptive text 9.4, +88.0% relative improvement" width="1435" height="864" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 4:</strong> Adaption measured the original text at 5.0 and the adapted text at 9.4.</figcaption>
+            <figcaption><strong>Figure 4: The Adaption platform quality score increased from 5.0 to 9.4, moving the dataset from grade C to grade A.</strong></figcaption>
           </figure>
 
           <p>
-            <strong>Adaptive Data</strong> preserved the evidence-based task while making the completion
-            easier to inspect and evaluate.
+            In the matched example below, <strong>Adaptive Data</strong> preserved the prompt and evidence
+            while making the completion easier to inspect and evaluate.
           </p>
 
           <figure>
-            <div class="morph" aria-label="The same completion shown before and after Adaptive Data">
+            <div class="morph" aria-label="One matched PTB completion shown before and after Adaptive Data">
               <div class="morph-col">
                 <span class="morph-label">Before</span>
                 <p class="morph-text">
-                  We maintain our BUY rating on PTB, premised on its extensive stone mine portfolio,
-                  its new quartz business and long-term growth in Vietnam’s wooden furniture
-                  exports… We raise our target price by 17% as we roll it over to YE2021…
+                  We raise our target price by 17% as we roll it over to YE2021, factor in a 1.2-ppt
+                  decrease in our house cost of equity to 13.0% and lift our aggregate 2020F–2023F
+                  NPAT-MI by 2% thanks to wood revenue, partly offset by projected lower capacity
+                  utilization for the quartz business.
                 </p>
               </div>
 
@@ -780,16 +796,16 @@
               <div class="morph-col after">
                 <span class="morph-label">After Adaptive Data</span>
                 <div class="morph-section">
-                  <div class="morph-section-title">Observations vs. Forecasts</div>
-                  <p class="morph-text">PTB held a topping out event in late October 2020. Pre-sales reached ~40% of units, trailing expectations. 2020F NPAT-MI nudged up 2%…</p>
+                  <div class="morph-section-title">Forecasts</div>
+                  <p class="morph-text">2020F NPAT-MI is nudged up by 2% due to wood exports. 2021F will see elevated earnings growth backed by robust wood and quartz exports, along with the condo handover. Revenue recognition is adjusted to 75% in 2021 and 25% in 2022. The blended target PER for core businesses is raised to 10.6x.</p>
                 </div>
                 <div class="morph-section">
-                  <div class="morph-section-title">Conclusion Supported</div>
-                  <p class="morph-text">The evidence supports the conclusion that PTB’s model is being revised for delayed revenue recognition…</p>
+                  <div class="morph-section-title">Net Impact</div>
+                  <p class="morph-text">The evidence does not support a conclusion on the net change to the final target price, as the offsetting effects of delayed revenue versus higher multiples are not quantified in aggregate.</p>
                 </div>
               </div>
             </div>
-            <figcaption><strong>Figure 5:</strong> One completion, before and after Adaptive Data. The evidence and the task do not change; the answer gains the section structure a judge can check clause by clause. Across the dataset, adapted completions ran 3.9 times longer and 78% carried explicit section headers, where the originals almost never did.</figcaption>
+            <figcaption><strong>Figure 5: One verified PTB training row before and after Adaptive Data.</strong> The prompt and evidence are identical; the remastered completion separates forecasts, valuation implications, and limiting evidence.</figcaption>
           </figure>
 
           <h3 id="autoscientist">AutoScientist</h3>
@@ -809,8 +825,8 @@
 
           <p>
             The 77-to-23 Market Analysis result is more informative because Adaption, rather than our
-            team, constructed the broader category evaluation. That preference result supports transfer
-            beyond our own rows; it is not an accuracy score.
+            team, constructed the broader category evaluation. That preference result provides broader
+            category evidence beyond our own rows; it is not an accuracy score.
           </p>
 
           <h3 id="limitation">Limitations</h3>
@@ -906,7 +922,7 @@
 
           <div class="table-scroll">
             <table class="cmp">
-              <thead><tr><th>Generation</th><th>Rows</th><th>Recipe</th><th>Quality</th></tr></thead>
+              <thead><tr><th>Generation</th><th>Rows</th><th>Recipe</th><th>Adaption platform quality score</th></tr></thead>
               <tbody>
                 <tr><th>Dataset 1</th><td>15,252</td><td>Completion rewritten only</td><td>7.0 → 9.2</td></tr>
                 <tr><th>Dataset 2</th><td>15,253</td><td>Prompt and completion, with response constraints</td><td>7.0 → 9.5</td></tr>
@@ -920,12 +936,12 @@
             <a class="image-link" href="assets/a2-adaptive-data.png" aria-label="Open the full-resolution Attempt 2 combined-dataset figure">
               <img src="assets/a2-adaptive-data.png" alt="Adaption quality grade panel showing the Attempt 2 dataset improving from grade B before adaptation to grade A after adaptation" width="1546" height="626" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 9:</strong> The broader Attempt #2 dataset improved from grade B to grade A after Adaptive Data.</figcaption>
+            <figcaption><strong>Figure 9: The Adaption platform quality score increased from 8.0 to 9.4, moving the broader Attempt #2 dataset from grade B to grade A.</strong></figcaption>
           </figure>
 
           <p>
-            The combined dataset entered <strong>Adaptive Data</strong> at a higher baseline quality. Each
-            source generation started at 7.0, while the combined dataset started at 8.0 and finished at
+            The combined dataset entered <strong>Adaptive Data</strong> with a higher baseline Adaption
+            platform quality score. Each source generation started at 7.0, while the combined dataset started at 8.0 and finished at
             9.4. The three generations share the same 1,753 leakage groups, so the 45,758 rows
             represent roughly 15,250 unique generated items rather than three independent corpora.
             The final row count came from broader source coverage and multiple adaptation recipes.
@@ -944,10 +960,11 @@
           <h3 id="result">Results</h3>
 
           <p>
-            On its dataset-specific preference evaluation, the adapted model won 80 to 20. This result
-            shows that the workflow absorbed broader source coverage, reached 45,758 rows, improved
-            data quality from B to A, and retained a large preference margin on its own distribution.
-            It does not establish better generalization than Attempt #1.
+            Attempt #2 produced 45,758 rows and raised the Adaption platform quality score from 8.0 to
+            9.4. In a separate dataset-specific preference evaluation, the adapted model won 80 to 20.
+            Together, these measurements show that the workflow operated at a materially larger scale
+            while retaining a large preference margin on its own distribution. They do not establish
+            better generalization than Attempt #1.
           </p>
 
           <figure class="shot">
@@ -958,11 +975,11 @@
           </figure>
 
           <p>
-            Attempt #1 remains the stronger evidence of external transfer because it includes a 77-to-23
+            Attempt #1 provides the stronger broader-category evidence because it includes a 77-to-23
             Market Analysis category result. Attempt #2 has no equivalent category result. The two
-            attempts therefore answer different questions: Attempt #1 tests transfer beyond its own
-            rows, while Attempt #2 tests whether the full data and training workflow can scale across a
-            materially broader finance corpus.
+            attempts therefore answer different questions: Attempt #1 evaluates the adapted model on
+            Adaption’s broader category evaluation, while Attempt #2 tests whether the full data and
+            training workflow can scale across a materially broader finance corpus.
           </p>
 
           <div class="act">
@@ -971,7 +988,7 @@
 
           <p>
             We thank <a href="https://adaptionlabs.ai/" target="_blank" rel="noreferrer">Adaption Labs</a>
-            for hosting the <strong><a href="https://adaptionlabs.ai/blog/autoscientist" target="_blank" rel="noreferrer">AutoScientist Challenge</a></strong>
+            for hosting the <strong><a href="https://adaptionlabs.ai/blog/autoscientist-challenge" target="_blank" rel="noreferrer">AutoScientist Challenge</a></strong>
             and for building <strong><a href="https://adaptionlabs.ai/adaptive-data" target="_blank" rel="noreferrer">Adaptive Data</a></strong>
             and <strong><a href="https://adaptionlabs.ai/auto-scientist" target="_blank" rel="noreferrer">AutoScientist</a></strong>,
             the tools we used to expand the training data and automate model training in a practical
