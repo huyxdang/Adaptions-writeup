@@ -1068,23 +1068,32 @@
           </div>
 
           <p>
-            Our next step is to build a point-in-time dataset of dynamic global-market relationships.
-            It would connect companies, sectors, commodities, funds, geographies, and macroeconomic
-            factors so that a model can study how financial events propagate across markets rather than
-            treating each company or report in isolation.
+            Ultimately, the value of a finance model comes from its ability to make useful predictions
+            about what happens next. Finance is relational: a change in one part of the market can
+            propagate across companies, sectors, assets, and geographies. Rather than analyzing each
+            company or macroeconomic factor in isolation, we want the model to produce research across
+            these relationships by understanding how changes in one part of the market affect another.
           </p>
 
           <p>
-            We want to compare two research directions. <a href="https://arxiv.org/abs/2505.23826" target="_blank" rel="noreferrer">FinRipple</a>
-            trains a model to reason over time-varying market relationships, while
-            <a href="https://arxiv.org/abs/2605.31201" target="_blank" rel="noreferrer">Point-in-Time Financial RAG</a>
-            keeps the reader model frozen and adapts which historical evidence it retrieves using
+            To do that, our next step is to build a <a href="https://starqube.com/point-in-time-data/" target="_blank" rel="noreferrer">point-in-time dataset</a>
+            that captures how companies, sectors, commodities, funds, geographies, and macroeconomic
+            factors are connected at a given moment. This would let the model study second-order effects
+            across markets—for example, how a change in oil prices could affect airlines, inflation,
+            currencies, and related sectors at the same time.
+          </p>
+
+          <p>
+            We consider two approaches. <strong><a href="https://arxiv.org/abs/2505.23826" target="_blank" rel="noreferrer">FinRipple</a></strong>
+            trains the model itself to reason over changing market relationships, while
+            <strong><a href="https://arxiv.org/abs/2605.31201" target="_blank" rel="noreferrer">Point-in-Time Financial RAG</a></strong>
+            keeps the model fixed and instead adapts which historical evidence it retrieves based on
             market feedback.
           </p>
 
           <p>
-            We would test both approaches on unseen markets, time periods, industries, and shocks. The
-            proposed dataset, experiments, and evaluation boundaries are described in the
+            We would evaluate both approaches on unseen markets, time periods, industries, and shocks.
+            The proposed dataset, experiments, and evaluation boundaries are described in the
             <a href="https://adaptions-writeup.vercel.app/docs/ROADMAP.md" target="_blank" rel="noreferrer">complete roadmap</a>.
           </p>
 
