@@ -7,15 +7,15 @@
     <title>Training a Finance Model with AutoScientist</title>
     <meta
       name="description"
-      content="We cleaned 5,000+ institutional-grade finance reports, then optimized both training data and process with Adaption Labs."
+      content="Two AutoScientist attempts: roughly 1,500 reports and 739 curated rows in the proof of concept, then about 7,000 reports and 45,758 combined rows at scale."
     />
     <link rel="canonical" href="https://adaptions-writeup.vercel.app/" />
     <meta property="og:type" content="article" />
-    <meta property="og:site_name" content="Huy X. Dang" />
+    <meta property="og:site_name" content="Keith Vo &amp; Huy X. Dang" />
     <meta property="og:title" content="Training a Finance Model with AutoScientist" />
     <meta
       property="og:description"
-      content="We cleaned 5,000+ institutional-grade finance reports, then optimized both training data and process with Adaption Labs."
+      content="Two AutoScientist attempts: roughly 1,500 reports and 739 curated rows in the proof of concept, then about 7,000 reports and 45,758 combined rows at scale."
     />
     <meta property="og:url" content="https://adaptions-writeup.vercel.app/" />
     <meta property="og:image" content="https://adaptions-writeup.vercel.app/assets/adaptive-liquid-pixel.jpg" />
@@ -28,7 +28,7 @@
     <meta name="twitter:title" content="Training a Finance Model with AutoScientist" />
     <meta
       name="twitter:description"
-      content="We cleaned 5,000+ institutional-grade finance reports, then optimized both training data and process with Adaption Labs."
+      content="Two AutoScientist attempts: roughly 1,500 reports and 739 curated rows in the proof of concept, then about 7,000 reports and 45,758 combined rows at scale."
     />
     <meta name="twitter:image" content="https://adaptions-writeup.vercel.app/assets/adaptive-liquid-pixel.jpg" />
     <meta name="twitter:image:alt" content="An iridescent liquid form transforming from a precise pixel grid into fine computational particles" />
@@ -45,6 +45,7 @@
         --dark-gray: #49433f;
         --medium-gray: #6b625d;
         --light-gray: #8a817b;
+        --muted-text: #756b65;
         --highlight-gray: #cfc8c2;
         --border: #e7e1db;
         --white: #ffffff;
@@ -113,16 +114,25 @@
         letter-spacing: -0.008em;
       }
 
-      .byline { margin: 1.45rem 0 0; color: var(--medium-gray); font-size: 0.75rem; }
+      .byline {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+        margin: 1.45rem 0 0;
+        color: var(--medium-gray);
+        font-size: 0.75rem;
+      }
+      .byline-person { display: inline-flex; align-items: baseline; }
+      .byline-and { color: var(--highlight-gray); }
       .byline a {
-        color: var(--dark-gray);
-        text-decoration: underline;
-        text-decoration-color: var(--light-gray);
+        color: var(--accent);
+        text-decoration: none;
         text-decoration-thickness: 1px;
         text-underline-offset: 3px;
         transition: color 140ms ease, text-decoration-color 140ms ease;
       }
-      .byline a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+      .byline a:hover, .byline a:focus-visible { text-decoration: underline; text-decoration-color: var(--accent); }
 
       .hero { width: min(calc(100% - 2rem), 1000px); margin: 0 auto 2.1rem; }
       .hero img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: var(--radius); background: #fafafa; }
@@ -149,11 +159,11 @@
       .mobile-toc summary::after { content: "+"; float: right; color: var(--light-gray); }
       .mobile-toc[open] summary::after { content: "−"; }
       .mobile-toc ul { padding: 0; list-style: none; }
-      .mobile-toc > .toc-tree { margin: 1rem 0 0; }
-      .mobile-toc .toc-group + .toc-group { margin-top: 1.2rem; }
+      .mobile-toc .toc-tree { margin: 1rem 0 0; }
+      .mobile-toc .toc-group + .toc-group { margin-top: 0.8rem; }
       .mobile-toc .toc-section { color: var(--black); font-size: 13px; font-weight: 400; text-decoration: none; }
-      .mobile-toc .toc-group ul { margin: 0.55rem 0 0; padding-left: 0.9rem; }
-      .mobile-toc .toc-group li + li { margin-top: 0.45rem; }
+      .mobile-toc .toc-group ul { margin: 0.45rem 0 0; padding-left: 0.9rem; }
+      .mobile-toc .toc-group li + li { margin-top: 0.3rem; }
       .mobile-toc .toc-group ul a { color: #676767; font-size: 13px; text-decoration: none; }
 
       .article-grid {
@@ -164,18 +174,54 @@
         margin: 0 auto;
       }
 
-      .toc { grid-column: 1; position: sticky; top: 82px; align-self: start; font-size: 13px; font-weight: 400; line-height: 1.4; }
+      .toc {
+        --toc-indicator-y: 0px;
+        grid-column: 1;
+        position: sticky;
+        top: 82px;
+        align-self: start;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 1.4;
+      }
+      .toc::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -0.9rem;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--black);
+        opacity: 0;
+        pointer-events: none;
+        transform: translate3d(0, var(--toc-indicator-y), 0);
+        transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1), opacity 140ms ease;
+        will-change: transform;
+      }
+      .toc.has-active::before { opacity: 1; }
       .toc ul { margin: 0; padding: 0; list-style: none; }
       .toc li { position: relative; }
-      .toc > .toc-tree > .toc-group + .toc-group { margin-top: 1.2rem; }
+      .toc > .toc-tree > .toc-group + .toc-group { margin-top: 0.8rem; }
       .toc .toc-section { color: var(--black); font-size: 13px; font-weight: 400; line-height: 1.4; }
-      .toc .toc-group ul { margin-top: 0.55rem; padding-left: 0.9rem; }
-      .toc .toc-group ul li + li { margin-top: 0.45rem; }
+      .toc .toc-group ul { margin-top: 0.45rem; padding-left: 0.9rem; }
+      .toc .toc-group ul li + li { margin-top: 0.3rem; }
       .toc .toc-group ul a { color: #676767; font-size: 13px; line-height: 1.4; }
       .toc a { position: relative; display: inline-block; color: var(--medium-gray); text-decoration: none; transition: color 140ms ease; }
       .toc a:hover, .toc a.active { color: var(--black); }
       .toc .toc-group:has(a.active) > .toc-section { color: var(--black); }
-      .toc a.active::before { content: ""; position: absolute; top: 0.52em; left: -0.9rem; width: 4px; height: 4px; border-radius: 50%; background: var(--black); }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
 
       article { grid-column: 2; min-width: 0; font-size: 17px; font-weight: 300; line-height: 28px; letter-spacing: 0; }
       article p { margin: 0 0 24px; }
@@ -206,13 +252,13 @@
 
       .act + h3 { margin-top: 38.4px; }
 
-      article a { color: var(--black); text-decoration: underline; text-decoration-color: var(--light-gray); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-      article a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+      article a { color: var(--accent); text-decoration: none; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+      article a:hover, article a:focus-visible { text-decoration: underline; text-decoration-color: var(--accent); }
 
       article ul { margin: 0 0 1.3rem; padding-left: 1.3rem; }
       article li { margin-bottom: 0.5rem; }
       article li::marker { color: var(--light-gray); }
-      article strong { font-weight: 600; color: var(--black); }
+      article strong { font-weight: 500; color: var(--black); }
 
       code { padding: 0.1em 0.32em; background: var(--muted-bg); font-family: var(--mono); font-size: 0.8em; font-weight: 400; }
 
@@ -409,14 +455,28 @@
         .scale-chart .scale-label { transition: none !important; }
       }
 
-      .cmp { width: 100%; min-width: 620px; border-collapse: collapse; font-size: 12.5px; }
-      .cmp th, .cmp td { padding: 0.62rem 0.55rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
-      .cmp thead th { color: var(--medium-gray); font-weight: 400; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.09em; }
+      .cmp { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+      .cmp th, .cmp td { padding: 0.62rem 0.45rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; white-space: nowrap; }
+      .cmp thead th {
+        padding-top: 0.72rem;
+        padding-bottom: 0.72rem;
+        border-bottom-color: var(--highlight-gray);
+        background: var(--muted-bg);
+        color: var(--dark-gray);
+        font-size: 10.5px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+      }
       .cmp tbody th { color: var(--medium-gray); font-weight: 400; }
+      .cmp tbody th, .cmp tbody td { border-bottom: 0; }
       .cmp td { color: var(--black); font-variant-numeric: tabular-nums; }
-      .cmp tr:last-child th, .cmp tr:last-child td { border-bottom: 0; }
+      .cmp th:nth-child(2), .cmp td:nth-child(2), .cmp th:nth-child(4), .cmp td:nth-child(4) { text-align: right; }
+      .cmp tfoot th, .cmp tfoot td { padding-top: 0.8rem; border-top: 2px solid var(--black); border-bottom: 0; font-weight: 500; }
+      .cmp tfoot th { color: var(--black); }
       .cmp .em { color: var(--accent); font-weight: 500; }
-      .table-scroll { margin: 1.8rem 0; overflow-x: auto; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+      .sum-mark { display: inline-block; margin-right: 0.4rem; color: var(--accent); font: 500 11px/1 var(--mono); }
+      .table-frame { margin: 1.8rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow-x: auto; }
 
       .morph {
         display: grid;
@@ -430,7 +490,7 @@
         line-height: 1.72;
       }
       .morph-rule { background: var(--border); }
-      .morph-label { display: block; margin-bottom: 0.75rem; color: var(--light-gray); font-size: 9.5px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.15em; }
+      .morph-label { display: block; margin-bottom: 0.75rem; color: var(--muted-text); font-size: 9.5px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.15em; }
       .morph-col.after .morph-label { color: var(--accent); }
       .morph-text { margin: 0; color: var(--medium-gray); }
       .morph-col.after .morph-text { color: var(--dark-gray); }
@@ -446,7 +506,7 @@
       .resource-group h3 { margin: 0; font-family: var(--sans); font-size: 15px; font-weight: 600; line-height: 20px; }
       .resource-meta { display: grid; gap: 0.15rem; margin: 0.5rem 0 0; }
       .resource-meta > div { display: grid; grid-template-columns: 68px minmax(0, 1fr); gap: 0.7rem; }
-      .resource-meta dt { color: var(--light-gray); font: 400 10px/1.6 var(--mono); }
+      .resource-meta dt { color: var(--muted-text); font: 400 10px/1.6 var(--mono); }
       .resource-meta dd { min-width: 0; margin: 0; color: var(--medium-gray); font: 400 10px/1.6 var(--mono); overflow-wrap: anywhere; }
       .resource-meta code { padding: 0; background: none; font: inherit; }
 
@@ -493,7 +553,7 @@
       article .platform-link { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--medium-gray); font-size: 12px; line-height: 1; text-decoration: none; white-space: nowrap; transition: color 140ms ease; }
       article .platform-link:hover { color: var(--black); }
       .brand-mark { width: 16px; height: 16px; flex: 0 0 auto; object-fit: contain; }
-      .resource-pending { color: var(--light-gray); font-size: 12px; }
+      .resource-pending { color: var(--muted-text); font-size: 12px; }
 
       .adaption-heading { display: flex; align-items: center; gap: 0.55rem; }
       .adaption-mark { width: 19px; height: 19px; flex: 0 0 auto; }
@@ -543,8 +603,12 @@
         .article-grid { padding-right: 2rem; padding-left: 2rem; }
         .report-footer { display: block; width: 100%; padding-right: 2rem; padding-left: 2rem; }
         .report-footer-people { grid-template-columns: 1fr; gap: 0.9rem; }
+        .byline { flex-wrap: wrap; gap: 0.35rem 0.5rem; }
         .shot { width: 100%; }
         .shot.narrow { width: min(440px, 100%); }
+        .cmp { font-size: 10.5px; }
+        .cmp th, .cmp td { padding: 0.55rem 0.2rem; }
+        .cmp thead th { font-size: 8.5px; letter-spacing: 0.05em; }
         .flow-step { grid-template-columns: 26px minmax(0, 1fr); }
         .flow-title, .flow-copy { grid-column: 2; }
         .morph { grid-template-columns: minmax(0, 1fr); gap: 1.35rem; }
@@ -572,12 +636,13 @@
       <header class="article-header">
         <h1>Training a Finance Model with AutoScientist</h1>
         <p class="subtitle">
-          We cleaned 5,000+ institutional-grade finance reports, then optimized both
-          training data and process with Adaption Labs
+          Two AutoScientist attempts: roughly 1,500 reports and 739 curated rows,
+          then about 7,000 reports and 45,758 combined rows
         </p>
         <p class="byline">
-          <a href="https://www.linkedin.com/in/kiet-vo-097/">Keith Vo</a> &amp;
-          <a href="https://huyxdang.com/">Huy X. Dang</a>
+          <span class="byline-person"><a href="https://www.linkedin.com/in/kiet-vo-097/">Keith Vo</a></span>
+          <span class="byline-and">&amp;</span>
+          <span class="byline-person"><a href="https://huyxdang.com/">Huy X. Dang</a></span>
         </p>
       </header>
 
@@ -593,40 +658,9 @@
 
       <details class="mobile-toc">
         <summary>Contents</summary>
-        <ul class="toc-tree">
-          <li class="toc-group">
-            <a class="toc-section" href="#first-time">Attempt #1: Proof of Concept</a>
-            <ul>
-              <li><a href="#source-data">Data</a></li>
-              <li><a href="#extract">Extraction</a></li>
-              <li><a href="#adaptive-data">Adaptive Data</a></li>
-              <li><a href="#autoscientist">AutoScientist</a></li>
-              <li><a href="#limitation">Limitations</a></li>
-            </ul>
-          </li>
-          <li class="toc-group">
-            <a class="toc-section" href="#scale">Attempt #2: Scaling 50x</a>
-            <ul>
-              <li><a href="#scale-data">Data</a></li>
-              <li><a href="#scale-model">Model</a></li>
-              <li><a href="#result">Results</a></li>
-            </ul>
-          </li>
-          <li class="toc-group">
-            <a class="toc-section" href="#adaptmarket">Attempt #3: AdaptMarket</a>
-            <ul>
-              <li><a href="#adaptmarket-method">Method</a></li>
-              <li><a href="#adaptmarket-results">Results</a></li>
-            </ul>
-          </li>
-          <li class="toc-group"><a class="toc-section" href="#acknowledgements">Acknowledgements</a></li>
-          <li class="toc-group"><a class="toc-section" href="#resources">Resources</a></li>
-        </ul>
-      </details>
-
-      <div class="article-grid">
-        <nav class="toc" aria-label="Table of contents">
+        <nav aria-label="Table of contents">
           <ul class="toc-tree">
+            <li class="toc-group"><a class="toc-section" href="#introduction">Introduction</a></li>
             <li class="toc-group">
               <a class="toc-section" href="#first-time">Attempt #1: Proof of Concept</a>
               <ul>
@@ -638,7 +672,7 @@
               </ul>
             </li>
             <li class="toc-group">
-              <a class="toc-section" href="#scale">Attempt #2: Scaling 50x</a>
+              <a class="toc-section" href="#scale">Attempt #2: Scaling 50×</a>
               <ul>
                 <li><a href="#scale-data">Data</a></li>
                 <li><a href="#scale-model">Model</a></li>
@@ -646,10 +680,49 @@
               </ul>
             </li>
             <li class="toc-group">
-              <a class="toc-section" href="#adaptmarket">Attempt #3: AdaptMarket</a>
+              <a class="toc-section" href="#future-improvement">Future Improvement</a>
               <ul>
-                <li><a href="#adaptmarket-method">Method</a></li>
-                <li><a href="#adaptmarket-results">Results</a></li>
+                <li><a href="#future-evidence">Point-in-time evidence</a></li>
+                <li><a href="#future-transmission">Market transmission</a></li>
+                <li><a href="#future-evaluation">Evaluation &amp; retrieval</a></li>
+                <li><a href="#future-research">Research blueprints</a></li>
+              </ul>
+            </li>
+            <li class="toc-group"><a class="toc-section" href="#acknowledgements">Acknowledgements</a></li>
+            <li class="toc-group"><a class="toc-section" href="#resources">Resources</a></li>
+          </ul>
+        </nav>
+      </details>
+
+      <div class="article-grid">
+        <nav class="toc" aria-label="Table of contents">
+          <ul class="toc-tree">
+            <li class="toc-group"><a class="toc-section" href="#introduction">Introduction</a></li>
+            <li class="toc-group">
+              <a class="toc-section" href="#first-time">Attempt #1: Proof of Concept</a>
+              <ul>
+                <li><a href="#source-data">Data</a></li>
+                <li><a href="#extract">Extraction</a></li>
+                <li><a href="#adaptive-data">Adaptive Data</a></li>
+                <li><a href="#autoscientist">AutoScientist</a></li>
+                <li><a href="#limitation">Limitations</a></li>
+              </ul>
+            </li>
+            <li class="toc-group">
+              <a class="toc-section" href="#scale">Attempt #2: Scaling 50×</a>
+              <ul>
+                <li><a href="#scale-data">Data</a></li>
+                <li><a href="#scale-model">Model</a></li>
+                <li><a href="#result">Results</a></li>
+              </ul>
+            </li>
+            <li class="toc-group">
+              <a class="toc-section" href="#future-improvement">Future Improvement</a>
+              <ul>
+                <li><a href="#future-evidence">Point-in-time evidence</a></li>
+                <li><a href="#future-transmission">Market transmission</a></li>
+                <li><a href="#future-evaluation">Evaluation &amp; retrieval</a></li>
+                <li><a href="#future-research">Research blueprints</a></li>
               </ul>
             </li>
             <li class="toc-group"><a class="toc-section" href="#acknowledgements">Acknowledgements</a></li>
@@ -658,18 +731,19 @@
         </nav>
 
         <article id="article">
+          <h2 id="introduction" class="sr-only">Introduction</h2>
+
           <p class="lede">
-            <a href="https://www.linkedin.com/in/kiet-vo-097/" target="_blank" rel="noreferrer">Keith</a>
-            and <a href="https://huyxdang.com/" target="_blank" rel="noreferrer">Huy</a> both work in
-            finance, and we entered <a href="https://adaptionlabs.ai/" target="_blank" rel="noreferrer">Adaption Labs</a>’
-            <strong><a href="https://adaptionlabs.ai/blog/autoscientist" target="_blank" rel="noreferrer">AutoScientist Challenge</a></strong>
-            with a practical goal: train a model that could actually be useful in our day-to-day work.
+            Keith contributed the equity-research workflow and domain framing; Huy contributed the
+            data and model-system work. We entered the
+            <a href="https://adaptionlabs.ai/blog/autoscientist-challenge" target="_blank" rel="noreferrer">AutoScientist Challenge</a>
+            with a practical goal: train a model that could be useful in day-to-day research work.
           </p>
 
           <p>
             That goal came from a recurring problem we saw firsthand. Institutional finance reports
-            contain the kind of analysis we wanted a model to learn—forecasts, valuations,
-            recommendations, and the reasoning behind them—but they do not contain the prompts needed
+            contain the target material—forecasts, valuations, recommendations, and the reasoning
+            behind them—but they do not contain the prompts needed
             to turn that analysis into training data.
           </p>
 
@@ -681,17 +755,18 @@
           </p>
 
           <p>
-            We faced many challenges. We repeatedly refined the data methodology, manually inspected
+            We faced many challenges: we repeatedly refined the methodology, manually inspected
             examples, and checked that the resulting tasks still reflected real equity-research
-            workflows. Along the way, we learned a great deal about both finance-data preparation and
-            how to work effectively with <strong>AutoScientist</strong>.
+            workflows. However, once the source data was prepared, much of the remaining pipeline was
+            automated: Adaptive Data expanded and restructured the dataset, while AutoScientist
+            optimized, trained, and evaluated the adapters.
           </p>
 
-          <div class="note">
-            <strong>Reading the numbers.</strong> Every score reported here is a pairwise preference:
-            the share of comparisons in which a judge chose the adapted model’s answer over the base
-            model’s. A score of 77 therefore does not mean 77% correct.
-          </div>
+          <p>
+            <a href="https://adaptionlabs.ai/" target="_blank" rel="noreferrer">Adaption Labs</a>
+            removed much of the complexity of scaling our experiments and let us stay focused on the
+            finance-specific work we knew best.
+          </p>
 
           <div class="act">
             <h2 id="first-time">Attempt #1: Proof of Concept</h2>
@@ -726,7 +801,7 @@
             <a class="image-link" href="assets/extraction-doc-to-prompt.png" aria-label="Open the full-resolution document-to-prompt extraction illustration">
               <img src="assets/extraction-doc-to-prompt.png" alt="A stack of institutional finance reports is separated into evidence fragments and transformed into a prompt and analyst response" width="1672" height="941" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 1:</strong> The extraction path turns report pages into evidence fragments, then reconstructs a supported prompt and analyst-style answer.</figcaption>
+            <figcaption>Figure 1: The extraction path turns report pages into evidence fragments, then reconstructs a supported prompt and analyst-style answer.</figcaption>
           </figure>
 
           <figure>
@@ -736,7 +811,7 @@
               <div class="flow-step"><span class="flow-number">03</span><span class="flow-title">Rank evidence</span><span class="flow-copy">Score the surviving paragraphs on shared figures, similarity and proximity. Any paragraph above 72% similarity is leakage. Keep six.</span></div>
               <div class="flow-step"><span class="flow-number">04</span><span class="flow-title">Derive the ask</span><span class="flow-copy">Identify the analytical moves in the conclusion, such as direction, valuation, or counterevidence, and ask only for those moves.</span></div>
             </div>
-            <figcaption><strong>Figure 2:</strong> Answer-first extraction. The conclusion becomes the target, while evidence from the same report becomes the prompt.</figcaption>
+            <figcaption>Figure 2: Answer-first extraction. The conclusion becomes the target, while evidence from the same report becomes the prompt.</figcaption>
           </figure>
 
           <p>
@@ -754,15 +829,16 @@
               <div class="funnel-row"><span class="funnel-label">Post-cap candidates</span><span class="funnel-bar" style="width:24.9%"></span><span class="funnel-val">816</span></div>
               <div class="funnel-row keep"><span class="funnel-label">Final baseline</span><span class="funnel-bar" style="width:22.5%"></span><span class="funnel-val">739</span></div>
             </div>
-            <figcaption><strong>Figure 3:</strong> Capping, identity checks, and deduplication reduced 3,136 eligible rows to 739: 589 train, 77 validation, and 73 held out.</figcaption>
+            <figcaption>Figure 3: Capping, identity checks, and deduplication reduced 3,136 eligible rows to 739: 589 train, 77 validation, and 73 held out.</figcaption>
           </figure>
 
           <h3 id="adaptive-data">Adaptive Data</h3>
 
           <p>
             We uploaded the 589 training rows to Adaption.
-            <strong><a href="https://adaptionlabs.ai/adaptive-data">Adaptive Data</a></strong> expanded
-            them to 27,862 rows, of which 27,405 were used for training. Its quality score
+            <a href="https://adaptionlabs.ai/adaptive-data">Adaptive Data</a>, a platform that automatically
+            reshapes and optimizes training data, expanded the 589 examples to 27,862 rows, of
+            which 27,405 were used for training. The Adaption platform quality score
             increased from 5.0 to 9.4, moving the dataset from grade C to grade A.
           </p>
 
@@ -770,22 +846,29 @@
             <a class="image-link" href="assets/a1-quality.png" aria-label="Open the full-resolution Attempt 1 quality figure">
               <img src="assets/a1-quality.png" alt="Adaption quality panel: original text 5.0, adaptive text 9.4, +88.0% relative improvement" width="1435" height="864" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 4:</strong> Adaption measured the original text at 5.0 and the adapted text at 9.4.</figcaption>
+            <figcaption>Figure 4: The Adaption platform quality score increased from <strong>5.0 to 9.4</strong>, moving the dataset from grade C to grade A.</figcaption>
           </figure>
 
+          <div class="note">
+            <strong>Reading the quality score.</strong> The 5.0-to-9.4 result is an Adaption platform
+            quality score for the dataset, not a model-evaluation result. Adaption does not publish
+            the scoring rubric.
+          </div>
+
           <p>
-            <strong>Adaptive Data</strong> preserved the evidence-based task while making the completion
-            easier to inspect and evaluate.
+            In the matched example below, Adaptive Data preserved the prompt and evidence
+            while making the completion easier to inspect and evaluate.
           </p>
 
           <figure>
-            <div class="morph" aria-label="The same completion shown before and after Adaptive Data">
+              <div class="morph" role="group" aria-label="One matched PTB completion shown before and after Adaptive Data">
               <div class="morph-col">
                 <span class="morph-label">Before</span>
                 <p class="morph-text">
-                  We maintain our BUY rating on PTB, premised on its extensive stone mine portfolio,
-                  its new quartz business and long-term growth in Vietnam’s wooden furniture
-                  exports… We raise our target price by 17% as we roll it over to YE2021…
+                  We raise our target price by 17% as we roll it over to YE2021, factor in a 1.2-ppt
+                  decrease in our house cost of equity to 13.0% and lift our aggregate 2020F–2023F
+                  NPAT-MI by 2% thanks to wood revenue, partly offset by projected lower capacity
+                  utilization for the quartz business.
                 </p>
               </div>
 
@@ -794,22 +877,27 @@
               <div class="morph-col after">
                 <span class="morph-label">After Adaptive Data</span>
                 <div class="morph-section">
-                  <div class="morph-section-title">Observations vs. Forecasts</div>
-                  <p class="morph-text">PTB held a topping out event in late October 2020. Pre-sales reached ~40% of units, trailing expectations. 2020F NPAT-MI nudged up 2%…</p>
+                  <div class="morph-section-title">Forecasts</div>
+                  <p class="morph-text">2020F NPAT-MI is nudged up by 2% due to wood exports. 2021F will see elevated earnings growth backed by robust wood and quartz exports, along with the condo handover. Revenue recognition is adjusted to 75% in 2021 and 25% in 2022. The blended target PER for core businesses is raised to 10.6x.</p>
                 </div>
                 <div class="morph-section">
-                  <div class="morph-section-title">Conclusion Supported</div>
-                  <p class="morph-text">The evidence supports the conclusion that PTB’s model is being revised for delayed revenue recognition…</p>
+                  <div class="morph-section-title">Net Impact</div>
+                  <p class="morph-text">The evidence does not support a conclusion on the net change to the final target price, as the offsetting effects of delayed revenue versus higher multiples are not quantified in aggregate.</p>
                 </div>
               </div>
             </div>
-            <figcaption><strong>Figure 5:</strong> One completion, before and after Adaptive Data. The evidence and the task do not change; the answer gains the section structure a judge can check clause by clause. Across the dataset, adapted completions ran 3.9 times longer and 78% carried explicit section headers, where the originals almost never did.</figcaption>
+            <figcaption>Figure 5: One verified PTB training row before and after Adaptive Data. The prompt and evidence are identical; the remastered completion separates forecasts, valuation implications, and limiting evidence.</figcaption>
           </figure>
 
           <h3 id="autoscientist">AutoScientist</h3>
 
           <p>
-            <strong>AutoScientist</strong> trained a LoRA adapter on <code>Llama-3.3-70B-Instruct</code>. The run used
+            Once the dataset was ready,
+            <a href="https://adaptionlabs.ai/auto-scientist" target="_blank" rel="noreferrer">AutoScientist</a>
+            automatically handled the optimization and hosting of the fine-tuning run, allowing us to
+            focus on the finance task rather than manually iterating on the training recipe. For
+            Attempt #1, it trained a LoRA adapter on
+            <code>Llama-3.3-70B-Instruct</code>. The run used
             rank 16, alpha 32, all linear layers, two epochs at <code>1e-4</code>, 382 steps, and loss
             on completions only. It produced two preference evaluations.
           </p>
@@ -818,52 +906,65 @@
             <a class="image-link" href="assets/a1-winrates.png" aria-label="Open the full-resolution Attempt 1 evaluation figure">
               <img src="assets/a1-winrates.png" alt="Training win rates: base 16 vs adapted 84 on our dataset; base 23 vs adapted 77 across the Market analysis category" width="2814" height="1012" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 6:</strong> The adapted model won 84 to 16 on our dataset and 77 to 23 across Adaption's Market Analysis category.</figcaption>
+            <figcaption>Figure 6: The adapted model won <strong>84 to 16 on our dataset and 77 to 23</strong> across Adaption's Market Analysis category.</figcaption>
           </figure>
 
+          <div class="note">
+            <strong>Reading the preference results.</strong> These are pairwise preferences: the share
+            of comparisons in which a judge chose the adapted model’s answer over the base model’s.
+            A result of 77 to 23 therefore does not mean 77% correct. Evaluator identity, comparison
+            counts, prompts, response-order randomization, tie handling, matched decoding settings,
+            and mapping to the local 73-row held-out split are not publicly available.
+          </div>
+
           <p>
-            The 77-to-23 Market Analysis result is more informative because Adaption, rather than our
-            team, constructed the broader category evaluation. That preference result supports transfer
-            beyond our own rows; it is not an accuracy score.
+            Adaption, rather than our team, constructed the broader Market Analysis category evaluation.
+            Its 77-to-23 result provides broader-category platform preference evidence, but independence
+            from the local 73-row held-out split and complete split hygiene are not established in the
+            public record. It is not accuracy, clean external transfer, or investment performance.
           </p>
 
           <h3 id="limitation">Limitations</h3>
 
           <p>
             <strong>Narrow source coverage.</strong> The initial corpus focused on company-level equity
-            research, so the model may understand a company’s fundamentals but miss how interest rates,
-            inflation, policy changes, commodity prices, or sector-wide events affect its outlook. The
-            next stage is to add institutional market research and macroeconomic news so the model can
-            reason across companies and sectors.
+            research and did not establish performance on interest rates, inflation, policy changes,
+            commodity prices, or sector-wide events. The next stage broadened the source coverage to
+            institutional market, macro, fund, and fixed-income research.
           </p>
 
           <p>
-            <strong>Small seed dataset.</strong> Our initial 589 examples could not provide enough
-            breadth or variation for a robust finance workflow, limiting the range of situations the
-            model could learn to handle. The next stage is to expand both the number of source reports
-            and the resulting training samples.
+            <strong>Small seed dataset.</strong> The initial 589 training examples provided limited
+            breadth and variation. The next stage expanded both the number of source reports and the
+            resulting instruction-tuning rows.
           </p>
 
           <div class="act">
-            <h2 id="scale">Attempt #2: Scaling 50x</h2>
+            <h2 id="scale">Attempt #2: Scaling 50×</h2>
+          </div>
+
+          <div class="note">
+            <strong>Reading the label.</strong> “Scaling 50×” is editorial. The measured change is from
+            roughly 1,500 to about 7,000 source reports; three recipes produced 45,702 generated rows,
+            and 56 rows in the Combine output brought the Attempt #2 total to 45,758.
           </div>
 
           <h3 id="scale-data">Data</h3>
 
           <p>
-            Attempt #2 began after an office-hours session with
-            <strong><a href="https://www.linkedin.com/in/sararosehooker" target="_blank" rel="noreferrer">Sara Hooker</a></strong>,
-            co-founder of Adaption Labs.
-            Sara emphasized the importance of training with substantially more data. Her advice shifted
-            our focus from optimizing a small proof of concept to testing whether the full workflow
-            could hold up at scale.
+            Attempt #2 followed directly from the limitations of Attempt #1: the method worked, but
+            the dataset was still too small to tell us how well the workflow would scale. A conversation
+            with
+            <a href="https://www.linkedin.com/in/sararosehooker" target="_blank" rel="noreferrer">Sara Hooker</a>,
+            co-founder of Adaption Labs, who emphasized the importance of larger training sets,
+            reinforced our decision to substantially expand the data and run the experiment again.
           </p>
 
           <p>
             To test that question, we expanded the source corpus from roughly 1,500 to about 7,000
             institutional reports. The expanded corpus added macro outlooks, sector studies, fund
-            reviews, and fixed-income commentary. As a result, our training corpus grew from
-            <strong>~500 → 45,000+</strong> samples.
+            reviews, and fixed-income commentary. Three recipes produced 45,702 generated rows; 56
+            rows in the Combine output brought the Attempt #2 total to <strong>45,758</strong>.
           </p>
 
           <figure>
@@ -884,7 +985,7 @@
                 <span class="scale-label">Attempt #2, Enhanced Data</span>
               </div>
             </div>
-            <figcaption><strong>Figure 7:</strong> Training-data scale across the two attempts: 589 baseline rows, 27,862 Attempt #1 Adaptive Data rows, and 45,758 Attempt #2 enhanced rows.</figcaption>
+            <figcaption>Figure 7: Training-data scale across the two attempts: 589 baseline rows, 27,862 Attempt #1 Adaptive Data rows, and 45,758 Attempt #2 enhanced rows.</figcaption>
           </figure>
 
           <p>
@@ -902,7 +1003,7 @@
               <div class="tax-row"><span class="tax-label">Comparative analysis</span><span class="tax-track"><i class="tax-fill" style="width:4%"></i></span><span class="tax-val">1.5%</span></div>
               <div class="tax-row"><span class="tax-label">Fund &amp; benchmark</span><span class="tax-track"><i class="tax-fill" style="width:1%"></i></span><span class="tax-val">0.4%</span></div>
             </div>
-            <figcaption><strong>Figure 8:</strong> Insufficient-evidence tasks account for 36.2% of the combined dataset.</figcaption>
+            <figcaption>Figure 8: Insufficient-evidence tasks account for 36.2% of the combined dataset. Reported task shares are rounded.</figcaption>
           </figure>
 
           <p>
@@ -912,21 +1013,24 @@
           </p>
 
           <p>
-            <strong>We ran Adaptive Data three times,</strong> using three recipes, and merged the outputs
+            We ran Adaptive Data three times, using three recipes, and merged the outputs
             with Adaption’s Combine workflow. The three generations used the same source corpus but
             expressed each analytical task differently. The combined dataset therefore increased row
             diversity without implying that each generated row came from an independent source.
           </p>
 
-          <div class="table-scroll">
+          <div class="table-frame" role="region" aria-label="Attempt 2 dataset comparison" tabindex="0">
             <table class="cmp">
-              <thead><tr><th>Generation</th><th>Rows</th><th>Recipe</th><th>Quality</th></tr></thead>
+              <caption class="sr-only">Attempt #2 Adaptive Data recipe row counts and platform quality scores</caption>
+              <thead><tr><th scope="col">Version</th><th scope="col">Rows</th><th scope="col">Recipe</th><th scope="col">Platform score</th></tr></thead>
               <tbody>
-                <tr><th>Dataset 1</th><td>15,252</td><td>Completion rewritten only</td><td>7.0 → 9.2</td></tr>
-                <tr><th>Dataset 2</th><td>15,253</td><td>Prompt and completion, with response constraints</td><td>7.0 → 9.5</td></tr>
-                <tr><th>Dataset 3</th><td>15,197</td><td>Same recipe, independent variant</td><td>7.0 → 9.5</td></tr>
-                <tr><th>Combined</th><td class="em">45,758</td><td>45,702 from the three, plus 56</td><td>8.0 → 9.4</td></tr>
+                <tr><th scope="row">Dataset 1</th><td>15,252</td><td>Completion only</td><td>7.0 → 9.2</td></tr>
+                <tr><th scope="row">Dataset 2</th><td>15,253</td><td>Prompt + completion</td><td>7.0 → 9.5</td></tr>
+                <tr><th scope="row">Dataset 3</th><td>15,197</td><td>Independent variant</td><td>7.0 → 9.5</td></tr>
               </tbody>
+              <tfoot>
+                <tr><th scope="row"><span class="sum-mark" aria-hidden="true">Σ</span>Final</th><td class="em">45,758</td><td>45,702 + 56 Combine</td><td>8.0 → 9.4</td></tr>
+              </tfoot>
             </table>
           </div>
 
@@ -934,21 +1038,22 @@
             <a class="image-link" href="assets/a2-adaptive-data.png" aria-label="Open the full-resolution Attempt 2 combined-dataset figure">
               <img src="assets/a2-adaptive-data.png" alt="Adaption quality grade panel showing the Attempt 2 dataset improving from grade B before adaptation to grade A after adaptation" width="1546" height="626" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 9:</strong> The broader Attempt #2 dataset improved from grade B to grade A after Adaptive Data.</figcaption>
+            <figcaption>Figure 9: The Adaption platform quality score increased from <strong>8.0 to 9.4</strong>, moving the broader Attempt #2 dataset from grade B to grade A.</figcaption>
           </figure>
 
           <p>
-            The combined dataset entered <strong>Adaptive Data</strong> at a higher baseline quality. Each
-            source generation started at 7.0, while the combined dataset started at 8.0 and finished at
-            9.4. The three generations share the same 1,753 leakage groups, so the 45,758 rows
-            represent roughly 15,250 unique generated items rather than three independent corpora.
-            The final row count came from broader source coverage and multiple adaptation recipes.
+            The combined dataset entered Adaptive Data with a higher baseline Adaption platform quality
+            score. Each source generation started at 7.0, while the combined dataset started at 8.0 and
+            finished at 9.4. These values describe dataset quality, not model performance, and Adaption
+            does not publish the scoring rubric. The three generations share the same 1,753 leakage groups,
+            so the 45,758 rows represent roughly 15,250 unique generated items rather than three independent
+            corpora. The final row count came from broader source coverage and multiple adaptation recipes.
           </p>
 
           <h3 id="scale-model">Model</h3>
 
           <p>
-            <strong>AutoScientist</strong> trained a LoRA adapter for <code>Llama 4 Scout 17B</code> on the 45,758-row
+            AutoScientist trained a LoRA adapter for <code>Llama 4 Scout 17B</code> on the 45,758-row
             combined dataset. The released adapter records rank 32, alpha 64, dropout 0.05, and the
             <code>q_proj</code>, <code>k_proj</code>, <code>v_proj</code>, and <code>o_proj</code>
             targets. Trainer state records two epochs, 168 steps, and a peak learning rate of
@@ -958,62 +1063,127 @@
           <h3 id="result">Results</h3>
 
           <p>
-            On its dataset-specific preference evaluation, the adapted model won 80 to 20. This result
-            shows that the workflow absorbed broader source coverage, reached 45,758 rows, improved
-            data quality from B to A, and retained a large preference margin on its own distribution.
-            It does not establish better generalization than Attempt #1.
+            Attempt #2 produced 45,758 rows and raised the Adaption platform quality score from 8.0 to
+            9.4. In a separate dataset-specific preference evaluation, the adapted model won 80 to 20.
           </p>
 
           <figure class="shot">
             <a class="image-link" href="assets/a2-winrate.png" aria-label="Open the full-resolution Attempt 2 evaluation figure">
               <img src="assets/a2-winrate.png" alt="AutoScientist result for the combined dataset: base 20, adapted 80" width="1036" height="760" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 10:</strong> Attempt #2 produced an 80 to 20 dataset-specific preference result. No category-level result was produced.</figcaption>
+            <figcaption>Figure 10: Attempt #2 produced an <strong>80 to 20</strong> dataset-specific preference result. No category-level result was produced.</figcaption>
           </figure>
 
-          <p>
-            Attempt #1 includes a 77-to-23 Market Analysis category result, while Attempt #2 has no
-            equivalent category evaluation. AdaptMarket later recorded a 73-to-27 Market Analysis
-            result with a different base model and full fine-tuning method. These are not direct
-            head-to-head comparisons: the models, data, and training methods differ. Together, the
-            experiments test data scaling, transfer beyond a target dataset, and a change in the
-            fine-tuning method.
-          </p>
-
-          <div class="act">
-            <h2 id="adaptmarket">Attempt #3: AdaptMarket</h2>
+          <div class="note">
+            <strong>Evaluation boundary.</strong> This is an adapted-versus-base pairwise preference,
+            not accuracy or investment performance. The unpublished protocol details listed for Attempt
+            #1 also apply here.
           </div>
 
           <p>
-            On 30 July 2026, <strong>AdaptMarket</strong> became the third experiment in this work for the
-            Market Analysis &amp; News — Equity Analysis track. The task is to turn a dated company or
-            market brief into concise, evidence-grounded research that separates reported facts from
-            forecasts, guidance, and opinion while surfacing catalysts, risks, uncertainty, and missing
-            evidence.
+            Because Attempt #2 has no category-level result, it does not tell us whether generalization
+            improved over Attempt #1. Attempt #1 provides broader-category platform evidence through its
+            77-to-23 Market Analysis result, subject to the split-hygiene limits above. Attempt #2 shows
+            source and task breadth at a 45,758-row combined scale while recording an 80-to-20 preference
+            margin on its own distribution.
           </p>
 
-          <h3 id="adaptmarket-method">Method</h3>
+          <div class="act">
+            <h2 id="future-improvement">Future Improvement: Global Market-System Intelligence</h2>
+          </div>
+
+          <div class="note">
+            <strong>Status.</strong> Everything in this section is aspirational. It is not a numbered
+            attempt, completed model, implemented retrieval system, or evaluated result.
+          </div>
 
           <p>
-            This experiment changed the training method from LoRA to a full supervised fine-tune of
-            <code>mistralai/Mixtral-8x7B-Instruct-v0.1</code> through AutoScientist. It used chat-format
-            data, one epoch, a <code>0.00001</code> learning rate, and no LoRA adapter.
+            Attempt #1 used company-level supplied-evidence tasks. Attempt #2 broadened the source
+            coverage and financial task taxonomy. A future system would ask a larger question: what
+            changed, which parts of the global financial system are exposed, through which transmission
+            channels, over what horizon, and what point-in-time evidence supports the conclusion?
           </p>
 
-          <h3 id="adaptmarket-results">Results</h3>
+          <h3 id="future-evidence">Global, point-in-time evidence</h3>
 
           <p>
-            In platform-reported comparative evaluations, AdaptMarket won 85 to 15 on its dataset and
-            73 to 27 on the broader Market Analysis evaluation, improvements of 70 and 46 percentage
-            points over the base model, respectively.
+            A global evidence layer could combine equities, sovereign and corporate credit, rates, FX,
+            commodities, real estate, central-bank research, regulatory filings, earnings calls,
+            institutional research, and macroeconomic releases across major markets. Every training,
+            retrieval, and evaluation case would preserve exactly what was available at the decision
+            timestamp, including source lineage, revisions, contradictions, and pre-event market context.
           </p>
 
           <p>
-            These are comparative win rates, not investment-return, price-target-accuracy, or
-            trading-performance metrics. They do not establish independent human validation,
-            statistical significance, or generalization beyond the reported evaluations. The source
-            material, derived data, prompts, weights, and evaluation outputs remain restricted pending
-            release review.
+            Suppliers, customers, competitors, ownership, funds, industries, commodities, leadership,
+            patents, and geographic exposures would be represented as time-varying relationships rather
+            than static metadata. This would make provenance and changing exposure part of the reasoning
+            problem instead of treating companies as independent observations.
+          </p>
+
+          <h3 id="future-transmission">Cross-sector, cross-asset, and multi-horizon transmission</h3>
+
+          <p>
+            Future tasks would test first- and higher-order effects, such as <code>rate shock → bond
+            yields → bank funding → mortgage rates → housing demand → construction → materials → company
+            earnings</code>. The analysis would distinguish immediate market reaction, near-term operating
+            or liquidity effects, medium-term earnings and valuation transmission, and longer-term
+            structural change.
+          </p>
+
+          <p>
+            The same event can have different signs across assets and horizons. Transmission tests would
+            therefore account for contracts, inventory, hedging, pricing power, pass-through capacity,
+            geography, and market regime rather than stop at the directly mentioned company or asset.
+          </p>
+
+          <h3 id="future-evaluation">Market-feedback evaluation, adaptive retrieval, and transfer tests</h3>
+
+          <p>
+            Model hypotheses could be compared with subsequently realized market behavior as noisy
+            feedback—not as unquestionable labels, an accuracy shortcut, or an investment-return engine.
+            Evaluation would separate broad-market, sector, factor, and company-specific movement where
+            possible and freeze definitions, horizons, baselines, and market-adjustment methods before
+            testing.
+          </p>
+
+          <p>
+            An adaptive retrieval policy could learn which evidence sources are useful for different
+            event types, entities, regimes, and horizons while keeping historical evidence strictly
+            point-in-time. Global transfer tests would then examine unseen geographies, industries, asset
+            classes, languages, source types, regimes, and shocks instead of testing only interpolation
+            within the original corpus.
+          </p>
+
+          <h3 id="future-research">Research blueprints</h3>
+
+          <p>
+            <a href="https://arxiv.org/abs/2505.23826" target="_blank" rel="noreferrer">FinRipple</a>
+            provides one useful blueprint: model a financial event as a shock propagating through a
+            dynamic network, then compare predicted ripple effects with realized asset-pricing residuals.
+            Its structural path is <code>event → direct exposure → related entities → ripple effects →
+            market response</code>.
+          </p>
+
+          <p>
+            A complementary blueprint is Point-in-Time Financial RAG with Market-Feedback Adaptive
+            Retrieval. It would freeze the reader, retrieve only evidence available at the historical
+            decision time, supply pre-event market context, predict residual impact over multiple
+            horizons, and use later market behavior to update an external source-memory system rather
+            than continually fine-tune the reader on noisy returns.
+          </p>
+
+          <p>
+            Before claiming that such a system exists or works, the project would need a release-eligible
+            point-in-time corpus, dynamic relationship and provenance tracking, frozen evaluation rules,
+            published uncertainty and error analysis, and transfer tests across geographies, regimes,
+            sectors, asset classes, and source types.
+          </p>
+
+          <p>
+            <strong>The long-term objective is not merely more financial documents. It is to test how
+            information propagates through the global financial system while preserving evidence,
+            time, uncertainty, and evaluation discipline.</strong>
           </p>
 
           <div class="act">
@@ -1022,13 +1192,12 @@
 
           <p>
             We thank <a href="https://adaptionlabs.ai/" target="_blank" rel="noreferrer">Adaption Labs</a>
-            for hosting the <strong><a href="https://adaptionlabs.ai/blog/autoscientist" target="_blank" rel="noreferrer">AutoScientist Challenge</a></strong>
-            and for building <strong><a href="https://adaptionlabs.ai/adaptive-data" target="_blank" rel="noreferrer">Adaptive Data</a></strong>
-            and <strong><a href="https://adaptionlabs.ai/auto-scientist" target="_blank" rel="noreferrer">AutoScientist</a></strong>,
+            for hosting the <a href="https://adaptionlabs.ai/blog/autoscientist-challenge" target="_blank" rel="noreferrer">AutoScientist Challenge</a>
+            and for building Adaptive Data and AutoScientist,
             the tools we used to expand the training data and automate model training in a practical
             environment. We are especially grateful
             to <a href="https://www.linkedin.com/in/sararosehooker" target="_blank" rel="noreferrer">Sara Hooker</a>
-            for the office-hours advice that pushed us to scale the data. We also thank
+            for the office-hours advice that reinforced our decision to scale the data. We also thank
             <a href="https://www.linkedin.com/in/ross-giagkoudis-1470a8263/" target="_blank" rel="noreferrer">Ross Giagkoudis</a>
             for being consistently supportive and helpful in Discord throughout the challenge.
           </p>
@@ -1122,33 +1291,6 @@
               </ul>
             </section>
 
-            <section class="resource-group" aria-labelledby="resource-attempt-3">
-              <h3 id="resource-attempt-3">Attempt #3: AdaptMarket</h3>
-              <dl class="resource-meta">
-                <div>
-                  <dt>Experiment</dt>
-                  <dd><button type="button" class="copy-id" data-copy="e7becda4-f659-4704-b2f8-67f76a029e52" aria-label="Copy experiment ID e7becda4-f659-4704-b2f8-67f76a029e52"><code>e7becda4-f659-4704-b2f8-67f76a029e52</code><span class="copy-glyph" aria-hidden="true"><svg class="copy-icon icon-copy" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.6" height="6.6" rx="1.3"/><path d="M8 4V2.8A1.3 1.3 0 0 0 6.7 1.5H2.8A1.3 1.3 0 0 0 1.5 2.8v3.9A1.3 1.3 0 0 0 2.8 8H4"/></svg><svg class="copy-icon icon-check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.3 6.3 4.8 8.8 9.9 3.4"/></svg></span><span class="copy-flag" aria-live="polite"></span></button></dd>
-                </div>
-                <div>
-                  <dt>Job ID</dt>
-                  <dd><button type="button" class="copy-id" data-copy="5b1fe1bb-c695-4bfd-bb05-eb24335634e0" aria-label="Copy fine-tune job ID 5b1fe1bb-c695-4bfd-bb05-eb24335634e0"><code>5b1fe1bb-c695-4bfd-bb05-eb24335634e0</code><span class="copy-glyph" aria-hidden="true"><svg class="copy-icon icon-copy" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.6" height="6.6" rx="1.3"/><path d="M8 4V2.8A1.3 1.3 0 0 0 6.7 1.5H2.8A1.3 1.3 0 0 0 1.5 2.8v3.9A1.3 1.3 0 0 0 2.8 8H4"/></svg><svg class="copy-icon icon-check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.3 6.3 4.8 8.8 9.9 3.4"/></svg></span><span class="copy-flag" aria-live="polite"></span></button></dd>
-                </div>
-              </dl>
-              <ul class="artifact-list">
-                <li class="artifact-item">
-                  <span class="artifact-label">Research record</span>
-                  <span class="artifact-platforms">
-                    <a class="platform-link" href="model_card/README.md">Model card</a>
-                    <a class="platform-link" href="docs/EXPERIMENT_HISTORY.md">History</a>
-                  </span>
-                </li>
-                <li class="artifact-item">
-                  <span class="artifact-label">Public artifacts</span>
-                  <span class="resource-pending">Pending release review</span>
-                </li>
-              </ul>
-            </section>
-
             <section class="resource-group" aria-labelledby="adaption-labs-resources">
               <div class="adaption-heading">
                 <svg class="adaption-mark" viewBox="0 0 20 20" aria-hidden="true">
@@ -1198,32 +1340,64 @@
     </main>
 
     <script>
+      const toc = document.querySelector(".toc");
       const links = [...document.querySelectorAll(".toc a")];
       const headings = links
         .map((link) => document.querySelector(link.getAttribute("href")))
         .filter(Boolean);
 
+      const positionTocIndicator = (link) => {
+        if (!toc || !link) return;
+        const tocRect = toc.getBoundingClientRect();
+        const linkRect = link.getBoundingClientRect();
+        const indicatorY = linkRect.top - tocRect.top + (linkRect.height - 4) / 2;
+        toc.style.setProperty("--toc-indicator-y", `${indicatorY}px`);
+        toc.classList.add("has-active");
+      };
+
       const setActive = (id) => {
+        if (toc?.dataset.activeSection === id) return;
+        let activeLink = null;
         links.forEach((link) => {
           const active = link.getAttribute("href") === `#${id}`;
           link.classList.toggle("active", active);
-          if (active) link.setAttribute("aria-current", "location");
+          if (active) {
+            activeLink = link;
+            link.setAttribute("aria-current", "location");
+          }
           else link.removeAttribute("aria-current");
         });
+        if (toc) toc.dataset.activeSection = id;
+        positionTocIndicator(activeLink);
       };
 
       if (headings.length) {
-        setActive(headings[0].id);
-        const observer = new IntersectionObserver(
-          (entries) => {
-            const current = entries
-              .filter((entry) => entry.isIntersecting)
-              .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
-            if (current) setActive(current.target.id);
-          },
-          { rootMargin: "-110px 0px -68% 0px", threshold: 0 }
-        );
-        headings.forEach((heading) => observer.observe(heading));
+        let scrollFrame = null;
+        const updateActiveFromScroll = () => {
+          const activationLine = 120;
+          let current = headings[0];
+
+          headings.forEach((heading) => {
+            if (heading.getBoundingClientRect().top <= activationLine) current = heading;
+          });
+
+          if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+            current = headings[headings.length - 1];
+          }
+
+          setActive(current.id);
+          scrollFrame = null;
+        };
+
+        const requestScrollUpdate = () => {
+          if (scrollFrame !== null) return;
+          scrollFrame = window.requestAnimationFrame(updateActiveFromScroll);
+        };
+
+        updateActiveFromScroll();
+        window.addEventListener("scroll", requestScrollUpdate, { passive: true });
+        window.addEventListener("resize", () => positionTocIndicator(document.querySelector(".toc a.active")));
+        document.fonts?.ready.then(() => positionTocIndicator(document.querySelector(".toc a.active")));
       }
 
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1247,8 +1421,10 @@
       document.querySelectorAll(".copy-id").forEach((btn) => {
         btn.addEventListener("click", async () => {
           const value = btn.dataset.copy;
+          let copied = false;
           try {
             await navigator.clipboard.writeText(value);
+            copied = true;
           } catch {
             const ta = document.createElement("textarea");
             ta.value = value;
@@ -1257,12 +1433,12 @@
             ta.style.opacity = "0";
             document.body.appendChild(ta);
             ta.select();
-            try { document.execCommand("copy"); } catch {}
+            try { copied = document.execCommand("copy"); } catch {}
             ta.remove();
           }
           const flag = btn.querySelector(".copy-flag");
-          btn.classList.add("copied");
-          flag.textContent = "Copied";
+          btn.classList.toggle("copied", copied);
+          flag.textContent = copied ? "Copied" : "Copy failed";
           clearTimeout(btn.copyTimer);
           btn.copyTimer = setTimeout(() => {
             btn.classList.remove("copied");

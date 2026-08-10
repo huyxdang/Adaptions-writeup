@@ -1,18 +1,20 @@
 # Experiment History
 
-This record covers all three AutoScientist experiments documented by the public report.
+This record covers the two AutoScientist attempts documented by the public report.
 
-Every score below is a platform-reported pairwise preference rate: the share of comparisons in which a judge preferred the adapted model's response over the base model's response. It is not an accuracy or investment-performance score.
+The 0–10 data-quality values below are Adaption platform quality scores; Adaption does not publish their scoring rubric. The evaluation results are platform-reported pairwise preference rates shown as **adapted:base**: the share of comparisons in which a judge preferred the adapted model's response over the base model's response. Neither metric is an accuracy or investment-performance score.
 
 ## Attempt #1 — Proof of Concept
 
+**Provided evidence that institutional equity-research reports can be converted into leakage-controlled training data for reconstructing analyst judgments from supplied evidence rather than copying conclusions from the prompt.**
+
 ### Data
 
-The project began with roughly 1,500 institutional sell-side reports. An answer-first extraction workflow identified analyst judgments, removed judgment leakage from the supplied evidence, ranked the remaining evidence, and derived only the analytical task supported by the source.
+The project began with roughly 1,500 Southeast Asian institutional sell-side reports. An answer-first extraction workflow identified analyst judgments, removed judgment leakage from the supplied evidence, ranked the remaining evidence, and derived only the analytical task supported by the source.
 
 ![Document-to-prompt extraction workflow](../assets/extraction-doc-to-prompt.png)
 
-The curated baseline contained 739 rows:
+The curated corpus contained 739 rows:
 
 | Split | Rows |
 | --- | ---: |
@@ -20,7 +22,7 @@ The curated baseline contained 739 rows:
 | Validation | 77 |
 | Held out | 73 |
 
-Adaptive Data expanded the 589-row training split to 27,862 rows, of which 27,405 were reported as used for training. Platform quality increased from 5.0 to 9.4, moving from grade C to grade A.
+Adaptive Data expanded the 589-row training baseline to 27,862 rows, of which 27,405 were reported as used for training. The Adaption platform quality score increased from 5.0 to 9.4, moving from grade C to grade A.
 
 ![Attempt 1 quality result](../assets/a1-quality.png)
 
@@ -32,32 +34,37 @@ Adaptive Data expanded the 589-row training split to 27,862 rows, of which 27,40
 | Method | LoRA supervised fine-tuning |
 | Rank / alpha / dropout | 16 / 32 / 0.05 |
 | Target modules | All linear layers |
-| Epochs | 2 |
+| Epochs / steps | 2 / 382 |
 | Learning rate | `1e-4` |
+| Loss | Completions only |
 | Training experiment | `22ed78c2-6708-4e15-814f-b2bc73ca95af` |
 | Fine-tune job | `140dbd16-fb1d-41da-ac02-b307e8d43024` |
 
 ### Results
 
-| Evaluation | Base | Adapted |
+| Evaluation | Adapted | Base |
 | --- | ---: | ---: |
-| On-dataset preference | 16% | **84%** |
-| Market Analysis preference | 23% | **77%** |
+| On-dataset preference | **84%** | 16% |
+| Market Analysis preference | **77%** | 23% |
 
 ![Attempt 1 preference results](../assets/a1-winrates.png)
 
-The broader Market Analysis evaluation provided evidence of transfer beyond the experiment's own rows, but it did not establish accuracy or real-world performance.
+The 84:16 result is an in-distribution diagnostic. Adaption, rather than the project team, constructed the broader Market Analysis category evaluation, so its 77:23 result provides broader-category evidence. Independence from the local 73-row held-out split and complete split hygiene are not established in the public record; neither result establishes accuracy or real-world performance.
 
 ### Public releases
 
 - Dataset: [Hugging Face](https://huggingface.co/datasets/huyxdang/adaption-equity-analysis-small) · [Kaggle](https://www.kaggle.com/datasets/huydang03/adaption-equity-analysis-small)
-- Adapter: [Hugging Face](https://huggingface.co/huyxdang/adaption_vietnam_equity_research_note) · [Kaggle](https://www.kaggle.com/models/huydang03/adaption-vietnam-equity-research-note/PyTorch/lora)
+- LoRA adapter: [Hugging Face](https://huggingface.co/huyxdang/adaption_vietnam_equity_research_note) · [Kaggle](https://www.kaggle.com/models/huydang03/adaption-vietnam-equity-research-note/PyTorch/lora)
 
-## Attempt #2 — Scaling 50x
+## Attempt #2 — Scaling 50×
+
+**Expanded source and task coverage from company-level equity research to macro, sector, fund, and fixed-income research.**
+
+“Scaling 50×” is an editorial label. The measured change is from roughly 1,500 to about 7,000 source reports; three recipes produced 45,702 generated rows, and 56 rows in the Combine output brought the total to 45,758.
 
 ### Data
 
-The source corpus expanded from roughly 1,500 to about 7,000 institutional reports, adding macro outlooks, sector studies, fund reviews, and fixed-income commentary. The task taxonomy added market-state interpretation, actual-versus-forward-looking separation, driver transmission, comparative analysis, fund and benchmark analysis, and explicit insufficient-evidence tasks.
+The source corpus expanded from roughly 1,500 to about 7,000 institutional reports. The combined-dataset taxonomy reported these rounded shares: insufficient evidence (36.2%), market-state interpretation (30.9%), actual-versus-forward-looking separation (17.0%), driver transmission (13.7%), comparative analysis (1.5%), and fund and benchmark analysis (0.4%).
 
 Adaptive Data ran three recipes over the same source corpus, then combined their outputs:
 
@@ -66,9 +73,9 @@ Adaptive Data ran three recipes over the same source corpus, then combined their
 | Dataset 1 | 15,252 | Completion rewritten | 7.0 to 9.2 |
 | Dataset 2 | 15,253 | Prompt and completion with response constraints | 7.0 to 9.5 |
 | Dataset 3 | 15,197 | Independent variant of the constrained recipe | 7.0 to 9.5 |
-| Combined | **45,758** | 45,702 generated rows plus 56 | 8.0 to 9.4 |
+| Combined | **45,758** | 45,702 generated rows plus 56 | Adaption platform score: 8.0 to 9.4 |
 
-The generations share the same underlying source items. The combined row count represents multiple enhancement variants, not 45,758 independent source records.
+The generations share the same underlying source items. The combined row count represents roughly 15,250 unique generated items through multiple enhancement variants, not 45,758 independent source records.
 
 ![Attempt 2 quality result](../assets/a2-adaptive-data.png)
 
@@ -86,50 +93,29 @@ The generations share the same underlying source items. The combined row count r
 
 ### Results
 
-| Evaluation | Base | Adapted |
+| Evaluation | Adapted | Base |
 | --- | ---: | ---: |
-| On-dataset preference | 20% | **80%** |
+| On-dataset preference | **80%** | 20% |
 | Market Analysis preference | Not produced | Not produced |
 
 ![Attempt 2 preference result](../assets/a2-winrate.png)
 
-Attempt #2 demonstrated that the data and training workflow could scale while retaining a large preference margin on its own distribution. Without a category-level result, it did not establish broader transfer.
+Attempt #2 demonstrated scale and breadth while retaining a large preference margin on its own distribution. Without a category-level result, it did not establish broader transfer or better generalization than Attempt #1.
 
 ### Public releases
 
 - Dataset: [Hugging Face](https://huggingface.co/datasets/huyxdang/adaption-market-analysis-final) · [Kaggle](https://www.kaggle.com/datasets/huydang03/adaption-market-analysis-final)
-- Adapter: [Hugging Face](https://huggingface.co/huyxdang/adaption-market-analysis-final-model) · [Kaggle](https://www.kaggle.com/models/huydang03/adaption-market-analysis-final-model/PyTorch/lora)
+- LoRA adapter: [Hugging Face](https://huggingface.co/huyxdang/adaption-market-analysis-final-model) · [Kaggle](https://www.kaggle.com/models/huydang03/adaption-market-analysis-final-model/PyTorch/lora)
 
-## Attempt #3 — AdaptMarket
-
-AdaptMarket changed the base model and moved from LoRA to full-model supervised fine-tuning.
-
-| Field | Value |
-| --- | --- |
-| Date | 30 July 2026 |
-| Track | Market Analysis & News — Equity Analysis |
-| Base model | `mistralai/Mixtral-8x7B-Instruct-v0.1` |
-| Method | Full-model supervised fine-tuning |
-| Data format | Chat |
-| Epochs | 1 |
-| Learning rate | `0.00001` |
-| LoRA | Disabled |
-| Training experiment | `e7becda4-f659-4704-b2f8-67f76a029e52` |
-| Fine-tune job | `5b1fe1bb-c695-4bfd-bb05-eb24335634e0` |
-
-| Evaluation | Base | AdaptMarket | Change |
-| --- | ---: | ---: | ---: |
-| On-dataset preference | 15% | **85%** | **+70 percentage points** |
-| Market Analysis preference | 27% | **73%** | **+46 percentage points** |
-
-The current experiment's data, model weights, prompts, and per-example evaluation outputs remain restricted. No cleared Attempt #3 result image is available.
-
-## Reading progress across experiments
+## Reading progress across attempts
 
 | Question | Evidence |
 | --- | --- |
-| Can a small evidence-grounded workflow transfer beyond its own rows? | Attempt #1 recorded a 77-to-23 Market Analysis preference result. |
-| Can the data workflow scale materially? | Attempt #2 reached 45,758 generated rows and an 80-to-20 on-dataset result. |
-| Can full fine-tuning retain target behavior and improve the broader evaluation? | AdaptMarket recorded 85-to-15 on-dataset and 73-to-27 Market Analysis results. |
+| Can leakage-controlled financial evidence support analyst-style responses on a broader Adaption category evaluation? | Attempt #1 recorded a 77:23 Market Analysis preference result; clean external transfer is not established. |
+| Can the same workflow scale to broader sources and tasks? | Attempt #2 reached 45,758 rows and an 80:20 on-dataset result. |
 
-The scores must not be ranked as though they came from one controlled benchmark. The models, datasets, methods, and evaluation scopes changed between experiments.
+The scores must not be ranked as though they came from one controlled benchmark. The models, datasets, configurations, and evaluation scopes changed between attempts.
+
+**Attempt #1 used company-level supplied-evidence tasks. Attempt #2 broadened the source coverage and financial task taxonomy. The next step is to test how information propagates through the global financial system.**
+
+See [Future Improvement Roadmap](ROADMAP.md).

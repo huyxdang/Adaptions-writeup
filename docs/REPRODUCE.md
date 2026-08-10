@@ -1,38 +1,36 @@
-# Reproduction and Data Availability
+# Reproduction
 
-## Current AdaptMarket experiment
-
-This repository does not contain the current experiment's source documents, training examples, evaluation examples, model weights, prompts, credentials, private infrastructure, or unpublished outputs.
-
-The current full fine-tune cannot be reproduced from this public repository.
-
-### What can be checked
-
-The public record includes:
-
-- the base model and training configuration;
-- the experiment and fine-tune job identifiers;
-- platform-reported base and adapted preference rates;
-- methodology, limitations, and planned research direction.
-
-### What full reproduction requires
-
-1. A release-eligible dataset and source-rights record.
-2. A frozen evaluation definition and evaluator configuration.
-3. Base and adapted outputs for the reported evaluation.
-4. Error analysis, uncertainty reporting, and release hashes.
-5. Clearance to publish every included artifact.
-
-## Predecessor experiments
+## What is public
 
 Attempts #1 and #2 have externally released datasets and LoRA adapters. Their links are catalogued in [data/README.md](../data/README.md) and [model_card/README.md](../model_card/README.md).
 
-Those releases support partial inspection and reuse under their host-page terms, but they do not provide complete reproduction of every reported result. Exact source-document provenance, the full AutoScientist runtime, frozen evaluator configuration, and all per-example evaluation outputs are not published here.
+The public record also includes:
 
-The predecessor releases also do not reproduce AdaptMarket: the current experiment uses a different base model and full-model fine-tuning.
+- base models and LoRA configurations;
+- reported dataset sizes and quality changes;
+- aggregate base-versus-adapted preference results;
+- figures used by the report;
+- known data and evaluation limitations.
+
+## What is not included here
+
+The public releases support partial inspection and reuse under their host-page terms, but this repository does not include:
+
+- the original institutional source reports;
+- a complete source-rights and provenance record;
+- the full AutoScientist runtime and infrastructure;
+- a frozen evaluator definition and configuration;
+- evaluator identity, comparison counts, exact evaluation prompts, response-order randomization, tie handling, and matched decoding settings;
+- the mapping between platform evaluations and the local 73-row held-out split;
+- all base and adapted per-example outputs;
+- an independent error analysis or statistical-significance study.
+
+The reported runs therefore cannot be reproduced end to end from this repository alone.
 
 ## Figures
 
-The figures in `assets/` support the public report in `index.html`. They document predecessor workflow and aggregate results; they are not new evaluation evidence and do not contain the current restricted corpus.
+The figures in `assets/` document the extraction workflow, data-quality changes, and aggregate preference results for Attempts #1 and #2. They are historical evidence from the reported workflow, not independently reproduced evaluations.
 
-Artifacts for the current experiment will be linked only after the conditions above are met.
+## Future evaluation
+
+The roadmap proposes point-in-time evidence, global transfer tests, multi-horizon impact, and market-feedback evaluation. Those are future research directions and have not been implemented or evaluated in this report.

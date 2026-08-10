@@ -1,36 +1,37 @@
 # Public Release Policy
 
-This repository is a public report, documentation archive, and figure archive. It does not publish the current AdaptMarket corpus or model.
+This repository is a public report, documentation archive, and figure archive for two completed AutoScientist attempts and their future research roadmap.
 
 ## Included
 
 - the responsive technical report;
-- project overview and three-experiment history;
-- high-level and current training methodology;
-- platform-reported aggregate experiment results;
+- the two-attempt experiment history;
+- extraction, Adaptive Data, and LoRA training methods;
+- platform-reported aggregate evaluation results;
 - figures used by the report;
-- links to externally hosted predecessor datasets and LoRA adapters;
-- roadmap, limitations, and reproducibility boundaries.
+- links to externally hosted datasets and LoRA adapters;
+- limitations, reproduction boundaries, and future research directions.
 
-## Current AdaptMarket exclusions
+## Not included
 
-- third-party research documents and source text;
-- private or restricted datasets, records, metadata, and provenance details;
-- model weights and model access credentials;
-- prompts, API keys, tokens, environment files, local paths, run infrastructure, and operational logs;
-- unpublished evaluation examples, outputs, evaluator records, and internal implementation code.
+- third-party institutional source reports;
+- local copies of externally hosted datasets or model adapters;
+- private records, credentials, environment files, infrastructure, or operational logs;
+- complete source-rights and provenance records;
+- frozen evaluator configuration, protocol details, and per-example evaluation outputs;
+- unpublished implementation work.
 
-## Predecessor artifacts
+## External artifacts
 
-Attempts #1 and #2 have public datasets and LoRA adapters hosted on Hugging Face and Kaggle. They are linked for historical completeness and must not be represented as the current AdaptMarket data or weights. Their host pages define access and license terms.
+The Attempt #1 and Attempt #2 datasets and LoRA adapters are hosted on Hugging Face and Kaggle. Each release must be associated with its corresponding attempt. The host pages define access and license terms.
 
 ## Figures and attribution
 
 The files in `assets/` are the figures and platform marks used by the public report. Repository content is provided under the root [MIT license](../LICENSE). Screenshots may contain third-party product interfaces or marks; inclusion documents the published experiment record and does not transfer ownership of those interfaces or marks.
 
-## Release conditions
+## Future releases
 
-Any future current-experiment dataset, model, prompt, or evaluation release requires review of source terms, redistribution rights, privacy, security, attribution, temporal leakage, and reproducibility. A public link is added only after its artifact is cleared for release.
+Any future dataset, model, prompt, retrieval system, or evaluation release requires review of source terms, redistribution rights, privacy, security, attribution, temporal leakage, point-in-time integrity, and reproducibility. The roadmap does not imply that those future systems or artifacts already exist.
 
 ## Use limitation
 

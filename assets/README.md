@@ -6,9 +6,9 @@ These files support the responsive report in [`index.html`](../index.html).
 | --- | --- |
 | `adaptive-liquid-pixel.jpg` | Editorial cover |
 | `extraction-doc-to-prompt.png` | Attempt #1 extraction workflow |
-| `a1-quality.png` | Attempt #1 quality result |
+| `a1-quality.png` | Attempt #1 Adaption platform quality score |
 | `a1-winrates.png` | Attempt #1 preference results |
-| `a2-adaptive-data.png` | Attempt #2 quality result |
+| `a2-adaptive-data.png` | Attempt #2 Adaption platform quality score |
 | `a2-winrate.png` | Attempt #2 preference result |
 | `favicon.png` | Site favicon |
 | `hf-mark.svg` | Hugging Face resource mark |

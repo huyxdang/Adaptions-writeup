@@ -1,63 +1,37 @@
-# AdaptMarket Model Card
+# Released Adapter Index
 
-## Model details
+This directory records the two publicly released LoRA adapters documented by the report.
+
+| Attempt | Base model | Method | Public adapter | Evaluation scope |
+| --- | --- | --- | --- | --- |
+| Attempt #1 | `meta-llama/Llama-3.3-70B-Instruct-Reference` | LoRA SFT | [Hugging Face](https://huggingface.co/huyxdang/adaption_vietnam_equity_research_note) · [Kaggle](https://www.kaggle.com/models/huydang03/adaption-vietnam-equity-research-note/PyTorch/lora) | 84:16 in-distribution; 77:23 broader Market Analysis category |
+| Attempt #2 | `togethercomputer/Llama-4-Scout-17B-16E-Instruct_bnb_4bit` | LoRA SFT | [Hugging Face](https://huggingface.co/huyxdang/adaption-market-analysis-final-model) · [Kaggle](https://www.kaggle.com/models/huydang03/adaption-market-analysis-final-model/PyTorch/lora) | 80:20 in-distribution; no category result |
+
+Each preference result is shown as **adapted:base**. For Attempt #1, independence between the broader category evaluation and the local 73-row held-out split, as well as complete split hygiene, are not established in the public record.
+
+## Attempt #1
 
 | Field | Value |
 | --- | --- |
-| Name | AdaptMarket |
-| Base model | `mistralai/Mixtral-8x7B-Instruct-v0.1` |
-| Task | Evidence-grounded equity and market analysis from dated briefs |
-| Training method | Full-model supervised fine-tuning through AutoScientist |
-| Data format | Chat |
-| Epochs | 1 |
-| Learning rate | `0.00001` |
-| LoRA | Disabled |
-| Training experiment | `e7becda4-f659-4704-b2f8-67f76a029e52` |
-| Fine-tune job | `5b1fe1bb-c695-4bfd-bb05-eb24335634e0` |
-| Release status | Documentation only; weights not released |
+| Rank / alpha / dropout | 16 / 32 / 0.05 |
+| Target modules | All linear layers |
+| Epochs | 2 |
+| Learning rate | `1e-4` |
+| Training experiment | `22ed78c2-6708-4e15-814f-b2bc73ca95af` |
+| Fine-tune job | `140dbd16-fb1d-41da-ac02-b307e8d43024` |
 
-## Intended use
+## Attempt #2
 
-AdaptMarket is intended as a first-pass research assistant that:
+| Field | Value |
+| --- | --- |
+| Rank / alpha / dropout | 32 / 64 / 0.05 |
+| Target modules | `q_proj`, `k_proj`, `v_proj`, `o_proj` |
+| Epochs / steps | 2 / 168 |
+| Peak learning rate | `2e-5` |
+| Run ID | `adaption_llama_4_scout_17b_16_final_cc7ddeac` |
 
-- separates reported observations from guidance, forecasts, and opinion;
-- links supplied evidence to operating performance, valuation, catalysts, and risks;
-- preserves counterevidence and identifies insufficient evidence;
-- produces concise analyst-style synthesis for human review.
+## Use and limitations
 
-It is not intended to provide individualized advice, execute trades, replace primary-source review, or make autonomous investment decisions.
+The adapters are externally hosted, and their host pages define availability and licensing. Their outputs require primary-source verification and qualified human review. The reported evaluations do not establish real-world financial performance or generalization beyond their stated scope.
 
-## Evaluation
-
-| Evaluation | Base | AdaptMarket |
-| --- | ---: | ---: |
-| On-dataset preference | 15% | **85%** |
-| Market Analysis preference | 27% | **73%** |
-
-These are platform-reported pairwise preference rates, not accuracy, financial return, or independent human-validation measures. Per-example outputs and evaluator records are not published.
-
-## Data
-
-The current training and evaluation material is restricted and not distributed. The released predecessor datasets in [data/README.md](../data/README.md) do not reproduce this model.
-
-## Limitations
-
-- Generalization beyond the reported evaluations is unverified.
-- Results do not establish robustness across markets, time periods, source types, or real-world decisions.
-- The model may inherit factual, reasoning, and safety limitations from its base model and training material.
-- Outputs require primary-source verification and qualified human review.
-
-## Availability
-
-No AdaptMarket weights, merged model, adapter, inference endpoint, or access credential is published here.
-
-## Public predecessor adapters
-
-These are historical LoRA releases, not AdaptMarket weights.
-
-| Stage | Base model | Adapter | Evaluation scope |
-| --- | --- | --- | --- |
-| Attempt #1 | `meta-llama/Llama-3.3-70B-Instruct-Reference` | [Hugging Face](https://huggingface.co/huyxdang/adaption_vietnam_equity_research_note) · [Kaggle](https://www.kaggle.com/models/huydang03/adaption-vietnam-equity-research-note/PyTorch/lora) | 84–16 on-dataset; 77–23 Market Analysis |
-| Attempt #2 | `togethercomputer/Llama-4-Scout-17B-16E-Instruct_bnb_4bit` | [Hugging Face](https://huggingface.co/huyxdang/adaption-market-analysis-final-model) · [Kaggle](https://www.kaggle.com/models/huydang03/adaption-market-analysis-final-model/PyTorch/lora) | 80–20 on-dataset; no category result |
-
-See [Experiment History](../docs/EXPERIMENT_HISTORY.md) for method and data context.
+See [Experiment History](../docs/EXPERIMENT_HISTORY.md), [Methods](../docs/METHODS.md), and [Dataset Availability](../data/README.md).
