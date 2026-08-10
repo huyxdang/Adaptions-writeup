@@ -753,16 +753,15 @@
           <h3 id="source-data">Data</h3>
 
           <p>
-            We started with roughly 1,500 sell-side reports on Southeast Asia's listed companies, published
+            We started with roughly 1,500 sell-side reports on Southeast Asia’s listed companies, published
             between 2011 and 2026. The collection included earnings reviews, valuation updates, and
             target-price revisions written by professional analysts.
           </p>
 
           <p>
-            These reports contained the language we wanted the model to learn, but not the training
-            structure we needed. An analyst writes a conclusion and the evidence behind it; the report
-            does not record the instruction that produced that conclusion. Supervised fine-tuning
-            requires both the instruction and the answer.
+            These reports contained the style of analysis we wanted the model to learn, but not the
+            instructions required for training. Supervised fine-tuning requires a question–answer pair.
+            Our reports contained the answer—the analyst’s analysis—but not the question that produced it.
           </p>
 
           <h3 id="extract">Extraction</h3>
