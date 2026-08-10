@@ -7,7 +7,7 @@
     <title>Training a Finance Model with AutoScientist</title>
     <meta
       name="description"
-      content="We cleaned 5,000+ institutional-grade finance reports, then optimized both training data and process with Adaption Labs."
+      content="Two AutoScientist attempts: roughly 1,500 reports and 739 curated rows in the proof of concept, then about 7,000 reports and 45,758 combined rows at scale."
     />
     <link rel="canonical" href="https://adaptions-writeup.vercel.app/" />
     <meta property="og:type" content="article" />
@@ -15,7 +15,7 @@
     <meta property="og:title" content="Training a Finance Model with AutoScientist" />
     <meta
       property="og:description"
-      content="We cleaned 5,000+ institutional-grade finance reports, then optimized both training data and process with Adaption Labs."
+      content="Two AutoScientist attempts: roughly 1,500 reports and 739 curated rows in the proof of concept, then about 7,000 reports and 45,758 combined rows at scale."
     />
     <meta property="og:url" content="https://adaptions-writeup.vercel.app/" />
     <meta property="og:image" content="https://adaptions-writeup.vercel.app/assets/adaptive-liquid-pixel.jpg" />
@@ -28,7 +28,7 @@
     <meta name="twitter:title" content="Training a Finance Model with AutoScientist" />
     <meta
       name="twitter:description"
-      content="We cleaned 5,000+ institutional-grade finance reports, then optimized both training data and process with Adaption Labs."
+      content="Two AutoScientist attempts: roughly 1,500 reports and 739 curated rows in the proof of concept, then about 7,000 reports and 45,758 combined rows at scale."
     />
     <meta name="twitter:image" content="https://adaptions-writeup.vercel.app/assets/adaptive-liquid-pixel.jpg" />
     <meta name="twitter:image:alt" content="An iridescent liquid form transforming from a precise pixel grid into fine computational particles" />
@@ -45,6 +45,7 @@
         --dark-gray: #49433f;
         --medium-gray: #6b625d;
         --light-gray: #8a817b;
+        --muted-text: #756b65;
         --highlight-gray: #cfc8c2;
         --border: #e7e1db;
         --white: #ffffff;
@@ -158,7 +159,7 @@
       .mobile-toc summary::after { content: "+"; float: right; color: var(--light-gray); }
       .mobile-toc[open] summary::after { content: "−"; }
       .mobile-toc ul { padding: 0; list-style: none; }
-      .mobile-toc > .toc-tree { margin: 1rem 0 0; }
+      .mobile-toc .toc-tree { margin: 1rem 0 0; }
       .mobile-toc .toc-group + .toc-group { margin-top: 0.8rem; }
       .mobile-toc .toc-section { color: var(--black); font-size: 13px; font-weight: 400; text-decoration: none; }
       .mobile-toc .toc-group ul { margin: 0.45rem 0 0; padding-left: 0.9rem; }
@@ -475,7 +476,7 @@
       .cmp tfoot th { color: var(--black); }
       .cmp .em { color: var(--accent); font-weight: 500; }
       .sum-mark { display: inline-block; margin-right: 0.4rem; color: var(--accent); font: 500 11px/1 var(--mono); }
-      .table-frame { margin: 1.8rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+      .table-frame { margin: 1.8rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow-x: auto; }
 
       .morph {
         display: grid;
@@ -489,7 +490,7 @@
         line-height: 1.72;
       }
       .morph-rule { background: var(--border); }
-      .morph-label { display: block; margin-bottom: 0.75rem; color: var(--light-gray); font-size: 9.5px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.15em; }
+      .morph-label { display: block; margin-bottom: 0.75rem; color: var(--muted-text); font-size: 9.5px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.15em; }
       .morph-col.after .morph-label { color: var(--accent); }
       .morph-text { margin: 0; color: var(--medium-gray); }
       .morph-col.after .morph-text { color: var(--dark-gray); }
@@ -505,7 +506,7 @@
       .resource-group h3 { margin: 0; font-family: var(--sans); font-size: 15px; font-weight: 600; line-height: 20px; }
       .resource-meta { display: grid; gap: 0.15rem; margin: 0.5rem 0 0; }
       .resource-meta > div { display: grid; grid-template-columns: 68px minmax(0, 1fr); gap: 0.7rem; }
-      .resource-meta dt { color: var(--light-gray); font: 400 10px/1.6 var(--mono); }
+      .resource-meta dt { color: var(--muted-text); font: 400 10px/1.6 var(--mono); }
       .resource-meta dd { min-width: 0; margin: 0; color: var(--medium-gray); font: 400 10px/1.6 var(--mono); overflow-wrap: anywhere; }
       .resource-meta code { padding: 0; background: none; font: inherit; }
 
@@ -552,7 +553,7 @@
       article .platform-link { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--medium-gray); font-size: 12px; line-height: 1; text-decoration: none; white-space: nowrap; transition: color 140ms ease; }
       article .platform-link:hover { color: var(--black); }
       .brand-mark { width: 16px; height: 16px; flex: 0 0 auto; object-fit: contain; }
-      .resource-pending { color: var(--light-gray); font-size: 12px; }
+      .resource-pending { color: var(--muted-text); font-size: 12px; }
 
       .adaption-heading { display: flex; align-items: center; gap: 0.55rem; }
       .adaption-mark { width: 19px; height: 19px; flex: 0 0 auto; }
@@ -635,8 +636,8 @@
       <header class="article-header">
         <h1>Training a Finance Model with AutoScientist</h1>
         <p class="subtitle">
-          We cleaned 5,000+ institutional-grade finance reports, then optimized both
-          training data and process with Adaption Labs
+          Two AutoScientist attempts: roughly 1,500 reports and 739 curated rows,
+          then about 7,000 reports and 45,758 combined rows
         </p>
         <p class="byline">
           <span class="byline-person"><a href="https://www.linkedin.com/in/kiet-vo-097/">Keith Vo</a></span>
@@ -657,29 +658,40 @@
 
       <details class="mobile-toc">
         <summary>Contents</summary>
-        <ul class="toc-tree">
-          <li class="toc-group"><a class="toc-section" href="#introduction">Introduction</a></li>
-          <li class="toc-group">
-            <a class="toc-section" href="#first-time">Attempt #1: Proof of Concept</a>
-            <ul>
-              <li><a href="#source-data">Data</a></li>
-              <li><a href="#extract">Extraction</a></li>
-              <li><a href="#adaptive-data">Adaptive Data</a></li>
-              <li><a href="#autoscientist">AutoScientist</a></li>
-              <li><a href="#limitation">Limitations</a></li>
-            </ul>
-          </li>
-          <li class="toc-group">
-            <a class="toc-section" href="#scale">Attempt #2: Scaling 50x</a>
-            <ul>
-              <li><a href="#scale-data">Data</a></li>
-              <li><a href="#scale-model">Model</a></li>
-              <li><a href="#result">Results</a></li>
-            </ul>
-          </li>
-          <li class="toc-group"><a class="toc-section" href="#acknowledgements">Acknowledgements</a></li>
-          <li class="toc-group"><a class="toc-section" href="#resources">Resources</a></li>
-        </ul>
+        <nav aria-label="Table of contents">
+          <ul class="toc-tree">
+            <li class="toc-group"><a class="toc-section" href="#introduction">Introduction</a></li>
+            <li class="toc-group">
+              <a class="toc-section" href="#first-time">Attempt #1: Proof of Concept</a>
+              <ul>
+                <li><a href="#source-data">Data</a></li>
+                <li><a href="#extract">Extraction</a></li>
+                <li><a href="#adaptive-data">Adaptive Data</a></li>
+                <li><a href="#autoscientist">AutoScientist</a></li>
+                <li><a href="#limitation">Limitations</a></li>
+              </ul>
+            </li>
+            <li class="toc-group">
+              <a class="toc-section" href="#scale">Attempt #2: Scaling 50×</a>
+              <ul>
+                <li><a href="#scale-data">Data</a></li>
+                <li><a href="#scale-model">Model</a></li>
+                <li><a href="#result">Results</a></li>
+              </ul>
+            </li>
+            <li class="toc-group">
+              <a class="toc-section" href="#future-improvement">Future Improvement</a>
+              <ul>
+                <li><a href="#future-evidence">Point-in-time evidence</a></li>
+                <li><a href="#future-transmission">Market transmission</a></li>
+                <li><a href="#future-evaluation">Evaluation &amp; retrieval</a></li>
+                <li><a href="#future-research">Research blueprints</a></li>
+              </ul>
+            </li>
+            <li class="toc-group"><a class="toc-section" href="#acknowledgements">Acknowledgements</a></li>
+            <li class="toc-group"><a class="toc-section" href="#resources">Resources</a></li>
+          </ul>
+        </nav>
       </details>
 
       <div class="article-grid">
@@ -697,11 +709,20 @@
               </ul>
             </li>
             <li class="toc-group">
-              <a class="toc-section" href="#scale">Attempt #2: Scaling 50x</a>
+              <a class="toc-section" href="#scale">Attempt #2: Scaling 50×</a>
               <ul>
                 <li><a href="#scale-data">Data</a></li>
                 <li><a href="#scale-model">Model</a></li>
                 <li><a href="#result">Results</a></li>
+              </ul>
+            </li>
+            <li class="toc-group">
+              <a class="toc-section" href="#future-improvement">Future Improvement</a>
+              <ul>
+                <li><a href="#future-evidence">Point-in-time evidence</a></li>
+                <li><a href="#future-transmission">Market transmission</a></li>
+                <li><a href="#future-evaluation">Evaluation &amp; retrieval</a></li>
+                <li><a href="#future-research">Research blueprints</a></li>
               </ul>
             </li>
             <li class="toc-group"><a class="toc-section" href="#acknowledgements">Acknowledgements</a></li>
@@ -713,33 +734,38 @@
           <h2 id="introduction" class="sr-only">Introduction</h2>
 
           <p class="lede">
-            Keith and Huy both work in finance, with Keith in equity research. We entered Adaption Labs’
+            Keith contributed the equity-research workflow and domain framing; Huy contributed the
+            data and model-system work. We entered the
             <a href="https://adaptionlabs.ai/blog/autoscientist-challenge" target="_blank" rel="noreferrer">AutoScientist Challenge</a>
-            with a practical goal: train a small model that could actually assist us in our day-to-day work.
+            with a practical goal: train a model that could be useful in day-to-day research work.
           </p>
 
           <p>
-            If we could train a useful model ourselves, it could be especially valuable in an enterprise
-            setting: potentially cheaper to run, self-hostable, and easier to keep sensitive financial
-            data within our own infrastructure.
+            That goal came from a recurring problem we saw firsthand. Institutional finance reports
+            contain the target material—forecasts, valuations, recommendations, and the reasoning
+            behind them—but they do not contain the prompts needed
+            to turn that analysis into training data.
           </p>
 
           <p>
-            As a starting point, we set out to automate one part of the job: reading financial
-            evidence and producing a first draft of an equity-research analysis, including forecasts,
-            valuations, recommendations, and the reasoning behind them.
+            Our main challenge was therefore to reconstruct those prompts from the evidence available
+            in each report without leaking the analyst’s final conclusion into the input. If the
+            reconstructed prompt contained only supporting evidence, the model would need to arrive at
+            the judgment itself rather than simply recover the answer from the source.
           </p>
 
           <p>
-            Training such a model ourselves would normally require substantial work and compute across
-            both data and training. In this challenge, however, we could focus primarily on preparing
-            and cleaning the finance training data around our actual workflows.
+            We faced many challenges: we repeatedly refined the methodology, manually inspected
+            examples, and checked that the resulting tasks still reflected real equity-research
+            workflows. However, once the source data was prepared, much of the remaining pipeline was
+            automated: Adaptive Data expanded and restructured the dataset, while AutoScientist
+            optimized, trained, and evaluated the adapters.
           </p>
 
           <p>
             <a href="https://adaptionlabs.ai/" target="_blank" rel="noreferrer">Adaption Labs</a>
-            removed much of the complexity of training and, later, scaling our experiments, which let
-            us concentrate on the finance-specific work we knew best.
+            removed much of the complexity of scaling our experiments and let us stay focused on the
+            finance-specific work we knew best.
           </p>
 
           <div class="act">
@@ -749,42 +775,33 @@
           <h3 id="source-data">Data</h3>
 
           <p>
-            We started with roughly 1,500 sell-side reports on Southeast Asia’s listed companies, published
+            We started with roughly 1,500 sell-side reports on Southeast Asia's listed companies, published
             between 2011 and 2026. The collection included earnings reviews, valuation updates, and
-            target-price revisions written by professional analysts.
+            target-price revisions written by professional analysts. It did not include model-written
+            text, blogs, or forum posts.
           </p>
 
           <p>
-            The reports contained exactly the style of analysis we wanted the model to learn, but they
-            were not training examples yet. SFT requires both an instruction and a target response,
-            but we only had the target—the analysis from the report—and no instruction that could have
-            produced it.
+            These reports contained the language we wanted the model to learn, but not the training
+            structure we needed. An analyst writes a conclusion and the evidence behind it; the report
+            does not record the instruction that produced that conclusion. Supervised fine-tuning
+            requires both the instruction and the answer.
           </p>
 
           <h3 id="extract">Extraction</h3>
 
           <p>
-            The next challenge was therefore to reconstruct these missing instructions from the reports
-            themselves.
-          </p>
-
-          <p>
-            Several early approaches failed because they generated plausible questions that were not
-            fully supported by the report. In other words, the question sounded reasonable, but the
-            source did not contain enough evidence to produce a valid answer.
-          </p>
-
-          <p>
-            We therefore reversed the process. Instead of starting with a question, we started with a
-            real conclusion from the report, removed that conclusion from the evidence, and then wrote
-            a question that could be answered using only the remaining information.
+            Several early extraction approaches failed for the same reason: they generated plausible
+            tasks that the source report did not actually answer. The final extraction method works in
+            reverse: it finds a real analyst conclusion first, removes that conclusion from the
+            available evidence, and then reconstructs only the question that the evidence can support.
           </p>
 
           <figure class="shot">
             <a class="image-link" href="assets/extraction-doc-to-prompt.png" aria-label="Open the full-resolution document-to-prompt extraction illustration">
               <img src="assets/extraction-doc-to-prompt.png" alt="A stack of institutional finance reports is separated into evidence fragments and transformed into a prompt and analyst response" width="1672" height="941" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 1:</strong> The extraction path turns report pages into evidence fragments, then reconstructs a supported prompt and analyst-style answer.</figcaption>
+            <figcaption>Figure 1: The extraction path turns report pages into evidence fragments, then reconstructs a supported prompt and analyst-style answer.</figcaption>
           </figure>
 
           <figure>
@@ -794,7 +811,7 @@
               <div class="flow-step"><span class="flow-number">03</span><span class="flow-title">Rank evidence</span><span class="flow-copy">Score the surviving paragraphs on shared figures, similarity and proximity. Any paragraph above 72% similarity is leakage. Keep six.</span></div>
               <div class="flow-step"><span class="flow-number">04</span><span class="flow-title">Derive the ask</span><span class="flow-copy">Identify the analytical moves in the conclusion, such as direction, valuation, or counterevidence, and ask only for those moves.</span></div>
             </div>
-            <figcaption><strong>Figure 2:</strong> Answer-first extraction. The conclusion becomes the target, while evidence from the same report becomes the prompt.</figcaption>
+            <figcaption>Figure 2: Answer-first extraction. The conclusion becomes the target, while evidence from the same report becomes the prompt.</figcaption>
           </figure>
 
           <p>
@@ -812,16 +829,16 @@
               <div class="funnel-row"><span class="funnel-label">Post-cap candidates</span><span class="funnel-bar" style="width:24.9%"></span><span class="funnel-val">816</span></div>
               <div class="funnel-row keep"><span class="funnel-label">Final baseline</span><span class="funnel-bar" style="width:22.5%"></span><span class="funnel-val">739</span></div>
             </div>
-            <figcaption><strong>Figure 3:</strong> Capping, identity checks, and deduplication reduced 3,136 eligible rows to 739: 589 train, 77 validation, and 73 held out.</figcaption>
+            <figcaption>Figure 3: Capping, identity checks, and deduplication reduced 3,136 eligible rows to 739: 589 train, 77 validation, and 73 held out.</figcaption>
           </figure>
 
           <h3 id="adaptive-data">Adaptive Data</h3>
 
           <p>
-            The 589-row baseline was traceable but offered limited variation for fine-tuning. We
-            therefore uploaded it to <a href="https://adaptionlabs.ai/adaptive-data">Adaptive Data</a>,
-            a platform that automatically reshapes and optimizes training data. The platform expanded
-            those examples to 27,862 rows; 27,405 were used for training. The Adaption platform quality score
+            We uploaded the 589 training rows to Adaption.
+            <a href="https://adaptionlabs.ai/adaptive-data">Adaptive Data</a>, a platform that automatically
+            reshapes and optimizes training data, expanded the 589 examples to 27,862 rows, of
+            which 27,405 were used for training. The Adaption platform quality score
             increased from 5.0 to 9.4, moving the dataset from grade C to grade A.
           </p>
 
@@ -829,7 +846,7 @@
             <a class="image-link" href="assets/a1-quality.png" aria-label="Open the full-resolution Attempt 1 quality figure">
               <img src="assets/a1-quality.png" alt="Adaption quality panel: original text 5.0, adaptive text 9.4, +88.0% relative improvement" width="1435" height="864" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 4:</strong> The Adaption platform quality score increased from <strong>5.0 to 9.4</strong>, moving the dataset from grade C to grade A.</figcaption>
+            <figcaption>Figure 4: The Adaption platform quality score increased from <strong>5.0 to 9.4</strong>, moving the dataset from grade C to grade A.</figcaption>
           </figure>
 
           <div class="note">
@@ -844,12 +861,12 @@
           </p>
 
           <figure>
-            <div class="morph" aria-label="One matched PTB completion shown before and after Adaptive Data">
+              <div class="morph" role="group" aria-label="One matched PTB completion shown before and after Adaptive Data">
               <div class="morph-col">
                 <span class="morph-label">Before</span>
                 <p class="morph-text">
                   We raise our target price by 17% as we roll it over to YE2021, factor in a 1.2-ppt
-                  decrease in our house cost of equity to 13.0% and lift our aggregate 2020F-2023F
+                  decrease in our house cost of equity to 13.0% and lift our aggregate 2020F–2023F
                   NPAT-MI by 2% thanks to wood revenue, partly offset by projected lower capacity
                   utilization for the quartz business.
                 </p>
@@ -869,7 +886,7 @@
                 </div>
               </div>
             </div>
-            <figcaption><strong>Figure 5:</strong> One verified PTB training row before and after Adaptive Data. The prompt and evidence are identical; the remastered completion separates forecasts, valuation implications, and limiting evidence.</figcaption>
+            <figcaption>Figure 5: One verified PTB training row before and after Adaptive Data. The prompt and evidence are identical; the remastered completion separates forecasts, valuation implications, and limiting evidence.</figcaption>
           </figure>
 
           <h3 id="autoscientist">AutoScientist</h3>
@@ -879,68 +896,75 @@
             <a href="https://adaptionlabs.ai/auto-scientist" target="_blank" rel="noreferrer">AutoScientist</a>
             automatically handled the optimization and hosting of the fine-tuning run, allowing us to
             focus on the finance task rather than manually iterating on the training recipe. For
-            Attempt #1, it trained a rank-16 LoRA adapter on
-            <code>Llama-3.3-70B-Instruct</code> for two epochs, with loss on completions only. It also
-            produced two preference evaluations.
+            Attempt #1, it trained a LoRA adapter on
+            <code>Llama-3.3-70B-Instruct</code>. The run used
+            rank 16, alpha 32, all linear layers, two epochs at <code>1e-4</code>, 382 steps, and loss
+            on completions only. It produced two preference evaluations.
           </p>
 
           <figure class="shot">
             <a class="image-link" href="assets/a1-winrates.png" aria-label="Open the full-resolution Attempt 1 evaluation figure">
               <img src="assets/a1-winrates.png" alt="Training win rates: base 16 vs adapted 84 on our dataset; base 23 vs adapted 77 across the Market analysis category" width="2814" height="1012" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 6:</strong> The adapted model won <strong>84 to 16 on our dataset and 77 to 23</strong> across Adaption's Market Analysis category.</figcaption>
+            <figcaption>Figure 6: The adapted model won <strong>84 to 16 on our dataset and 77 to 23</strong> across Adaption's Market Analysis category.</figcaption>
           </figure>
 
           <div class="note">
             <strong>Reading the preference results.</strong> These are pairwise preferences: the share
             of comparisons in which a judge chose the adapted model’s answer over the base model’s.
-            A result of 77 to 23 therefore does not mean 77% correct. Adaption describes its category
-            test sets as in-house and held out.
+            A result of 77 to 23 therefore does not mean 77% correct. Evaluator identity, comparison
+            counts, prompts, response-order randomization, tie handling, matched decoding settings,
+            and mapping to the local 73-row held-out split are not publicly available.
           </div>
 
           <p>
-            More importantly, the 77-to-23 result came from Adaption's separate Market Analysis
-            evaluation, which was constructed independently of our dataset. This separate evaluation
-            extends the evidence beyond our own distribution.
+            Adaption, rather than our team, constructed the broader Market Analysis category evaluation.
+            Its 77-to-23 result provides broader-category platform preference evidence, but independence
+            from the local 73-row held-out split and complete split hygiene are not established in the
+            public record. It is not accuracy, clean external transfer, or investment performance.
           </p>
 
           <h3 id="limitation">Limitations</h3>
 
           <p>
             <strong>Narrow source coverage.</strong> The initial corpus focused on company-level equity
-            research, so the model may understand a company’s fundamentals but miss how interest rates,
-            inflation, policy changes, commodity prices, or sector-wide events affect its outlook. The
-            next stage is to add institutional market research and macroeconomic news so the model can
-            reason across companies and sectors.
+            research and did not establish performance on interest rates, inflation, policy changes,
+            commodity prices, or sector-wide events. The next stage broadened the source coverage to
+            institutional market, macro, fund, and fixed-income research.
           </p>
 
           <p>
-            <strong>Small seed dataset.</strong> Our initial 589 examples could not provide enough
-            breadth or variation for a robust finance workflow, limiting the range of situations the
-            model could learn to handle. The next stage is to expand both the number of source reports
-            and the resulting training samples.
+            <strong>Small seed dataset.</strong> The initial 589 training examples provided limited
+            breadth and variation. The next stage expanded both the number of source reports and the
+            resulting instruction-tuning rows.
           </p>
 
           <div class="act">
-            <h2 id="scale">Attempt #2: Scaling 50x</h2>
+            <h2 id="scale">Attempt #2: Scaling 50×</h2>
+          </div>
+
+          <div class="note">
+            <strong>Reading the label.</strong> “Scaling 50×” is editorial. The measured change is from
+            roughly 1,500 to about 7,000 source reports; three recipes produced 45,702 generated rows,
+            and 56 rows in the Combine output brought the Attempt #2 total to 45,758.
           </div>
 
           <h3 id="scale-data">Data</h3>
 
           <p>
-            Attempt #2 followed directly from the limitations of Attempt #1. The method worked, but
-            the dataset was still too small and narrow to show whether the workflow would hold up at
-            scale. Around the same time, an office-hours conversation with
+            Attempt #2 followed directly from the limitations of Attempt #1: the method worked, but
+            the dataset was still too small to tell us how well the workflow would scale. A conversation
+            with
             <a href="https://www.linkedin.com/in/sararosehooker" target="_blank" rel="noreferrer">Sara Hooker</a>,
-            co-founder of Adaption Labs, reinforced the importance of substantially larger training
-            sets.
+            co-founder of Adaption Labs, who emphasized the importance of larger training sets,
+            reinforced our decision to substantially expand the data and run the experiment again.
           </p>
 
           <p>
-            We therefore expanded the source corpus from roughly 1,500 to about 7,000
+            To test that question, we expanded the source corpus from roughly 1,500 to about 7,000
             institutional reports. The expanded corpus added macro outlooks, sector studies, fund
-            reviews, and fixed-income commentary. As a result, our training corpus grew from
-            <strong>~500 → 45,000+</strong> samples.
+            reviews, and fixed-income commentary. Three recipes produced 45,702 generated rows; 56
+            rows in the Combine output brought the Attempt #2 total to <strong>45,758</strong>.
           </p>
 
           <figure>
@@ -961,7 +985,7 @@
                 <span class="scale-label">Attempt #2, Enhanced Data</span>
               </div>
             </div>
-            <figcaption><strong>Figure 7:</strong> Training-data scale across the two attempts: 589 baseline rows, 27,862 Attempt #1 Adaptive Data rows, and 45,758 Attempt #2 enhanced rows.</figcaption>
+            <figcaption>Figure 7: Training-data scale across the two attempts: 589 baseline rows, 27,862 Attempt #1 Adaptive Data rows, and 45,758 Attempt #2 enhanced rows.</figcaption>
           </figure>
 
           <p>
@@ -979,7 +1003,7 @@
               <div class="tax-row"><span class="tax-label">Comparative analysis</span><span class="tax-track"><i class="tax-fill" style="width:4%"></i></span><span class="tax-val">1.5%</span></div>
               <div class="tax-row"><span class="tax-label">Fund &amp; benchmark</span><span class="tax-track"><i class="tax-fill" style="width:1%"></i></span><span class="tax-val">0.4%</span></div>
             </div>
-            <figcaption><strong>Figure 8:</strong> Insufficient-evidence tasks account for 36.2% of the combined dataset.</figcaption>
+            <figcaption>Figure 8: Insufficient-evidence tasks account for 36.2% of the combined dataset. Reported task shares are rounded.</figcaption>
           </figure>
 
           <p>
@@ -989,23 +1013,23 @@
           </p>
 
           <p>
-            Scaling the dataset also gave us room to test different adaptation strategies. We ran
-            Adaptive Data three times, using three recipes, and merged the outputs with Adaption’s
-            Combine workflow. The three generations used the same source corpus but expressed each
-            analytical task differently. The combined dataset therefore increased row diversity
-            without implying that each generated row came from an independent source.
+            We ran Adaptive Data three times, using three recipes, and merged the outputs
+            with Adaption’s Combine workflow. The three generations used the same source corpus but
+            expressed each analytical task differently. The combined dataset therefore increased row
+            diversity without implying that each generated row came from an independent source.
           </p>
 
-          <div class="table-frame">
+          <div class="table-frame" role="region" aria-label="Attempt 2 dataset comparison" tabindex="0">
             <table class="cmp">
-              <thead><tr><th>Version</th><th>Rows</th><th>Recipe</th><th>Quality score</th></tr></thead>
+              <caption class="sr-only">Attempt #2 Adaptive Data recipe row counts and platform quality scores</caption>
+              <thead><tr><th scope="col">Version</th><th scope="col">Rows</th><th scope="col">Recipe</th><th scope="col">Platform score</th></tr></thead>
               <tbody>
-                <tr><th>Dataset 1</th><td>15,252</td><td>Completion only</td><td>7.0 → 9.2</td></tr>
-                <tr><th>Dataset 2</th><td>15,253</td><td>Prompt + completion</td><td>7.0 → 9.5</td></tr>
-                <tr><th>Dataset 3</th><td>15,197</td><td>Independent variant</td><td>7.0 → 9.5</td></tr>
+                <tr><th scope="row">Dataset 1</th><td>15,252</td><td>Completion only</td><td>7.0 → 9.2</td></tr>
+                <tr><th scope="row">Dataset 2</th><td>15,253</td><td>Prompt + completion</td><td>7.0 → 9.5</td></tr>
+                <tr><th scope="row">Dataset 3</th><td>15,197</td><td>Independent variant</td><td>7.0 → 9.5</td></tr>
               </tbody>
               <tfoot>
-                <tr><th><span class="sum-mark" aria-hidden="true">Σ</span>Final</th><td class="em">45,758</td><td>Combined outputs</td><td>8.0 → 9.4</td></tr>
+                <tr><th scope="row"><span class="sum-mark" aria-hidden="true">Σ</span>Final</th><td class="em">45,758</td><td>45,702 + 56 Combine</td><td>8.0 → 9.4</td></tr>
               </tfoot>
             </table>
           </div>
@@ -1014,51 +1038,152 @@
             <a class="image-link" href="assets/a2-adaptive-data.png" aria-label="Open the full-resolution Attempt 2 combined-dataset figure">
               <img src="assets/a2-adaptive-data.png" alt="Adaption quality grade panel showing the Attempt 2 dataset improving from grade B before adaptation to grade A after adaptation" width="1546" height="626" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 9:</strong> The Adaption platform quality score increased from <strong>8.0 to 9.4</strong>, moving the broader Attempt #2 dataset from grade B to grade A.</figcaption>
+            <figcaption>Figure 9: The Adaption platform quality score increased from <strong>8.0 to 9.4</strong>, moving the broader Attempt #2 dataset from grade B to grade A.</figcaption>
           </figure>
 
           <p>
-            The combined dataset entered Adaptive Data with a higher baseline Adaption
-            platform quality score. Each source generation started at 7.0, while the combined dataset started at 8.0 and finished at
-            9.4. The three generations share the same 1,753 leakage groups, so the 45,758 rows
-            represent roughly 15,250 unique generated items rather than three independent corpora.
-            The final row count came from broader source coverage and multiple adaptation recipes.
+            The combined dataset entered Adaptive Data with a higher baseline Adaption platform quality
+            score. Each source generation started at 7.0, while the combined dataset started at 8.0 and
+            finished at 9.4. These values describe dataset quality, not model performance, and Adaption
+            does not publish the scoring rubric. The three generations share the same 1,753 leakage groups,
+            so the 45,758 rows represent roughly 15,250 unique generated items rather than three independent
+            corpora. The final row count came from broader source coverage and multiple adaptation recipes.
           </p>
 
           <h3 id="scale-model">Model</h3>
 
           <p>
-            With the larger dataset ready, the remaining question was whether the training workflow
-            could scale alongside the data. AutoScientist trained a rank-32 LoRA adapter for
-            <code>Llama 4 Scout 17B</code> on all 45,758 rows, completing two epochs in 168 steps.
+            AutoScientist trained a LoRA adapter for <code>Llama 4 Scout 17B</code> on the 45,758-row
+            combined dataset. The released adapter records rank 32, alpha 64, dropout 0.05, and the
+            <code>q_proj</code>, <code>k_proj</code>, <code>v_proj</code>, and <code>o_proj</code>
+            targets. Trainer state records two epochs, 168 steps, and a peak learning rate of
+            <code>2e-5</code>.
           </p>
 
           <h3 id="result">Results</h3>
 
           <p>
-            The two attempts answer different questions. Attempt #1 provides the stronger
-            broader-category evidence through Adaption's separate Market Analysis evaluation. Attempt
-            #2 tests whether the full data and training pipeline can scale to a substantially broader
-            finance corpus.
-          </p>
-
-          <p>
-            At that larger scale, Attempt #2 produced 45,758 rows and raised the Adaption platform
-            quality score from 8.0 to 9.4. In a separate dataset-specific preference evaluation, the
-            adapted model won 80 to 20. Like the earlier win rates, the 80-to-20 result is a pairwise
-            preference score, not an accuracy measure.
+            Attempt #2 produced 45,758 rows and raised the Adaption platform quality score from 8.0 to
+            9.4. In a separate dataset-specific preference evaluation, the adapted model won 80 to 20.
           </p>
 
           <figure class="shot">
             <a class="image-link" href="assets/a2-winrate.png" aria-label="Open the full-resolution Attempt 2 evaluation figure">
               <img src="assets/a2-winrate.png" alt="AutoScientist result for the combined dataset: base 20, adapted 80" width="1036" height="760" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 10:</strong> Attempt #2 produced an <strong>80 to 20</strong> dataset-specific preference result. No category-level result was produced.</figcaption>
+            <figcaption>Figure 10: Attempt #2 produced an <strong>80 to 20</strong> dataset-specific preference result. No category-level result was produced.</figcaption>
           </figure>
 
+          <div class="note">
+            <strong>Evaluation boundary.</strong> This is an adapted-versus-base pairwise preference,
+            not accuracy or investment performance. The unpublished protocol details listed for Attempt
+            #1 also apply here.
+          </div>
+
           <p>
-            Attempt #2 has no category-level result, so the 80-to-20 preference describes performance
-            only on its own distribution. The evidence supports scale, not better generalization.
+            Because Attempt #2 has no category-level result, it does not tell us whether generalization
+            improved over Attempt #1. Attempt #1 provides broader-category platform evidence through its
+            77-to-23 Market Analysis result, subject to the split-hygiene limits above. Attempt #2 shows
+            source and task breadth at a 45,758-row combined scale while recording an 80-to-20 preference
+            margin on its own distribution.
+          </p>
+
+          <div class="act">
+            <h2 id="future-improvement">Future Improvement: Global Market-System Intelligence</h2>
+          </div>
+
+          <div class="note">
+            <strong>Status.</strong> Everything in this section is aspirational. It is not a numbered
+            attempt, completed model, implemented retrieval system, or evaluated result.
+          </div>
+
+          <p>
+            Attempt #1 used company-level supplied-evidence tasks. Attempt #2 broadened the source
+            coverage and financial task taxonomy. A future system would ask a larger question: what
+            changed, which parts of the global financial system are exposed, through which transmission
+            channels, over what horizon, and what point-in-time evidence supports the conclusion?
+          </p>
+
+          <h3 id="future-evidence">Global, point-in-time evidence</h3>
+
+          <p>
+            A global evidence layer could combine equities, sovereign and corporate credit, rates, FX,
+            commodities, real estate, central-bank research, regulatory filings, earnings calls,
+            institutional research, and macroeconomic releases across major markets. Every training,
+            retrieval, and evaluation case would preserve exactly what was available at the decision
+            timestamp, including source lineage, revisions, contradictions, and pre-event market context.
+          </p>
+
+          <p>
+            Suppliers, customers, competitors, ownership, funds, industries, commodities, leadership,
+            patents, and geographic exposures would be represented as time-varying relationships rather
+            than static metadata. This would make provenance and changing exposure part of the reasoning
+            problem instead of treating companies as independent observations.
+          </p>
+
+          <h3 id="future-transmission">Cross-sector, cross-asset, and multi-horizon transmission</h3>
+
+          <p>
+            Future tasks would test first- and higher-order effects, such as <code>rate shock → bond
+            yields → bank funding → mortgage rates → housing demand → construction → materials → company
+            earnings</code>. The analysis would distinguish immediate market reaction, near-term operating
+            or liquidity effects, medium-term earnings and valuation transmission, and longer-term
+            structural change.
+          </p>
+
+          <p>
+            The same event can have different signs across assets and horizons. Transmission tests would
+            therefore account for contracts, inventory, hedging, pricing power, pass-through capacity,
+            geography, and market regime rather than stop at the directly mentioned company or asset.
+          </p>
+
+          <h3 id="future-evaluation">Market-feedback evaluation, adaptive retrieval, and transfer tests</h3>
+
+          <p>
+            Model hypotheses could be compared with subsequently realized market behavior as noisy
+            feedback—not as unquestionable labels, an accuracy shortcut, or an investment-return engine.
+            Evaluation would separate broad-market, sector, factor, and company-specific movement where
+            possible and freeze definitions, horizons, baselines, and market-adjustment methods before
+            testing.
+          </p>
+
+          <p>
+            An adaptive retrieval policy could learn which evidence sources are useful for different
+            event types, entities, regimes, and horizons while keeping historical evidence strictly
+            point-in-time. Global transfer tests would then examine unseen geographies, industries, asset
+            classes, languages, source types, regimes, and shocks instead of testing only interpolation
+            within the original corpus.
+          </p>
+
+          <h3 id="future-research">Research blueprints</h3>
+
+          <p>
+            <a href="https://arxiv.org/abs/2505.23826" target="_blank" rel="noreferrer">FinRipple</a>
+            provides one useful blueprint: model a financial event as a shock propagating through a
+            dynamic network, then compare predicted ripple effects with realized asset-pricing residuals.
+            Its structural path is <code>event → direct exposure → related entities → ripple effects →
+            market response</code>.
+          </p>
+
+          <p>
+            A complementary blueprint is Point-in-Time Financial RAG with Market-Feedback Adaptive
+            Retrieval. It would freeze the reader, retrieve only evidence available at the historical
+            decision time, supply pre-event market context, predict residual impact over multiple
+            horizons, and use later market behavior to update an external source-memory system rather
+            than continually fine-tune the reader on noisy returns.
+          </p>
+
+          <p>
+            Before claiming that such a system exists or works, the project would need a release-eligible
+            point-in-time corpus, dynamic relationship and provenance tracking, frozen evaluation rules,
+            published uncertainty and error analysis, and transfer tests across geographies, regimes,
+            sectors, asset classes, and source types.
+          </p>
+
+          <p>
+            <strong>The long-term objective is not merely more financial documents. It is to test how
+            information propagates through the global financial system while preserving evidence,
+            time, uncertainty, and evaluation discipline.</strong>
           </p>
 
           <div class="act">
@@ -1070,9 +1195,9 @@
             for hosting the <a href="https://adaptionlabs.ai/blog/autoscientist-challenge" target="_blank" rel="noreferrer">AutoScientist Challenge</a>
             and for building Adaptive Data and AutoScientist,
             the tools we used to expand the training data and automate model training in a practical
-            environment. We also thank
-            <a href="https://www.linkedin.com/in/sararosehooker" target="_blank" rel="noreferrer">Sara Hooker</a>
-            for the office-hours advice that reinforced our decision to scale the data, and
+            environment. We are especially grateful
+            to <a href="https://www.linkedin.com/in/sararosehooker" target="_blank" rel="noreferrer">Sara Hooker</a>
+            for the office-hours advice that reinforced our decision to scale the data. We also thank
             <a href="https://www.linkedin.com/in/ross-giagkoudis-1470a8263/" target="_blank" rel="noreferrer">Ross Giagkoudis</a>
             for being consistently supportive and helpful in Discord throughout the challenge.
           </p>
@@ -1296,8 +1421,10 @@
       document.querySelectorAll(".copy-id").forEach((btn) => {
         btn.addEventListener("click", async () => {
           const value = btn.dataset.copy;
+          let copied = false;
           try {
             await navigator.clipboard.writeText(value);
+            copied = true;
           } catch {
             const ta = document.createElement("textarea");
             ta.value = value;
@@ -1306,12 +1433,12 @@
             ta.style.opacity = "0";
             document.body.appendChild(ta);
             ta.select();
-            try { document.execCommand("copy"); } catch {}
+            try { copied = document.execCommand("copy"); } catch {}
             ta.remove();
           }
           const flag = btn.querySelector(".copy-flag");
-          btn.classList.add("copied");
-          flag.textContent = "Copied";
+          btn.classList.toggle("copied", copied);
+          flag.textContent = copied ? "Copied" : "Copy failed";
           clearTimeout(btn.copyTimer);
           btn.copyTimer = setTimeout(() => {
             btn.classList.remove("copied");
