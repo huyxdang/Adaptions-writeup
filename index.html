@@ -677,6 +677,7 @@
               <li><a href="#result">Results</a></li>
             </ul>
           </li>
+          <li class="toc-group"><a class="toc-section" href="#whats-next">What's next</a></li>
           <li class="toc-group"><a class="toc-section" href="#acknowledgements">Acknowledgements</a></li>
           <li class="toc-group"><a class="toc-section" href="#resources">Resources</a></li>
         </ul>
@@ -704,6 +705,7 @@
                 <li><a href="#result">Results</a></li>
               </ul>
             </li>
+            <li class="toc-group"><a class="toc-section" href="#whats-next">What's next</a></li>
             <li class="toc-group"><a class="toc-section" href="#acknowledgements">Acknowledgements</a></li>
             <li class="toc-group"><a class="toc-section" href="#resources">Resources</a></li>
           </ul>
@@ -1059,6 +1061,31 @@
           <p>
             Attempt #2 has no category-level result, so the 80-to-20 preference describes performance
             only on its own distribution. The evidence supports scale, not better generalization.
+          </p>
+
+          <div class="act">
+            <h2 id="whats-next">What's next</h2>
+          </div>
+
+          <p>
+            Our next step is to build a point-in-time dataset of dynamic global-market relationships.
+            It would connect companies, sectors, commodities, funds, geographies, and macroeconomic
+            factors so that a model can study how financial events propagate across markets rather than
+            treating each company or report in isolation.
+          </p>
+
+          <p>
+            We want to compare two research directions. <a href="https://arxiv.org/abs/2505.23826" target="_blank" rel="noreferrer">FinRipple</a>
+            trains a model to reason over time-varying market relationships, while
+            <a href="https://arxiv.org/abs/2605.31201" target="_blank" rel="noreferrer">Point-in-Time Financial RAG</a>
+            keeps the reader model frozen and adapts which historical evidence it retrieves using
+            market feedback.
+          </p>
+
+          <p>
+            We would test both approaches on unseen markets, time periods, industries, and shocks. The
+            proposed dataset, experiments, and evaluation boundaries are described in the
+            <a href="docs/ROADMAP.md">complete roadmap</a>.
           </p>
 
           <div class="act">
