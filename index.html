@@ -759,9 +759,10 @@
           </p>
 
           <p>
-            These reports contained the style of analysis we wanted the model to learn, but not the
-            instructions required for training. Supervised fine-tuning requires a question–answer pair.
-            Our reports contained the answer—the analyst’s analysis—but not the question that produced it.
+            The reports contained exactly the style of analysis we wanted the model to learn, but they
+            were not training examples yet. SFT requires both an instruction and a target response,
+            but we only had the target—the analysis from the report—and no instruction that could have
+            produced it.
           </p>
 
           <h3 id="extract">Extraction</h3>
