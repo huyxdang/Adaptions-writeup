@@ -720,9 +720,9 @@
 
           <p>
             That goal came from a recurring problem we saw firsthand. Institutional finance reports
-            contain the kind of analysis we wanted a model to learn—forecasts, valuations,
-            recommendations, and the reasoning behind them—but they do not contain the prompts needed
-            to turn that analysis into training data.
+            contain the kind of analysis we wanted a model to learn: forecasts, valuations,
+            recommendations, and the reasoning behind them. However, they do not contain the prompts
+            needed to turn that analysis into training data.
           </p>
 
           <p>
@@ -755,8 +755,7 @@
           <p>
             We started with roughly 1,500 sell-side reports on Southeast Asia's listed companies, published
             between 2011 and 2026. The collection included earnings reviews, valuation updates, and
-            target-price revisions written by professional analysts. It did not include model-written
-            text, blogs, or forum posts.
+            target-price revisions written by professional analysts.
           </p>
 
           <p>
@@ -813,10 +812,10 @@
           <h3 id="adaptive-data">Adaptive Data</h3>
 
           <p>
-            We uploaded the 589 training rows to Adaption.
-            <a href="https://adaptionlabs.ai/adaptive-data">Adaptive Data</a>, a platform that automatically
-            reshapes and optimizes training data, expanded the 589 examples to 27,862 rows, of
-            which 27,405 were used for training. The Adaption platform quality score
+            The 589-row baseline was traceable but offered limited variation for fine-tuning. We
+            therefore uploaded it to <a href="https://adaptionlabs.ai/adaptive-data">Adaptive Data</a>,
+            a platform that automatically reshapes and optimizes training data. The platform expanded
+            those examples to 27,862 rows; 27,405 were used for training. The Adaption platform quality score
             increased from 5.0 to 9.4, moving the dataset from grade C to grade A.
           </p>
 
@@ -844,7 +843,7 @@
                 <span class="morph-label">Before</span>
                 <p class="morph-text">
                   We raise our target price by 17% as we roll it over to YE2021, factor in a 1.2-ppt
-                  decrease in our house cost of equity to 13.0% and lift our aggregate 2020F–2023F
+                  decrease in our house cost of equity to 13.0% and lift our aggregate 2020F-2023F
                   NPAT-MI by 2% thanks to wood revenue, partly offset by projected lower capacity
                   utilization for the quartz business.
                 </p>
@@ -874,10 +873,9 @@
             <a href="https://adaptionlabs.ai/auto-scientist" target="_blank" rel="noreferrer">AutoScientist</a>
             automatically handled the optimization and hosting of the fine-tuning run, allowing us to
             focus on the finance task rather than manually iterating on the training recipe. For
-            Attempt #1, it trained a LoRA adapter on
-            <code>Llama-3.3-70B-Instruct</code>. The run used
-            rank 16, alpha 32, all linear layers, two epochs at <code>1e-4</code>, 382 steps, and loss
-            on completions only. It produced two preference evaluations.
+            Attempt #1, it trained a rank-16 LoRA adapter on
+            <code>Llama-3.3-70B-Instruct</code> for two epochs, with loss on completions only. It also
+            produced two preference evaluations.
           </p>
 
           <figure class="shot">
@@ -895,9 +893,9 @@
           </div>
 
           <p>
-            The 77-to-23 Market Analysis result is more informative because Adaption, rather than our
-            team, constructed the broader category evaluation. That preference result provides broader
-            category evidence beyond our own rows; it is not an accuracy score.
+            More importantly, the 77-to-23 result came from Adaption's separate Market Analysis
+            evaluation, which was constructed independently of our dataset. This separate evaluation
+            extends the evidence beyond our own distribution.
           </p>
 
           <h3 id="limitation">Limitations</h3>
@@ -924,16 +922,16 @@
           <h3 id="scale-data">Data</h3>
 
           <p>
-            Attempt #2 followed directly from the limitations of Attempt #1: the method worked, but
-            the dataset was still too small to tell us how well the workflow would scale. A conversation
-            with
+            Attempt #2 followed directly from the limitations of Attempt #1. The method worked, but
+            the dataset was still too small and narrow to show whether the workflow would hold up at
+            scale. Around the same time, an office-hours conversation with
             <a href="https://www.linkedin.com/in/sararosehooker" target="_blank" rel="noreferrer">Sara Hooker</a>,
-            co-founder of Adaption Labs, who emphasized the importance of larger training sets,
-            reinforced our decision to substantially expand the data and run the experiment again.
+            co-founder of Adaption Labs, reinforced the importance of substantially larger training
+            sets.
           </p>
 
           <p>
-            To test that question, we expanded the source corpus from roughly 1,500 to about 7,000
+            We therefore expanded the source corpus from roughly 1,500 to about 7,000
             institutional reports. The expanded corpus added macro outlooks, sector studies, fund
             reviews, and fixed-income commentary. As a result, our training corpus grew from
             <strong>~500 → 45,000+</strong> samples.
@@ -985,10 +983,11 @@
           </p>
 
           <p>
-            We ran Adaptive Data three times, using three recipes, and merged the outputs
-            with Adaption’s Combine workflow. The three generations used the same source corpus but
-            expressed each analytical task differently. The combined dataset therefore increased row
-            diversity without implying that each generated row came from an independent source.
+            Scaling the dataset also gave us room to test different adaptation strategies. We ran
+            Adaptive Data three times, using three recipes, and merged the outputs with Adaption’s
+            Combine workflow. The three generations used the same source corpus but expressed each
+            analytical task differently. The combined dataset therefore increased row diversity
+            without implying that each generated row came from an independent source.
           </p>
 
           <div class="table-frame">
@@ -1023,18 +1022,25 @@
           <h3 id="scale-model">Model</h3>
 
           <p>
-            AutoScientist trained a LoRA adapter for <code>Llama 4 Scout 17B</code> on the 45,758-row
-            combined dataset. The released adapter records rank 32, alpha 64, dropout 0.05, and the
-            <code>q_proj</code>, <code>k_proj</code>, <code>v_proj</code>, and <code>o_proj</code>
-            targets. Trainer state records two epochs, 168 steps, and a peak learning rate of
-            <code>2e-5</code>.
+            With the larger dataset ready, the remaining question was whether the training workflow
+            could scale alongside the data. AutoScientist trained a rank-32 LoRA adapter for
+            <code>Llama 4 Scout 17B</code> on all 45,758 rows, completing two epochs in 168 steps.
           </p>
 
           <h3 id="result">Results</h3>
 
           <p>
-            Attempt #2 produced 45,758 rows and raised the Adaption platform quality score from 8.0 to
-            9.4. In a separate dataset-specific preference evaluation, the adapted model won 80 to 20.
+            The two attempts answer different questions. Attempt #1 provides the stronger
+            broader-category evidence through Adaption's separate Market Analysis evaluation. Attempt
+            #2 tests whether the full data and training pipeline can scale to a substantially broader
+            finance corpus.
+          </p>
+
+          <p>
+            At that larger scale, Attempt #2 produced 45,758 rows and raised the Adaption platform
+            quality score from 8.0 to 9.4. In a separate dataset-specific preference evaluation, the
+            adapted model won 80 to 20. Like the earlier win rates, the 80-to-20 result is a pairwise
+            preference score, not an accuracy measure.
           </p>
 
           <figure class="shot">
@@ -1045,11 +1051,8 @@
           </figure>
 
           <p>
-            Because Attempt #2 has no category-level result, it does not tell us whether generalization
-            improved over Attempt #1. Attempt #1 therefore provides the stronger broader-category
-            evidence through its 77-to-23 Market Analysis result. What Attempt #2 does show is that the
-            full workflow scaled from roughly 500 seed examples to 45,758 training rows while retaining
-            an 80-to-20 preference margin on its own distribution.
+            Attempt #2 has no category-level result, so the 80-to-20 preference describes performance
+            only on its own distribution. The evidence supports scale, not better generalization.
           </p>
 
           <div class="act">
