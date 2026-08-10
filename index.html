@@ -249,6 +249,17 @@
         scroll-margin-top: 90px;
       }
 
+      article h4 {
+        margin: 30px 0 12px;
+        color: var(--medium-gray);
+        font-family: var(--sans);
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 18px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
       .act + h3 { margin-top: 38.4px; }
 
       article a { color: var(--accent); text-decoration: none; text-decoration-thickness: 1px; text-underline-offset: 3px; }
@@ -744,6 +755,14 @@
             us concentrate on the finance-specific work we knew best.
           </p>
 
+          <p>
+            We pursued that goal in two stages. Attempt #1 tested whether a small model could turn
+            company-level financial evidence into a useful first draft of equity research. Its results
+            were encouraging, but narrow source coverage limited its usefulness in real work. Attempt
+            #2 therefore expanded both the quantity and breadth of the training data, adding more
+            market- and macro-level context.
+          </p>
+
           <div class="act">
             <h2 id="first-time">Attempt #1: Proof of Concept</h2>
           </div>
@@ -770,6 +789,13 @@
             themselves.
           </p>
 
+          <figure class="shot">
+            <a class="image-link" href="assets/extraction-doc-to-prompt.png" aria-label="Open the full-resolution document-to-prompt extraction illustration">
+              <img src="assets/extraction-doc-to-prompt.png" alt="A stack of institutional finance reports is separated into evidence fragments and transformed into a prompt and analyst response" width="1672" height="941" loading="lazy" decoding="async" />
+            </a>
+            <figcaption><strong>Figure 1:</strong> The extraction path turns report pages into evidence fragments, then reconstructs a supported prompt and analyst-style answer.</figcaption>
+          </figure>
+
           <p>
             Several early approaches failed because they generated plausible questions that were not
             fully supported by the report. In other words, the question sounded reasonable, but the
@@ -777,17 +803,17 @@
           </p>
 
           <p>
+            One fixed-template approach asked every example for counterevidence and an invalidation
+            condition, even when the source contained neither. In a 50-row review, 45 rows failed that
+            check. This failure showed that each instruction had to be derived from the analysis the
+            report could actually support.
+          </p>
+
+          <p>
             We therefore reversed the process. Instead of starting with a question, we started with a
             real conclusion from the report, removed that conclusion from the evidence, and then wrote
             a question that could be answered using only the remaining information.
           </p>
-
-          <figure class="shot">
-            <a class="image-link" href="assets/extraction-doc-to-prompt.png" aria-label="Open the full-resolution document-to-prompt extraction illustration">
-              <img src="assets/extraction-doc-to-prompt.png" alt="A stack of institutional finance reports is separated into evidence fragments and transformed into a prompt and analyst response" width="1672" height="941" loading="lazy" decoding="async" />
-            </a>
-            <figcaption><strong>Figure 1:</strong> The extraction path turns report pages into evidence fragments, then reconstructs a supported prompt and analyst-style answer.</figcaption>
-          </figure>
 
           <figure>
             <div class="figure-panel">
@@ -800,10 +826,9 @@
           </figure>
 
           <p>
-            Earlier fixed templates asked every example for counterevidence and an invalidation
-            condition, even when the source contained neither. In a 50-row review, 45 rows failed
-            the counterevidence-and-invalidation-condition check. We therefore derived each task from
-            its conclusion and applied quality gates to produce a smaller, traceable baseline.
+            We then applied support, leakage, identity, capping, and deduplication checks. These gates
+            reduced source concentration and produced a smaller baseline in which every instruction,
+            evidence passage, and target response remained traceable to its report.
           </p>
 
           <figure>
@@ -823,26 +848,13 @@
             The 589-row baseline was traceable but offered limited variation for fine-tuning. We
             therefore uploaded it to <a href="https://adaptionlabs.ai/adaptive-data">Adaptive Data</a>,
             a platform that automatically reshapes and optimizes training data. The platform expanded
-            those examples to 27,862 rows; 27,405 were used for training. The Adaption platform quality score
-            increased from 5.0 to 9.4, moving the dataset from grade C to grade A.
+            those examples to 27,862 rows; 27,405 were used for training.
           </p>
 
-          <figure class="shot">
-            <a class="image-link" href="assets/a1-quality.png" aria-label="Open the full-resolution Attempt 1 quality figure">
-              <img src="assets/a1-quality.png" alt="Adaption quality panel: original text 5.0, adaptive text 9.4, +88.0% relative improvement" width="1435" height="864" loading="lazy" decoding="async" />
-            </a>
-            <figcaption><strong>Figure 4:</strong> The Adaption platform quality score increased from <strong>5.0 to 9.4</strong>, moving the dataset from grade C to grade A.</figcaption>
-          </figure>
-
-          <div class="note">
-            <strong>Reading the quality score.</strong> The 5.0-to-9.4 result is an Adaption platform
-            quality score for the dataset, not a model-evaluation result. Adaption does not publish
-            the scoring rubric.
-          </div>
-
           <p>
-            In the matched example below, Adaptive Data preserved the prompt and evidence
-            while making the completion easier to inspect and evaluate.
+            The matched example below shows what that reshaping changed. Adaptive Data preserved the
+            underlying task while turning a dense analyst conclusion into a response whose forecasts,
+            valuation implications, and limiting evidence were easier to inspect.
           </p>
 
           <figure>
@@ -871,8 +883,26 @@
                 </div>
               </div>
             </div>
-            <figcaption><strong>Figure 5:</strong> One verified PTB training row before and after Adaptive Data. The prompt and evidence are identical; the remastered completion separates forecasts, valuation implications, and limiting evidence.</figcaption>
+            <figcaption><strong>Figure 4:</strong> One verified PTB training row before and after Adaptive Data. The remastered completion separates forecasts, valuation implications, and limiting evidence.</figcaption>
           </figure>
+
+          <p>
+            Across the full dataset, the Adaption platform quality score increased from 5.0 to 9.4,
+            moving the dataset from grade C to grade A.
+          </p>
+
+          <figure class="shot">
+            <a class="image-link" href="assets/a1-quality.png" aria-label="Open the full-resolution Attempt 1 quality figure">
+              <img src="assets/a1-quality.png" alt="Adaption quality panel: original text 5.0, adaptive text 9.4, +88.0% relative improvement" width="1435" height="864" loading="lazy" decoding="async" />
+            </a>
+            <figcaption><strong>Figure 5:</strong> The Adaption platform quality score increased from <strong>5.0 to 9.4</strong>, moving the dataset from grade C to grade A.</figcaption>
+          </figure>
+
+          <div class="note">
+            <strong>Reading the quality score.</strong> The 5.0-to-9.4 result is an Adaption platform
+            quality score for the dataset, not a model-evaluation result. Adaption does not publish
+            the scoring rubric.
+          </div>
 
           <h3 id="autoscientist">AutoScientist</h3>
 
@@ -882,8 +912,13 @@
             automatically handled the optimization and hosting of the fine-tuning run, allowing us to
             focus on the finance task rather than manually iterating on the training recipe. For
             Attempt #1, it trained a rank-16 LoRA adapter on
-            <code>Llama-3.3-70B-Instruct</code> for two epochs, with loss on completions only. It also
-            produced two preference evaluations.
+            <code>Llama-3.3-70B-Instruct</code> for two epochs, with loss on completions only.
+          </p>
+
+          <p>
+            To test whether the adapter produced more useful research drafts, AutoScientist ran two
+            preference evaluations: one on our dataset and another on Adaption’s separate, in-house
+            Market Analysis evaluation.
           </p>
 
           <figure class="shot">
@@ -901,9 +936,15 @@
           </div>
 
           <p>
-            More importantly, the 77-to-23 result came from Adaption's separate Market Analysis
-            evaluation, which was constructed independently of our dataset. This separate evaluation
-            extends the evidence beyond our own distribution.
+            The 77-to-23 result is especially useful because it came from an evaluation constructed
+            independently of our dataset. It therefore provides limited evidence that the improvement
+            extended beyond our own distribution.
+          </p>
+
+          <p>
+            Attempt #1 showed that a small adapted model could turn company-level evidence into a more
+            useful first draft of equity research. It did not yet show that the model could support the
+            broader market context required in day-to-day finance work.
           </p>
 
           <h3 id="limitation">Limitations</h3>
@@ -917,32 +958,35 @@
           </p>
 
           <p>
-            <strong>Small seed dataset.</strong> Our initial 589 examples could not provide enough
-            breadth or variation for a robust finance workflow, limiting the range of situations the
-            model could learn to handle. The next stage is to expand both the number of source reports
-            and the resulting training samples.
+            <strong>Small source-grounded seed.</strong> Although Adaptive Data expanded the training set,
+            those variations still began with only 589 independent examples. That seed could not cover
+            enough situations for a robust finance workflow. The next stage is to expand both the number
+            of source reports and the resulting training samples.
           </p>
 
           <div class="act">
             <h2 id="scale">Attempt #2: Scaling 50x</h2>
           </div>
 
-          <h3 id="scale-data">Data</h3>
-
           <p>
-            Attempt #2 followed directly from the limitations of Attempt #1. The method worked, but
-            the dataset was still too small and narrow to show whether the workflow would hold up at
-            scale. Around the same time, an office-hours conversation with
+            Attempt #2 addressed both practical limitations: it added broader market context and more
+            source-grounded examples so the model could move closer to our real research workflow.
+            Around the same time, an office-hours conversation with
             <a href="https://www.linkedin.com/in/sararosehooker" target="_blank" rel="noreferrer">Sara Hooker</a>,
             co-founder of Adaption Labs, reinforced the importance of substantially larger training
             sets.
           </p>
 
+          <h3 id="scale-data">Data</h3>
+
+          <h4>Broader source coverage</h4>
+
           <p>
             We therefore expanded the source corpus from roughly 1,500 to about 7,000
             institutional reports. The expanded corpus added macro outlooks, sector studies, fund
-            reviews, and fixed-income commentary. As a result, our training corpus grew from
-            <strong>~500 → 45,000+</strong> samples.
+            reviews, and fixed-income commentary. Across the two attempts, the training set grew in
+            two stages: from the 589-row baseline to 27,862 adapted rows in Attempt #1, then to 45,758
+            rows built from the broader corpus in Attempt #2—more than 50 times the original baseline.
           </p>
 
           <figure>
@@ -966,10 +1010,15 @@
             <figcaption><strong>Figure 7:</strong> Training-data scale across the two attempts: 589 baseline rows, 27,862 Attempt #1 Adaptive Data rows, and 45,758 Attempt #2 enhanced rows.</figcaption>
           </figure>
 
+          <h4>Broader research tasks</h4>
+
           <p>
             The expanded source corpus required a broader task taxonomy. Each training row records a
             task family, an asset family, and the relationship between evidence and conclusion. This
             taxonomy also adds a task that Attempt #1 lacked: deciding when the evidence is insufficient.
+            More than one third of the rows reward the model for declining to make an unsupported claim,
+            because a useful first draft must recognize when the available evidence cannot support a
+            conclusion.
           </p>
 
           <figure>
@@ -984,11 +1033,7 @@
             <figcaption><strong>Figure 8:</strong> Insufficient-evidence tasks account for 36.2% of the combined dataset.</figcaption>
           </figure>
 
-          <p>
-            More than one third of the rows reward the model for declining to make an unsupported
-            claim. Insufficient-evidence tasks matter because fluent synthesis is not enough; an
-            analyst also needs to recognize when the available evidence cannot support a conclusion.
-          </p>
+          <h4>Multiple adaptation recipes</h4>
 
           <p>
             Scaling the dataset also gave us room to test different adaptation strategies. We ran
@@ -996,6 +1041,13 @@
             Combine workflow. The three generations used the same source corpus but expressed each
             analytical task differently. The combined dataset therefore increased row diversity
             without implying that each generated row came from an independent source.
+          </p>
+
+          <p>
+            Specifically, the three generations share the same 1,753 leakage groups. The 45,758 rows
+            therefore represent roughly 15,250 unique generated items rather than three independent
+            corpora. The final row count came from broader source coverage and multiple adaptation
+            recipes.
           </p>
 
           <div class="table-frame">
@@ -1012,6 +1064,12 @@
             </table>
           </div>
 
+          <p>
+            The broader combined dataset entered Adaptive Data with a higher baseline quality score
+            than the individual generations. It started at 8.0 and finished at 9.4, moving from grade
+            B to grade A.
+          </p>
+
           <figure class="shot">
             <a class="image-link" href="assets/a2-adaptive-data.png" aria-label="Open the full-resolution Attempt 2 combined-dataset figure">
               <img src="assets/a2-adaptive-data.png" alt="Adaption quality grade panel showing the Attempt 2 dataset improving from grade B before adaptation to grade A after adaptation" width="1546" height="624" loading="lazy" decoding="async" />
@@ -1020,34 +1078,25 @@
           </figure>
 
           <p>
-            The combined dataset entered Adaptive Data with a higher baseline Adaption
-            platform quality score. Each source generation started at 7.0, while the combined dataset started at 8.0 and finished at
-            9.4. The three generations share the same 1,753 leakage groups, so the 45,758 rows
-            represent roughly 15,250 unique generated items rather than three independent corpora.
-            The final row count came from broader source coverage and multiple adaptation recipes.
+            This broader dataset gave the model more of the context found in real finance work: not
+            only individual companies, but also market conditions, sector relationships, and cases in
+            which the evidence is insufficient.
           </p>
 
           <h3 id="scale-model">Model</h3>
 
           <p>
-            With the larger dataset ready, the remaining question was whether the training workflow
-            could scale alongside the data. AutoScientist trained a rank-32 LoRA adapter for
-            <code>Llama 4 Scout 17B</code> on all 45,758 rows, completing two epochs in 168 steps.
+            With the broader dataset ready, the next question was whether a small adapter could learn
+            from it. AutoScientist trained a rank-32 LoRA adapter for <code>Llama 4 Scout 17B</code> on
+            all 45,758 rows, completing two epochs in 168 steps.
           </p>
 
           <h3 id="result">Results</h3>
 
           <p>
-            The two attempts answer different questions. Attempt #1 provides the stronger
-            broader-category evidence through Adaption's separate Market Analysis evaluation. Attempt
-            #2 tests whether the full data and training pipeline can scale to a substantially broader
-            finance corpus.
-          </p>
-
-          <p>
-            At that larger scale, Attempt #2 produced 45,758 rows and raised the Adaption platform
-            quality score from 8.0 to 9.4. In a separate dataset-specific preference evaluation, the
-            adapted model won 80 to 20. Like the earlier win rates, the 80-to-20 result is a pairwise
+            On Attempt #2’s dataset-specific preference evaluation, the adapted model won 80 to 20.
+            This result measures whether the adapter could produce preferred answers on tasks drawn
+            from the broader training distribution. Like the earlier win rates, it is a pairwise
             preference score, not an accuracy measure.
           </p>
 
@@ -1060,7 +1109,18 @@
 
           <p>
             Attempt #2 has no category-level result, so the 80-to-20 preference describes performance
-            only on its own distribution. The evidence supports scale, not better generalization.
+            only on its own distribution. Attempt #1 provides the stronger evidence beyond our own
+            data through Adaption’s separate Market Analysis evaluation; Attempt #2 shows that we could
+            train the model on a much broader set of finance tasks while retaining a strong preference
+            result within that distribution.
+          </p>
+
+          <p>
+            Together, the two attempts moved us closer to the original goal. We first trained a small
+            model to draft company-level equity research, then broadened its training context to include
+            more of the market information encountered in real finance work. What remains is to test
+            whether it can reason reliably across those relationships and make useful predictions about
+            what happens next.
           </p>
 
           <div class="act">
