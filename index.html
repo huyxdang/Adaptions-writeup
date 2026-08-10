@@ -419,14 +419,28 @@
         .scale-chart .scale-label { transition: none !important; }
       }
 
-      .cmp { width: 100%; min-width: 620px; border-collapse: collapse; font-size: 12.5px; }
-      .cmp th, .cmp td { padding: 0.62rem 0.55rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
-      .cmp thead th { color: var(--medium-gray); font-weight: 400; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.09em; }
+      .cmp { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+      .cmp th, .cmp td { padding: 0.62rem 0.45rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; white-space: nowrap; }
+      .cmp thead th {
+        padding-top: 0.72rem;
+        padding-bottom: 0.72rem;
+        border-bottom-color: var(--highlight-gray);
+        background: var(--muted-bg);
+        color: var(--dark-gray);
+        font-size: 10.5px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+      }
       .cmp tbody th { color: var(--medium-gray); font-weight: 400; }
+      .cmp tbody th, .cmp tbody td { border-bottom: 0; }
       .cmp td { color: var(--black); font-variant-numeric: tabular-nums; }
-      .cmp tr:last-child th, .cmp tr:last-child td { border-bottom: 0; }
+      .cmp th:nth-child(2), .cmp td:nth-child(2), .cmp th:nth-child(4), .cmp td:nth-child(4) { text-align: right; }
+      .cmp tfoot th, .cmp tfoot td { padding-top: 0.8rem; border-top: 2px solid var(--black); border-bottom: 0; font-weight: 500; }
+      .cmp tfoot th { color: var(--black); }
       .cmp .em { color: var(--accent); font-weight: 500; }
-      .table-scroll { margin: 1.8rem 0; overflow-x: auto; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+      .sum-mark { display: inline-block; margin-right: 0.4rem; color: var(--accent); font: 500 11px/1 var(--mono); }
+      .table-frame { margin: 1.8rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
       .morph {
         display: grid;
@@ -556,6 +570,9 @@
         .byline { flex-wrap: wrap; gap: 0.35rem 0.5rem; }
         .shot { width: 100%; }
         .shot.narrow { width: min(440px, 100%); }
+        .cmp { font-size: 10.5px; }
+        .cmp th, .cmp td { padding: 0.55rem 0.2rem; }
+        .cmp thead th { font-size: 8.5px; letter-spacing: 0.05em; }
         .flow-step { grid-template-columns: 26px minmax(0, 1fr); }
         .flow-title, .flow-copy { grid-column: 2; }
         .morph { grid-template-columns: minmax(0, 1fr); gap: 1.35rem; }
@@ -920,15 +937,17 @@
             diversity without implying that each generated row came from an independent source.
           </p>
 
-          <div class="table-scroll">
+          <div class="table-frame">
             <table class="cmp">
-              <thead><tr><th>Generation</th><th>Rows</th><th>Recipe</th><th>Adaption platform quality score</th></tr></thead>
+              <thead><tr><th>Version</th><th>Rows</th><th>Recipe</th><th>Quality score</th></tr></thead>
               <tbody>
-                <tr><th>Dataset 1</th><td>15,252</td><td>Completion rewritten only</td><td>7.0 → 9.2</td></tr>
-                <tr><th>Dataset 2</th><td>15,253</td><td>Prompt and completion, with response constraints</td><td>7.0 → 9.5</td></tr>
-                <tr><th>Dataset 3</th><td>15,197</td><td>Same recipe, independent variant</td><td>7.0 → 9.5</td></tr>
-                <tr><th>Combined</th><td class="em">45,758</td><td>45,702 from the three, plus 56</td><td>8.0 → 9.4</td></tr>
+                <tr><th>Dataset 1</th><td>15,252</td><td>Completion only</td><td>7.0 → 9.2</td></tr>
+                <tr><th>Dataset 2</th><td>15,253</td><td>Prompt + completion</td><td>7.0 → 9.5</td></tr>
+                <tr><th>Dataset 3</th><td>15,197</td><td>Independent variant</td><td>7.0 → 9.5</td></tr>
               </tbody>
+              <tfoot>
+                <tr><th><span class="sum-mark" aria-hidden="true">Σ</span>Final</th><td class="em">45,758</td><td>Combined outputs</td><td>8.0 → 9.4</td></tr>
+              </tfoot>
             </table>
           </div>
 
