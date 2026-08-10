@@ -696,8 +696,8 @@
           <p>
             We faced many challenges. We repeatedly refined the data methodology, manually inspected
             examples, and checked that the resulting tasks still reflected real equity-research
-            workflows. Along the way, we learned a great deal about both finance-data preparation and
-            how to work effectively with AutoScientist.
+            workflows. Along the way, we learned a great deal about finance-data preparation and how
+            to work effectively with <strong>AutoScientist</strong>.
           </p>
 
           <div class="note">
@@ -777,8 +777,9 @@
 
           <p>
             We uploaded the 589 training rows to Adaption.
-            <a href="https://adaptionlabs.ai/adaptive-data">Adaptive Data</a> expanded
-            them to 27,862 rows, of which 27,405 were used for training. The Adaption platform quality score
+            <a href="https://adaptionlabs.ai/adaptive-data">Adaptive Data</a>, a platform that automatically
+            reshapes and optimizes training data, expanded the 589 examples to 27,862 rows, of
+            which 27,405 were used for training. The Adaption platform quality score
             increased from 5.0 to 9.4, moving the dataset from grade C to grade A.
           </p>
 
@@ -826,7 +827,8 @@
           <h3 id="autoscientist">AutoScientist</h3>
 
           <p>
-            AutoScientist trained a LoRA adapter on <code>Llama-3.3-70B-Instruct</code>. The run used
+            AutoScientist, a platform that automatically optimizes and hosts LLM fine-tuning runs,
+            trained a LoRA adapter on <code>Llama-3.3-70B-Instruct</code>. The run used
             rank 16, alpha 32, all linear layers, two epochs at <code>1e-4</code>, 382 steps, and loss
             on completions only. It produced two preference evaluations.
           </p>
