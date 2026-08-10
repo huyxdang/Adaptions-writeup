@@ -713,31 +713,27 @@
           <h2 id="introduction" class="sr-only">Introduction</h2>
 
           <p class="lede">
-            Keith and Huy both work in finance, with Keith in equity research. We entered the
+            Keith and Huy both work in finance, with Keith in equity research. We entered Adaption Labs’
             <a href="https://adaptionlabs.ai/blog/autoscientist-challenge" target="_blank" rel="noreferrer">AutoScientist Challenge</a>
-            with a practical goal: train a model that could actually be useful in our day-to-day work.
+            with a practical goal: train a small model that could actually assist us in our day-to-day work.
           </p>
 
           <p>
-            That goal came from a recurring problem we saw firsthand. Institutional finance reports
-            contain the kind of analysis we wanted a model to learn: forecasts, valuations,
-            recommendations, and the reasoning behind them. However, they do not contain the prompts
-            needed to turn that analysis into training data.
+            If we could train a useful model ourselves, it could be especially valuable in an enterprise
+            setting: potentially cheaper to run, self-hostable, and easier to keep sensitive financial
+            data within our own infrastructure.
           </p>
 
           <p>
-            Our main challenge was therefore to reconstruct those prompts from the evidence available
-            in each report without leaking the analyst’s final conclusion into the input. If the
-            reconstructed prompt contained only supporting evidence, the model would need to arrive at
-            the judgment itself rather than simply recover the answer from the source.
+            We therefore set out to train a model that could read financial evidence and produce
+            research-level analysis, including forecasts, valuations, recommendations, and the
+            reasoning behind them.
           </p>
 
           <p>
-            We faced many challenges: we repeatedly refined the methodology, manually inspected
-            examples, and checked that the resulting tasks still reflected real equity-research
-            workflows. However, once the source data was prepared, much of the remaining pipeline was
-            automated: Adaptive Data enhanced the dataset, while AutoScientist optimized the training
-            process.
+            Training such a model ourselves would normally require substantial work and compute across
+            both data and training. In this challenge, however, we could focus primarily on preparing
+            and cleaning the finance data.
           </p>
 
           <p>
@@ -778,7 +774,7 @@
             <a class="image-link" href="assets/extraction-doc-to-prompt.png" aria-label="Open the full-resolution document-to-prompt extraction illustration">
               <img src="assets/extraction-doc-to-prompt.png" alt="A stack of institutional finance reports is separated into evidence fragments and transformed into a prompt and analyst response" width="1672" height="941" loading="lazy" decoding="async" />
             </a>
-            <figcaption>Figure 1: The extraction path turns report pages into evidence fragments, then reconstructs a supported prompt and analyst-style answer.</figcaption>
+            <figcaption><strong>Figure 1:</strong> The extraction path turns report pages into evidence fragments, then reconstructs a supported prompt and analyst-style answer.</figcaption>
           </figure>
 
           <figure>
@@ -788,7 +784,7 @@
               <div class="flow-step"><span class="flow-number">03</span><span class="flow-title">Rank evidence</span><span class="flow-copy">Score the surviving paragraphs on shared figures, similarity and proximity. Any paragraph above 72% similarity is leakage. Keep six.</span></div>
               <div class="flow-step"><span class="flow-number">04</span><span class="flow-title">Derive the ask</span><span class="flow-copy">Identify the analytical moves in the conclusion, such as direction, valuation, or counterevidence, and ask only for those moves.</span></div>
             </div>
-            <figcaption>Figure 2: Answer-first extraction. The conclusion becomes the target, while evidence from the same report becomes the prompt.</figcaption>
+            <figcaption><strong>Figure 2:</strong> Answer-first extraction. The conclusion becomes the target, while evidence from the same report becomes the prompt.</figcaption>
           </figure>
 
           <p>
@@ -806,7 +802,7 @@
               <div class="funnel-row"><span class="funnel-label">Post-cap candidates</span><span class="funnel-bar" style="width:24.9%"></span><span class="funnel-val">816</span></div>
               <div class="funnel-row keep"><span class="funnel-label">Final baseline</span><span class="funnel-bar" style="width:22.5%"></span><span class="funnel-val">739</span></div>
             </div>
-            <figcaption>Figure 3: Capping, identity checks, and deduplication reduced 3,136 eligible rows to 739: 589 train, 77 validation, and 73 held out.</figcaption>
+            <figcaption><strong>Figure 3:</strong> Capping, identity checks, and deduplication reduced 3,136 eligible rows to 739: 589 train, 77 validation, and 73 held out.</figcaption>
           </figure>
 
           <h3 id="adaptive-data">Adaptive Data</h3>
@@ -823,7 +819,7 @@
             <a class="image-link" href="assets/a1-quality.png" aria-label="Open the full-resolution Attempt 1 quality figure">
               <img src="assets/a1-quality.png" alt="Adaption quality panel: original text 5.0, adaptive text 9.4, +88.0% relative improvement" width="1435" height="864" loading="lazy" decoding="async" />
             </a>
-            <figcaption>Figure 4: The Adaption platform quality score increased from <strong>5.0 to 9.4</strong>, moving the dataset from grade C to grade A.</figcaption>
+            <figcaption><strong>Figure 4:</strong> The Adaption platform quality score increased from <strong>5.0 to 9.4</strong>, moving the dataset from grade C to grade A.</figcaption>
           </figure>
 
           <div class="note">
@@ -863,7 +859,7 @@
                 </div>
               </div>
             </div>
-            <figcaption>Figure 5: One verified PTB training row before and after Adaptive Data. The prompt and evidence are identical; the remastered completion separates forecasts, valuation implications, and limiting evidence.</figcaption>
+            <figcaption><strong>Figure 5:</strong> One verified PTB training row before and after Adaptive Data. The prompt and evidence are identical; the remastered completion separates forecasts, valuation implications, and limiting evidence.</figcaption>
           </figure>
 
           <h3 id="autoscientist">AutoScientist</h3>
@@ -882,7 +878,7 @@
             <a class="image-link" href="assets/a1-winrates.png" aria-label="Open the full-resolution Attempt 1 evaluation figure">
               <img src="assets/a1-winrates.png" alt="Training win rates: base 16 vs adapted 84 on our dataset; base 23 vs adapted 77 across the Market analysis category" width="2814" height="1012" loading="lazy" decoding="async" />
             </a>
-            <figcaption>Figure 6: The adapted model won <strong>84 to 16 on our dataset and 77 to 23</strong> across Adaption's Market Analysis category.</figcaption>
+            <figcaption><strong>Figure 6:</strong> The adapted model won <strong>84 to 16 on our dataset and 77 to 23</strong> across Adaption's Market Analysis category.</figcaption>
           </figure>
 
           <div class="note">
@@ -955,7 +951,7 @@
                 <span class="scale-label">Attempt #2, Enhanced Data</span>
               </div>
             </div>
-            <figcaption>Figure 7: Training-data scale across the two attempts: 589 baseline rows, 27,862 Attempt #1 Adaptive Data rows, and 45,758 Attempt #2 enhanced rows.</figcaption>
+            <figcaption><strong>Figure 7:</strong> Training-data scale across the two attempts: 589 baseline rows, 27,862 Attempt #1 Adaptive Data rows, and 45,758 Attempt #2 enhanced rows.</figcaption>
           </figure>
 
           <p>
@@ -973,7 +969,7 @@
               <div class="tax-row"><span class="tax-label">Comparative analysis</span><span class="tax-track"><i class="tax-fill" style="width:4%"></i></span><span class="tax-val">1.5%</span></div>
               <div class="tax-row"><span class="tax-label">Fund &amp; benchmark</span><span class="tax-track"><i class="tax-fill" style="width:1%"></i></span><span class="tax-val">0.4%</span></div>
             </div>
-            <figcaption>Figure 8: Insufficient-evidence tasks account for 36.2% of the combined dataset.</figcaption>
+            <figcaption><strong>Figure 8:</strong> Insufficient-evidence tasks account for 36.2% of the combined dataset.</figcaption>
           </figure>
 
           <p>
@@ -1008,7 +1004,7 @@
             <a class="image-link" href="assets/a2-adaptive-data.png" aria-label="Open the full-resolution Attempt 2 combined-dataset figure">
               <img src="assets/a2-adaptive-data.png" alt="Adaption quality grade panel showing the Attempt 2 dataset improving from grade B before adaptation to grade A after adaptation" width="1546" height="626" loading="lazy" decoding="async" />
             </a>
-            <figcaption>Figure 9: The Adaption platform quality score increased from <strong>8.0 to 9.4</strong>, moving the broader Attempt #2 dataset from grade B to grade A.</figcaption>
+            <figcaption><strong>Figure 9:</strong> The Adaption platform quality score increased from <strong>8.0 to 9.4</strong>, moving the broader Attempt #2 dataset from grade B to grade A.</figcaption>
           </figure>
 
           <p>
@@ -1047,7 +1043,7 @@
             <a class="image-link" href="assets/a2-winrate.png" aria-label="Open the full-resolution Attempt 2 evaluation figure">
               <img src="assets/a2-winrate.png" alt="AutoScientist result for the combined dataset: base 20, adapted 80" width="1036" height="760" loading="lazy" decoding="async" />
             </a>
-            <figcaption>Figure 10: Attempt #2 produced an <strong>80 to 20</strong> dataset-specific preference result. No category-level result was produced.</figcaption>
+            <figcaption><strong>Figure 10:</strong> Attempt #2 produced an <strong>80 to 20</strong> dataset-specific preference result. No category-level result was produced.</figcaption>
           </figure>
 
           <p>
