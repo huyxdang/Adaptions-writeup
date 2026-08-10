@@ -231,3 +231,96 @@
 **Blockers**
 
 - None
+
+## Task: Apply narrative feedback to the Adaption write-up
+
+**Status:** complete
+**Started:** 2026-08-10 11:10 +07
+
+### Scope
+
+- Preserve the existing introduction while adding an early, evidence-backed outcome.
+- Move metric explanations beside the metrics they interpret.
+- Explain AutoScientist through what it changed in the workflow before listing run settings.
+- Frame Attempt #2 as the natural response to Attempt #1, with Sara Hooker's comments as confirmation.
+- End the Attempt #2 results on the supported scale finding rather than the generalization limitation.
+
+### 2026-08-10 11:13 +07 - Task complete
+
+**Status:** complete
+
+**Completed**
+
+- Added one outcome sentence to the existing introduction without restructuring it.
+- Split the original metric primer into two contextual notes beside the first quality and preference results.
+- Reframed AutoScientist around the work it handled before retaining the exact training settings.
+- Recast Attempt #2 as the response to Attempt #1's scale limitation, with Sara Hooker's comments as confirmation.
+- Reordered the Attempt #2 conclusion so the limitation comes first and the supported scaling result lands last.
+- Updated the acknowledgement to preserve the same causal attribution.
+
+**Evidence**
+
+- The source diff contains only the approved narrative changes.
+- Playwright found all three revised narrative passages in the rendered article.
+- Desktop at 1440px and mobile at 393px reported no horizontal overflow and zero console warnings or errors.
+- Both metric notes remained within the mobile viewport.
+
+**Decisions**
+
+- Use “were preferred over” rather than “outperformed” to match the pairwise-evaluation evidence precisely.
+- Preserve the article's title, section structure, figures, technical settings, and visual system.
+
+**Next**
+
+- None
+
+**Blockers**
+
+- None
+
+## Task: Smooth the table-of-contents indicator
+
+**Status:** complete
+**Started:** 2026-08-10 11:31 +07
+
+### Scope
+
+- Replace per-link bullets with one indicator aligned to a shared outer rail.
+- Animate the indicator smoothly between active sections and subsections.
+- Preserve accurate active-section tracking and reduced-motion behavior.
+
+### 2026-08-10 11:34 +07 - Task complete
+
+**Status:** complete
+
+**Completed**
+
+- Replaced nested per-link bullets with one fixed-rail table-of-contents indicator.
+- Added a 360ms eased vertical transition between active entries.
+- Replaced the previous intersection observer with scroll-position tracking so the final Acknowledgements and Resources sections activate correctly.
+- Preserved smooth anchor navigation and disabled motion when reduced motion is requested.
+
+**Evidence**
+
+- Playwright verified Introduction, Extraction, Attempt #2, Results, Acknowledgements, and Resources all activate the correct link.
+- Every active state reported the same `-14.4px` indicator rail position and zero horizontal overflow.
+- Visual inspection confirmed the indicator sits outside both section and subsection text.
+- Reduced-motion emulation reduced the transition to `0.01ms` and disabled smooth page scrolling.
+- The browser console reported zero errors or warnings.
+
+**Decisions**
+
+- Keep subsection text indented for hierarchy while decoupling the indicator from link indentation.
+- Use one moving pseudo-element rather than rendering and fading separate bullets.
+
+**Failures and recovery**
+
+- The first multi-section Playwright selector check was malformed by shell interpretation and returned `zsh: no matches found: a[href=#]`; rerunning with string concatenation completed successfully and did not affect the page.
+
+**Next**
+
+- None
+
+**Blockers**
+
+- None

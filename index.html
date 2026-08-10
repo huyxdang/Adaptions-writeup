@@ -125,14 +125,13 @@
       .byline-person { display: inline-flex; align-items: baseline; }
       .byline-and { color: var(--highlight-gray); }
       .byline a {
-        color: var(--dark-gray);
-        text-decoration: underline;
-        text-decoration-color: var(--light-gray);
+        color: var(--accent);
+        text-decoration: none;
         text-decoration-thickness: 1px;
         text-underline-offset: 3px;
         transition: color 140ms ease, text-decoration-color 140ms ease;
       }
-      .byline a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+      .byline a:hover, .byline a:focus-visible { text-decoration: underline; text-decoration-color: var(--accent); }
 
       .hero { width: min(calc(100% - 2rem), 1000px); margin: 0 auto 2.1rem; }
       .hero img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: var(--radius); background: #fafafa; }
@@ -160,10 +159,10 @@
       .mobile-toc[open] summary::after { content: "−"; }
       .mobile-toc ul { padding: 0; list-style: none; }
       .mobile-toc > .toc-tree { margin: 1rem 0 0; }
-      .mobile-toc .toc-group + .toc-group { margin-top: 1.2rem; }
+      .mobile-toc .toc-group + .toc-group { margin-top: 0.8rem; }
       .mobile-toc .toc-section { color: var(--black); font-size: 13px; font-weight: 400; text-decoration: none; }
-      .mobile-toc .toc-group ul { margin: 0.55rem 0 0; padding-left: 0.9rem; }
-      .mobile-toc .toc-group li + li { margin-top: 0.45rem; }
+      .mobile-toc .toc-group ul { margin: 0.45rem 0 0; padding-left: 0.9rem; }
+      .mobile-toc .toc-group li + li { margin-top: 0.3rem; }
       .mobile-toc .toc-group ul a { color: #676767; font-size: 13px; text-decoration: none; }
 
       .article-grid {
@@ -174,18 +173,54 @@
         margin: 0 auto;
       }
 
-      .toc { grid-column: 1; position: sticky; top: 82px; align-self: start; font-size: 13px; font-weight: 400; line-height: 1.4; }
+      .toc {
+        --toc-indicator-y: 0px;
+        grid-column: 1;
+        position: sticky;
+        top: 82px;
+        align-self: start;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 1.4;
+      }
+      .toc::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -0.9rem;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--black);
+        opacity: 0;
+        pointer-events: none;
+        transform: translate3d(0, var(--toc-indicator-y), 0);
+        transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1), opacity 140ms ease;
+        will-change: transform;
+      }
+      .toc.has-active::before { opacity: 1; }
       .toc ul { margin: 0; padding: 0; list-style: none; }
       .toc li { position: relative; }
-      .toc > .toc-tree > .toc-group + .toc-group { margin-top: 1.2rem; }
+      .toc > .toc-tree > .toc-group + .toc-group { margin-top: 0.8rem; }
       .toc .toc-section { color: var(--black); font-size: 13px; font-weight: 400; line-height: 1.4; }
-      .toc .toc-group ul { margin-top: 0.55rem; padding-left: 0.9rem; }
-      .toc .toc-group ul li + li { margin-top: 0.45rem; }
+      .toc .toc-group ul { margin-top: 0.45rem; padding-left: 0.9rem; }
+      .toc .toc-group ul li + li { margin-top: 0.3rem; }
       .toc .toc-group ul a { color: #676767; font-size: 13px; line-height: 1.4; }
       .toc a { position: relative; display: inline-block; color: var(--medium-gray); text-decoration: none; transition: color 140ms ease; }
       .toc a:hover, .toc a.active { color: var(--black); }
       .toc .toc-group:has(a.active) > .toc-section { color: var(--black); }
-      .toc a.active::before { content: ""; position: absolute; top: 0.52em; left: -0.9rem; width: 4px; height: 4px; border-radius: 50%; background: var(--black); }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
 
       article { grid-column: 2; min-width: 0; font-size: 17px; font-weight: 300; line-height: 28px; letter-spacing: 0; }
       article p { margin: 0 0 24px; }
@@ -216,8 +251,8 @@
 
       .act + h3 { margin-top: 38.4px; }
 
-      article a { color: var(--black); text-decoration: underline; text-decoration-color: var(--light-gray); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-      article a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+      article a { color: var(--accent); text-decoration: none; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+      article a:hover, article a:focus-visible { text-decoration: underline; text-decoration-color: var(--accent); }
 
       article ul { margin: 0 0 1.3rem; padding-left: 1.3rem; }
       article li { margin-bottom: 0.5rem; }
@@ -623,6 +658,7 @@
       <details class="mobile-toc">
         <summary>Contents</summary>
         <ul class="toc-tree">
+          <li class="toc-group"><a class="toc-section" href="#introduction">Introduction</a></li>
           <li class="toc-group">
             <a class="toc-section" href="#first-time">Attempt #1: Proof of Concept</a>
             <ul>
@@ -649,6 +685,7 @@
       <div class="article-grid">
         <nav class="toc" aria-label="Table of contents">
           <ul class="toc-tree">
+            <li class="toc-group"><a class="toc-section" href="#introduction">Introduction</a></li>
             <li class="toc-group">
               <a class="toc-section" href="#first-time">Attempt #1: Proof of Concept</a>
               <ul>
@@ -673,8 +710,10 @@
         </nav>
 
         <article id="article">
+          <h2 id="introduction" class="sr-only">Introduction</h2>
+
           <p class="lede">
-            Keith works in equity research, while Huy works in AI in finance. We entered Adaption Labs’
+            Keith works in equity research, while Huy works in AI in finance. We entered the
             <a href="https://adaptionlabs.ai/blog/autoscientist-challenge" target="_blank" rel="noreferrer">AutoScientist Challenge</a>
             with a practical goal: train a model that could actually be useful in our day-to-day work.
           </p>
@@ -694,20 +733,18 @@
           </p>
 
           <p>
-            We faced many challenges. We repeatedly refined the data methodology, manually inspected
+            We faced many challenges: we repeatedly refined the methodology, manually inspected
             examples, and checked that the resulting tasks still reflected real equity-research
-            workflows. Along the way, we learned a great deal about finance-data preparation and how
-            to work effectively with <strong>AutoScientist</strong>.
+            workflows. However, once the source data was prepared, much of the remaining pipeline was
+            automated: Adaptive Data enhanced the dataset, while AutoScientist optimized the training
+            process.
           </p>
 
-          <div class="note">
-            <strong>Reading the numbers.</strong> The 84:16, 77:23, and 80:20 results are pairwise
-            preferences: the share of comparisons in which a judge chose the adapted model’s answer
-            over the base model’s. A result of 77:23 therefore does not mean 77% correct. Adaption
-            describes its category test sets as in-house and held out. Separately, the 5.0 → 9.4,
-            7.0 → 9.2/9.5, and 8.0 → 9.4 figures are Adaption platform quality scores
-            for the datasets. Adaption does not publish the scoring rubric.
-          </div>
+          <p>
+            <a href="https://adaptionlabs.ai/" target="_blank" rel="noreferrer">Adaption Labs</a>
+            removed much of the complexity of scaling our experiments and let us stay focused on the
+            finance-specific work we knew best.
+          </p>
 
           <div class="act">
             <h2 id="first-time">Attempt #1: Proof of Concept</h2>
@@ -790,6 +827,12 @@
             <figcaption>Figure 4: The Adaption platform quality score increased from <strong>5.0 to 9.4</strong>, moving the dataset from grade C to grade A.</figcaption>
           </figure>
 
+          <div class="note">
+            <strong>Reading the quality score.</strong> The 5.0-to-9.4 result is an Adaption platform
+            quality score for the dataset, not a model-evaluation result. Adaption does not publish
+            the scoring rubric.
+          </div>
+
           <p>
             In the matched example below, Adaptive Data preserved the prompt and evidence
             while making the completion easier to inspect and evaluate.
@@ -827,8 +870,12 @@
           <h3 id="autoscientist">AutoScientist</h3>
 
           <p>
-            AutoScientist, a platform that automatically optimizes and hosts LLM fine-tuning runs,
-            trained a LoRA adapter on <code>Llama-3.3-70B-Instruct</code>. The run used
+            Once the dataset was ready,
+            <a href="https://adaptionlabs.ai/auto-scientist" target="_blank" rel="noreferrer">AutoScientist</a>
+            automatically handled the optimization and hosting of the fine-tuning run, allowing us to
+            focus on the finance task rather than manually iterating on the training recipe. For
+            Attempt #1, it trained a LoRA adapter on
+            <code>Llama-3.3-70B-Instruct</code>. The run used
             rank 16, alpha 32, all linear layers, two epochs at <code>1e-4</code>, 382 steps, and loss
             on completions only. It produced two preference evaluations.
           </p>
@@ -839,6 +886,13 @@
             </a>
             <figcaption>Figure 6: The adapted model won <strong>84 to 16 on our dataset and 77 to 23</strong> across Adaption's Market Analysis category.</figcaption>
           </figure>
+
+          <div class="note">
+            <strong>Reading the preference results.</strong> These are pairwise preferences: the share
+            of comparisons in which a judge chose the adapted model’s answer over the base model’s.
+            A result of 77 to 23 therefore does not mean 77% correct. Adaption describes its category
+            test sets as in-house and held out.
+          </div>
 
           <p>
             The 77-to-23 Market Analysis result is more informative because Adaption, rather than our
@@ -870,12 +924,12 @@
           <h3 id="scale-data">Data</h3>
 
           <p>
-            Attempt #2 began after an office-hours session with
+            Attempt #2 followed directly from the limitations of Attempt #1: the method worked, but
+            the dataset was still too small to tell us how well the workflow would scale. A conversation
+            with
             <a href="https://www.linkedin.com/in/sararosehooker" target="_blank" rel="noreferrer">Sara Hooker</a>,
-            co-founder of Adaption Labs.
-            Sara emphasized the importance of training with substantially more data. Her advice shifted
-            our focus from optimizing a small proof of concept to testing whether the full workflow
-            could hold up at scale.
+            co-founder of Adaption Labs, who emphasized the importance of larger training sets,
+            reinforced our decision to substantially expand the data and run the experiment again.
           </p>
 
           <p>
@@ -981,9 +1035,6 @@
           <p>
             Attempt #2 produced 45,758 rows and raised the Adaption platform quality score from 8.0 to
             9.4. In a separate dataset-specific preference evaluation, the adapted model won 80 to 20.
-            Together, these measurements show that the workflow operated at a materially larger scale
-            while retaining a large preference margin on its own distribution. They do not establish
-            better generalization than Attempt #1.
           </p>
 
           <figure class="shot">
@@ -994,11 +1045,11 @@
           </figure>
 
           <p>
-            Attempt #1 provides the stronger broader-category evidence because it includes a 77-to-23
-            Market Analysis category result. Attempt #2 has no equivalent category result. The two
-            attempts therefore answer different questions: Attempt #1 evaluates the adapted model on
-            Adaption’s broader category evaluation, while Attempt #2 tests whether the full data and
-            training workflow can scale across a materially broader finance corpus.
+            Because Attempt #2 has no category-level result, it does not tell us whether generalization
+            improved over Attempt #1. Attempt #1 therefore provides the stronger broader-category
+            evidence through its 77-to-23 Market Analysis result. What Attempt #2 does show is that the
+            full workflow scaled from roughly 500 seed examples to 45,758 training rows while retaining
+            an 80-to-20 preference margin on its own distribution.
           </p>
 
           <div class="act">
@@ -1012,7 +1063,7 @@
             the tools we used to expand the training data and automate model training in a practical
             environment. We are especially grateful
             to <a href="https://www.linkedin.com/in/sararosehooker" target="_blank" rel="noreferrer">Sara Hooker</a>
-            for the office-hours advice that pushed us to scale the data. We also thank
+            for the office-hours advice that reinforced our decision to scale the data. We also thank
             <a href="https://www.linkedin.com/in/ross-giagkoudis-1470a8263/" target="_blank" rel="noreferrer">Ross Giagkoudis</a>
             for being consistently supportive and helpful in Discord throughout the challenge.
           </p>
@@ -1155,32 +1206,64 @@
     </main>
 
     <script>
+      const toc = document.querySelector(".toc");
       const links = [...document.querySelectorAll(".toc a")];
       const headings = links
         .map((link) => document.querySelector(link.getAttribute("href")))
         .filter(Boolean);
 
+      const positionTocIndicator = (link) => {
+        if (!toc || !link) return;
+        const tocRect = toc.getBoundingClientRect();
+        const linkRect = link.getBoundingClientRect();
+        const indicatorY = linkRect.top - tocRect.top + (linkRect.height - 4) / 2;
+        toc.style.setProperty("--toc-indicator-y", `${indicatorY}px`);
+        toc.classList.add("has-active");
+      };
+
       const setActive = (id) => {
+        if (toc?.dataset.activeSection === id) return;
+        let activeLink = null;
         links.forEach((link) => {
           const active = link.getAttribute("href") === `#${id}`;
           link.classList.toggle("active", active);
-          if (active) link.setAttribute("aria-current", "location");
+          if (active) {
+            activeLink = link;
+            link.setAttribute("aria-current", "location");
+          }
           else link.removeAttribute("aria-current");
         });
+        if (toc) toc.dataset.activeSection = id;
+        positionTocIndicator(activeLink);
       };
 
       if (headings.length) {
-        setActive(headings[0].id);
-        const observer = new IntersectionObserver(
-          (entries) => {
-            const current = entries
-              .filter((entry) => entry.isIntersecting)
-              .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
-            if (current) setActive(current.target.id);
-          },
-          { rootMargin: "-110px 0px -68% 0px", threshold: 0 }
-        );
-        headings.forEach((heading) => observer.observe(heading));
+        let scrollFrame = null;
+        const updateActiveFromScroll = () => {
+          const activationLine = 120;
+          let current = headings[0];
+
+          headings.forEach((heading) => {
+            if (heading.getBoundingClientRect().top <= activationLine) current = heading;
+          });
+
+          if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+            current = headings[headings.length - 1];
+          }
+
+          setActive(current.id);
+          scrollFrame = null;
+        };
+
+        const requestScrollUpdate = () => {
+          if (scrollFrame !== null) return;
+          scrollFrame = window.requestAnimationFrame(updateActiveFromScroll);
+        };
+
+        updateActiveFromScroll();
+        window.addEventListener("scroll", requestScrollUpdate, { passive: true });
+        window.addEventListener("resize", () => positionTocIndicator(document.querySelector(".toc a.active")));
+        document.fonts?.ready.then(() => positionTocIndicator(document.querySelector(".toc a.active")));
       }
 
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
