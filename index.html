@@ -332,25 +332,6 @@
         transition: opacity 480ms ease, filter 700ms ease, transform 760ms cubic-bezier(0.16, 1, 0.3, 1);
       }
 
-      .flow-step { display: grid; grid-template-columns: 30px 124px minmax(0, 1fr); gap: 0.85rem; padding: 0.85rem 0; }
-      .flow-step + .flow-step { border-top: 1px solid var(--border); }
-      .flow-number { color: var(--accent); font: 400 10.5px/1.5 var(--mono); }
-      .flow-title { color: var(--black); font-size: 12.5px; font-weight: 500; }
-      .flow-copy { color: var(--medium-gray); font-size: 12.5px; line-height: 1.52; }
-
-      article figure.motion-ready .flow-step {
-        opacity: 0;
-        transform: translateX(-9px);
-      }
-      article figure.motion-ready.is-visible .flow-step {
-        opacity: 1;
-        transform: translateX(0);
-        transition: opacity 340ms ease, transform 560ms cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      article figure.motion-ready.is-visible .flow-step:nth-child(2) { transition-delay: 90ms; }
-      article figure.motion-ready.is-visible .flow-step:nth-child(3) { transition-delay: 180ms; }
-      article figure.motion-ready.is-visible .flow-step:nth-child(4) { transition-delay: 270ms; }
-
       .funnel-row { display: grid; grid-template-columns: 160px minmax(0, 1fr) 62px; align-items: center; gap: 0.75rem; padding: 0.4rem 0; }
       .funnel-label { color: var(--medium-gray); font-size: 12px; }
       .funnel-bar { height: 12px; background: var(--highlight-gray); }
@@ -617,11 +598,14 @@
         .byline { flex-wrap: wrap; gap: 0.35rem 0.5rem; }
         .shot { width: 100%; }
         .shot.narrow { width: min(440px, 100%); }
+        .extraction-diagram {
+          width: calc(100vw - 1rem);
+          margin-left: 50%;
+          transform: translateX(-50%);
+        }
         .cmp { font-size: 10.5px; }
         .cmp th, .cmp td { padding: 0.55rem 0.2rem; }
         .cmp thead th { font-size: 8.5px; letter-spacing: 0.05em; }
-        .flow-step { grid-template-columns: 26px minmax(0, 1fr); }
-        .flow-title, .flow-copy { grid-column: 2; }
         .morph { grid-template-columns: minmax(0, 1fr); gap: 1.35rem; }
         .morph-rule { height: 1px; }
         .funnel-row { grid-template-columns: 112px minmax(0, 1fr) 52px; }
@@ -781,13 +765,17 @@
             a question that could be answered using only the remaining information.
           </p>
 
-          <figure>
-            <div class="figure-panel">
-              <div class="flow-step"><span class="flow-number">01</span><span class="flow-title">Find a judgment</span><span class="flow-copy">Detect phrases such as “we expect” and “in our view,” then capture a 90- to 320-word span inside one paragraph.</span></div>
-              <div class="flow-step"><span class="flow-number">02</span><span class="flow-title">Strip the answer</span><span class="flow-copy">Delete every judgment sentence from every other paragraph. What survives is factual-only text, and only that text may enter the prompt.</span></div>
-              <div class="flow-step"><span class="flow-number">03</span><span class="flow-title">Rank evidence</span><span class="flow-copy">Score the surviving paragraphs on shared figures, similarity and proximity. Any paragraph above 72% similarity is leakage. Keep six.</span></div>
-              <div class="flow-step"><span class="flow-number">04</span><span class="flow-title">Derive the ask</span><span class="flow-copy">Identify the analytical moves in the conclusion, such as direction, valuation, or counterevidence, and ask only for those moves.</span></div>
-            </div>
+          <figure class="shot extraction-diagram">
+            <a class="image-link" href="assets/extraction-report-to-training-pair.png" aria-label="Open the full-resolution report-to-training-pair diagram">
+              <img
+                src="assets/extraction-report-to-training-pair.png"
+                alt="A source report is separated into a prompt containing financial evidence and a question, and a target containing the analyst's conclusion"
+                width="1536"
+                height="680"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
           </figure>
 
           <p>

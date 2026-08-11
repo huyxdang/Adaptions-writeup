@@ -41,6 +41,47 @@
 
 - None
 
+## Task: Replace the extraction card with the generated diagram
+
+**Status:** complete
+**Started:** 2026-08-11 14:09 +07
+
+### Scope
+
+- Compare a responsive HTML concept with an ImageGen alternative for the report-to-training-pair explanation.
+- Use the selected generated image without its title or footer caption.
+- Preserve the published article's surrounding extraction narrative.
+
+### 2026-08-11 14:51 +07 - Task complete
+
+**Status:** complete
+
+**Completed**
+
+- Collected three independent comparisons of the HTML and generated alternatives.
+- Cropped the generated image from 1536 by 1024 to 1536 by 680, removing only its title and footer caption.
+- Replaced the four-step extraction card with the cropped diagram and removed its obsolete CSS.
+- Added a controlled mobile bleed so the wide image remains more legible without horizontal scrolling.
+
+**Evidence**
+
+- New asset: `assets/extraction-report-to-training-pair.png`
+- Desktop and 390px mobile renders were inspected in Playwright.
+- `git diff --check` completed without errors.
+
+**Decisions**
+
+- Use the generated composition directly, as requested, rather than rebuilding it as HTML.
+- Keep the image clickable at full resolution and retain descriptive alternative text.
+
+**Next**
+
+- None
+
+**Blockers**
+
+- The original Desktop worktree became inaccessible to the tool process, so the isolated change was applied and verified in a temporary clone of the same repository. The blocked local files were not modified.
+
 ### 2026-08-10 00:18 +07 - Figure animations implemented
 
 **Status:** in progress
