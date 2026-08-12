@@ -697,3 +697,31 @@
 **Blockers**
 
 - None
+
+## Task: Crop the final Attempt #2 result figure
+
+**Status:** complete
+**Started:** 2026-08-12 12:42 +07
+
+### 2026-08-12 12:45 +07 - Result screenshot cropped
+
+**Status:** complete
+
+**Completed**
+
+- Cropped the existing Attempt #2 screenshot so it begins at “Training Winrates” and retains the complete two-chart result area below.
+- Updated the intrinsic image dimensions in the article from 1600 by 1162 to 1600 by 602.
+
+**Evidence**
+
+- The final asset was inspected at original resolution and contains only the verified 87-to-13 and 74-to-27 evaluation panel.
+- The crop is a deterministic extraction from the original screenshot; no retained pixels were redrawn or restyled.
+- Desktop and 393px browser checks loaded the 1600-by-602 asset with zero horizontal overflow and zero console errors or warnings.
+
+**Next**
+
+- Commit and push.
+
+**Blockers**
+
+- None
