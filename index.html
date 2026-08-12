@@ -289,8 +289,6 @@
 
       figure { margin: 2rem 0 2.25rem; padding: 0; }
 
-      .figure-panel { padding: 1.25rem 1.35rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); }
-
       .shot { width: 100%; }
 
       .shot img {
@@ -333,146 +331,38 @@
         transition: opacity 480ms ease, filter 700ms ease, transform 760ms cubic-bezier(0.16, 1, 0.3, 1);
       }
 
-      .funnel-row { display: grid; grid-template-columns: 160px minmax(0, 1fr) 62px; align-items: center; gap: 0.75rem; padding: 0.4rem 0; }
-      .funnel-label { color: var(--medium-gray); font-size: 12px; }
-      .funnel-bar { height: 12px; background: var(--highlight-gray); }
-      .funnel-row.keep .funnel-bar { background: var(--accent); }
-      .funnel-row.drop .funnel-bar { background: var(--border); }
-      .funnel-val { color: var(--medium-gray); font: 400 11.5px/1 var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
-      .funnel-row.keep .funnel-val { color: var(--accent); }
-
-      article figure.motion-ready .funnel-bar {
-        transform: scaleX(0);
-        transform-origin: left center;
-      }
-      article figure.motion-ready .funnel-label,
-      article figure.motion-ready .funnel-val {
-        opacity: 0;
-        transform: translateY(4px);
-      }
-      article figure.motion-ready.is-visible .funnel-bar {
-        transform: scaleX(1);
-        transition: transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      article figure.motion-ready.is-visible .funnel-label,
-      article figure.motion-ready.is-visible .funnel-val {
-        opacity: 1;
-        transform: translateY(0);
-        transition: opacity 300ms ease, transform 460ms cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      article figure.motion-ready.is-visible .funnel-row:nth-child(2) > * { transition-delay: 70ms; }
-      article figure.motion-ready.is-visible .funnel-row:nth-child(3) > * { transition-delay: 140ms; }
-      article figure.motion-ready.is-visible .funnel-row:nth-child(4) > * { transition-delay: 210ms; }
-      article figure.motion-ready.is-visible .funnel-row:nth-child(5) > * { transition-delay: 280ms; }
-
-      .tax-row { display: grid; grid-template-columns: 200px minmax(0, 1fr) 50px; align-items: center; gap: 0.75rem; padding: 0.32rem 0; }
-      .tax-label { color: var(--medium-gray); font-size: 12px; }
-      .tax-track { height: 11px; background: var(--muted-bg); overflow: hidden; }
-      .tax-fill { display: block; height: 100%; background: #bdb4ae; }
-      .tax-row.lead .tax-fill { background: var(--accent); }
-      .tax-val { color: var(--medium-gray); font: 400 11.5px/1 var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
-      .tax-row.lead .tax-val { color: var(--accent); }
-
-      article figure.motion-ready .tax-fill {
-        transform: scaleX(0);
-        transform-origin: left center;
-      }
-      article figure.motion-ready .tax-label,
-      article figure.motion-ready .tax-val {
-        opacity: 0;
-      }
-      article figure.motion-ready.is-visible .tax-fill {
-        transform: scaleX(1);
-        transition: transform 760ms cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      article figure.motion-ready.is-visible .tax-label,
-      article figure.motion-ready.is-visible .tax-val {
-        opacity: 1;
-        transition: opacity 320ms ease;
-      }
-      article figure.motion-ready.is-visible .tax-row:nth-child(2) > * { transition-delay: 60ms; }
-      article figure.motion-ready.is-visible .tax-row:nth-child(3) > * { transition-delay: 120ms; }
-      article figure.motion-ready.is-visible .tax-row:nth-child(4) > * { transition-delay: 180ms; }
-      article figure.motion-ready.is-visible .tax-row:nth-child(5) > * { transition-delay: 240ms; }
-      article figure.motion-ready.is-visible .tax-row:nth-child(6) > * { transition-delay: 300ms; }
-
-      .scale-chart {
+      .mixture-flow {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        align-items: end;
-        gap: 1.2rem;
-        min-height: 225px;
-        padding: 1rem 0 0.65rem;
-        border-bottom: 1px solid var(--border);
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+        align-items: center;
+        gap: 0.85rem;
+        padding: 1.5rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--card);
       }
-      .scale-stage { display: grid; grid-template-rows: 24px 164px auto; gap: 0.4rem; min-width: 0; text-align: center; }
-      .scale-value { align-self: end; color: var(--black); font: 500 0.72rem/1.2 var(--mono); }
-      .scale-bar-space { display: flex; align-items: end; justify-content: center; }
-      .scale-bar { display: block; width: min(76px, 70%); min-height: 4px; background: var(--highlight-gray); }
-      .scale-stage:nth-child(2) .scale-bar { background: var(--accent-light); }
-      .scale-stage:nth-child(3) .scale-bar { background: var(--accent-medium); }
-      .scale-stage:last-child .scale-bar { background: var(--accent); }
-      .scale-label { color: var(--medium-gray); font-size: 0.66rem; line-height: 1.35; }
+      .mixture-step { min-width: 0; }
+      .mixture-value { display: block; color: var(--black); font: 500 1.15rem/1.2 var(--mono); font-variant-numeric: tabular-nums; }
+      .mixture-label { display: block; margin-top: 0.35rem; color: var(--medium-gray); font-size: 0.68rem; line-height: 1.4; }
+      .mixture-step.final .mixture-value { color: var(--accent); }
+      .mixture-operator { color: var(--accent); font: 400 1.15rem/1 var(--sans); text-align: center; }
+      .mixture-trained { margin: 0.9rem 0 0; color: var(--medium-gray); font: 400 0.62rem/1.5 var(--mono); text-align: right; }
 
-      article figure.motion-ready .scale-chart .scale-bar {
-        transform: scaleY(0);
-        transform-origin: center bottom;
-      }
-      article figure.motion-ready .scale-chart .scale-value,
-      article figure.motion-ready .scale-chart .scale-label {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      article figure.motion-ready.is-visible .scale-chart .scale-bar {
-        transform: scaleY(1);
-        transition: transform 850ms cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      article figure.motion-ready.is-visible .scale-chart .scale-value,
-      article figure.motion-ready.is-visible .scale-chart .scale-label {
+      article figure.motion-ready .mixture-step,
+      article figure.motion-ready .mixture-operator,
+      article figure.motion-ready .mixture-trained { opacity: 0; transform: translateY(8px); }
+      article figure.motion-ready.is-visible .mixture-step,
+      article figure.motion-ready.is-visible .mixture-operator,
+      article figure.motion-ready.is-visible .mixture-trained {
         opacity: 1;
         transform: translateY(0);
-        transition: opacity 360ms ease, transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+        transition: opacity 360ms ease, transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
       }
-      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(2) .scale-bar { transition-delay: 120ms; }
-      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(3) .scale-bar { transition-delay: 240ms; }
-      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(4) .scale-bar { transition-delay: 360ms; }
-      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(1) .scale-value,
-      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(1) .scale-label { transition-delay: 180ms; }
-      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(2) .scale-value,
-      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(2) .scale-label { transition-delay: 300ms; }
-      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(3) .scale-value,
-      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(3) .scale-label { transition-delay: 420ms; }
-      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(4) .scale-value,
-      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(4) .scale-label { transition-delay: 540ms; }
-
-      @media (prefers-reduced-motion: reduce) {
-        .scale-chart .scale-bar,
-        .scale-chart .scale-value,
-        .scale-chart .scale-label { transition: none !important; }
-      }
-
-      .cmp { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-      .cmp th, .cmp td { padding: 0.62rem 0.45rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; white-space: nowrap; }
-      .cmp thead th {
-        padding-top: 0.72rem;
-        padding-bottom: 0.72rem;
-        border-bottom-color: var(--highlight-gray);
-        background: var(--muted-bg);
-        color: var(--dark-gray);
-        font-size: 10.5px;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.09em;
-      }
-      .cmp tbody th { color: var(--medium-gray); font-weight: 400; }
-      .cmp tbody th, .cmp tbody td { border-bottom: 0; }
-      .cmp td { color: var(--black); font-variant-numeric: tabular-nums; }
-      .cmp th:nth-child(2), .cmp td:nth-child(2), .cmp th:nth-child(4), .cmp td:nth-child(4) { text-align: right; }
-      .cmp tfoot th, .cmp tfoot td { padding-top: 0.8rem; border-top: 2px solid var(--black); border-bottom: 0; font-weight: 500; }
-      .cmp tfoot th { color: var(--black); }
-      .cmp .em { color: var(--accent); font-weight: 500; }
-      .sum-mark { display: inline-block; margin-right: 0.4rem; color: var(--accent); font: 500 11px/1 var(--mono); }
-      .table-frame { margin: 1.8rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+      article figure.motion-ready.is-visible .mixture-flow > :nth-child(2) { transition-delay: 100ms; }
+      article figure.motion-ready.is-visible .mixture-flow > :nth-child(3) { transition-delay: 200ms; }
+      article figure.motion-ready.is-visible .mixture-flow > :nth-child(4) { transition-delay: 300ms; }
+      article figure.motion-ready.is-visible .mixture-flow > :nth-child(5) { transition-delay: 400ms; }
+      article figure.motion-ready.is-visible .mixture-trained { transition-delay: 520ms; }
       .morph {
         display: grid;
         grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
@@ -607,17 +497,11 @@
           margin-left: 50%;
           transform: translateX(-50%);
         }
-        .cmp { font-size: 10.5px; }
-        .cmp th, .cmp td { padding: 0.55rem 0.2rem; }
-        .cmp thead th { font-size: 8.5px; letter-spacing: 0.05em; }
         .morph { grid-template-columns: minmax(0, 1fr); gap: 1.35rem; }
         .morph-rule { height: 1px; }
-        .funnel-row { grid-template-columns: 112px minmax(0, 1fr) 52px; }
-        .tax-row { grid-template-columns: 128px minmax(0, 1fr) 44px; }
-        .funnel-label, .tax-label { font-size: 11px; }
-        .scale-chart { gap: 0.65rem; min-height: 205px; }
-        .scale-stage { grid-template-rows: 24px 145px auto; }
-        .scale-bar { width: min(58px, 72%); }
+        .mixture-flow { grid-template-columns: 1fr; gap: 0.8rem; padding: 1.2rem; }
+        .mixture-operator { justify-self: start; margin-left: 0.2rem; }
+        .mixture-trained { text-align: left; }
         article h2 { font-size: 24px; }
         .resource-meta > div, .artifact-item { grid-template-columns: 68px minmax(0, 1fr); }
         .adaption-links li { grid-template-columns: 92px minmax(0, 1fr); }
@@ -921,111 +805,39 @@
           <p>
             We therefore expanded the source corpus from roughly 1,500 to about 7,000
             institutional reports. The expanded corpus added macro outlooks, sector studies, fund
-            reviews, and fixed-income commentary. After testing several adaptation recipes, we selected
-            Dataset 2 and combined it with the <code>market_analysis_XXL</code> dataset from Attempt #1.
+            reviews, and fixed-income commentary. After testing three Adaptive Data recipes, we selected
+            Dataset 2, the prompt-and-completion variant, and combined it with the
+            <code>market_analysis_XXL</code> dataset from Attempt #1.
             This produced the final public finance dataset: <strong>34,640 samples</strong>, more than
             50 times the original 589-row baseline.
           </p>
 
-          <figure>
-            <div class="scale-chart" role="img" aria-label="Dataset growth from the 589-row baseline to 27,862 Attempt 1 adapted rows, 34,640 finalized finance samples, and a 48,496-example training mixture after general-purpose replay">
-              <div class="scale-stage">
-                <span class="scale-value">589</span>
-                <span class="scale-bar-space"><i class="scale-bar" style="height:1.2%"></i></span>
-                <span class="scale-label">Baseline</span>
-              </div>
-              <div class="scale-stage">
-                <span class="scale-value">27,862</span>
-                <span class="scale-bar-space"><i class="scale-bar" style="height:57.5%"></i></span>
-                <span class="scale-label">Attempt #1 adapted</span>
-              </div>
-              <div class="scale-stage">
-                <span class="scale-value">34,640</span>
-                <span class="scale-bar-space"><i class="scale-bar" style="height:71.4%"></i></span>
-                <span class="scale-label">Final finance data</span>
-              </div>
-              <div class="scale-stage">
-                <span class="scale-value">48,496</span>
-                <span class="scale-bar-space"><i class="scale-bar" style="height:100%"></i></span>
-                <span class="scale-label">Training mixture</span>
-              </div>
-            </div>
-            <figcaption><strong>Figure 4:</strong> The finalized finance dataset contains <strong>34,640 samples</strong>. General-purpose replay expanded the pre-split training mixture to <strong>48,496 examples</strong>.</figcaption>
-          </figure>
-
-          <h4>Broader research tasks</h4>
-
           <p>
-            The expanded source corpus required a broader task taxonomy. In the 45,758-row candidate
-            pool, each generated row records a
-            task family, an asset family, and the relationship between evidence and conclusion. This
-            taxonomy also adds a task that Attempt #1 lacked: deciding when the evidence is insufficient.
-            More than one third of the rows reward the model for declining to make an unsupported claim,
-            because a useful first draft must recognize when the available evidence cannot support a
-            conclusion.
+            The final dataset covers individual companies, macroeconomic and market conditions, sector
+            relationships, and cases in which the available evidence is insufficient. This broader
+            coverage moved the training task closer to the finance workflow described in the introduction.
           </p>
 
           <figure>
-            <div class="figure-panel">
-              <div class="tax-row lead"><span class="tax-label">Insufficient evidence</span><span class="tax-track"><i class="tax-fill" style="width:100%"></i></span><span class="tax-val">36.2%</span></div>
-              <div class="tax-row"><span class="tax-label">Market state interpretation</span><span class="tax-track"><i class="tax-fill" style="width:85%"></i></span><span class="tax-val">30.9%</span></div>
-              <div class="tax-row"><span class="tax-label">Actual vs. forward-looking</span><span class="tax-track"><i class="tax-fill" style="width:47%"></i></span><span class="tax-val">17.0%</span></div>
-              <div class="tax-row"><span class="tax-label">Driver transmission</span><span class="tax-track"><i class="tax-fill" style="width:37%"></i></span><span class="tax-val">13.7%</span></div>
-              <div class="tax-row"><span class="tax-label">Comparative analysis</span><span class="tax-track"><i class="tax-fill" style="width:4%"></i></span><span class="tax-val">1.5%</span></div>
-              <div class="tax-row"><span class="tax-label">Fund &amp; benchmark</span><span class="tax-track"><i class="tax-fill" style="width:1%"></i></span><span class="tax-val">0.4%</span></div>
+            <div class="mixture-flow" role="img" aria-label="34,640 finance samples plus 13,856 general-purpose examples produced a 48,496-example pre-split training mixture, of which 48,127 examples were used for training">
+              <div class="mixture-step">
+                <span class="mixture-value">34,640</span>
+                <span class="mixture-label">Finance samples</span>
+              </div>
+              <span class="mixture-operator" aria-hidden="true">+</span>
+              <div class="mixture-step">
+                <span class="mixture-value">13,856</span>
+                <span class="mixture-label">General-purpose examples</span>
+              </div>
+              <span class="mixture-operator" aria-hidden="true">=</span>
+              <div class="mixture-step final">
+                <span class="mixture-value">48,496</span>
+                <span class="mixture-label">Pre-split training mixture</span>
+              </div>
             </div>
-            <figcaption><strong>Figure 5:</strong> Insufficient-evidence tasks account for 36.2% of the <strong>45,758-row candidate pool</strong> generated during development.</figcaption>
+            <p class="mixture-trained">48,127 examples used for training</p>
+            <figcaption><strong>Figure 4:</strong> AutoScientist added <strong>13,856 general-purpose examples</strong> to the finalized finance dataset, creating a <strong>48,496-example</strong> mixture before the training split.</figcaption>
           </figure>
-
-          <h4>Multiple adaptation recipes</h4>
-
-          <p>
-            Scaling the dataset also gave us room to test different adaptation strategies. We ran
-            Adaptive Data three times, using three recipes, and merged the outputs with Adaption’s
-            Combine workflow. The three generations used the same source corpus but expressed each
-            analytical task differently. This candidate pool therefore increased row diversity
-            without implying that each generated row came from an independent source.
-          </p>
-
-          <p>
-            Specifically, the three generations share the same 1,753 leakage groups. The 45,758 rows
-            therefore represent roughly 15,250 unique generated items rather than three independent
-            corpora. We used this pool to compare recipes; it was not the dataset used for the final run.
-          </p>
-
-          <div class="table-frame">
-            <table class="cmp">
-              <thead><tr><th>Version</th><th>Rows</th><th>Recipe</th><th>Quality score</th></tr></thead>
-              <tbody>
-                <tr><th>Dataset 1</th><td>15,252</td><td>Completion only</td><td>7.0 → 9.2</td></tr>
-                <tr><th>Dataset 2</th><td>15,253</td><td>Prompt + completion</td><td>7.0 → 9.5</td></tr>
-                <tr><th>Dataset 3</th><td>15,197</td><td>Independent variant</td><td>7.0 → 9.5</td></tr>
-              </tbody>
-              <tfoot>
-                <tr><th><span class="sum-mark" aria-hidden="true">Σ</span>Candidate pool</th><td class="em">45,758</td><td>Combined outputs</td><td>8.0 → 9.4</td></tr>
-              </tfoot>
-            </table>
-          </div>
-
-          <p>
-            The combined candidate pool entered Adaptive Data with a higher baseline quality score
-            than the individual generations. It started at 8.0 and finished at 9.4, moving from grade
-            B to grade A.
-          </p>
-
-          <figure class="shot">
-            <a class="image-link" href="assets/a2-adaptive-data.png" aria-label="Open the full-resolution Attempt 2 combined-dataset figure">
-              <img src="assets/a2-adaptive-data.png" alt="Adaption quality grade panel showing the Attempt 2 dataset improving from grade B before adaptation to grade A after adaptation" width="1546" height="624" loading="lazy" decoding="async" />
-            </a>
-            <figcaption><strong>Figure 6:</strong> During recipe development, the candidate pool’s Adaption platform quality score increased from <strong>8.0 to 9.4</strong>, moving from grade B to grade A.</figcaption>
-          </figure>
-
-          <p>
-            For the final release, we chose Dataset 2—the strongest prompt-and-completion variant—and
-            combined it with <code>market_analysis_XXL</code>. The resulting 34,640-sample finance
-            dataset retained the broader context we wanted: individual companies, macroeconomic and
-            market conditions, sector relationships, and cases in which the evidence is insufficient.
-          </p>
 
           <h3 id="scale-model">Train model</h3>
 
@@ -1047,7 +859,7 @@
             <a class="image-link" href="assets/a2-winrate.png" aria-label="Open the full-resolution Attempt 2 evaluation figure">
               <img src="assets/a2-winrate.png" alt="AutoScientist results for the final run: base 13 versus adapted 87 on our dataset, and base 27 versus adapted 74 across the Market Analysis category" width="1600" height="1162" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 7:</strong> The final adapted model won <strong>87 to 13 on its dataset and 74 to 27</strong> across Adaption’s Market Analysis category.</figcaption>
+            <figcaption><strong>Figure 5:</strong> The final adapted model won <strong>87 to 13 on its dataset and 74 to 27</strong> across Adaption’s Market Analysis category.</figcaption>
           </figure>
 
           <p>
@@ -1060,8 +872,8 @@
           </p>
 
           <p>
-            Together, the two attempts moved us closer to the original goal. We first trained a small
-            model to draft company-level equity research, then broadened its training context to include
+            Together, the two attempts moved us closer to the original goal. We first adapted a model
+            to draft company-level equity research, then broadened its training context to include
             more of the market information encountered in real finance work. What remains is to test
             whether it can reason reliably across those relationships and make useful predictions about
             what happens next.

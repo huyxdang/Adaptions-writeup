@@ -629,3 +629,71 @@
 **Blockers**
 
 - None
+
+## Task: Remove stale Attempt #2 development artifacts
+
+**Status:** complete
+**Started:** 2026-08-12 12:06 +07
+
+### Scope
+
+- Audit every Attempt #2 statement, diagram, table, screenshot, caption, and resource against the finalized run.
+- Remove development-candidate artifacts that compete with or contradict the final dataset and evaluation story.
+- Preserve the established editorial tone and minimalist Be Vietnam Pro visual system.
+
+### 2026-08-12 12:06 +07 - Publication inconsistency confirmed
+
+**Status:** in progress
+
+**Completed**
+
+- Confirmed that the published section still gave the abandoned 45,758-row candidate pool a taxonomy figure, comparison table, quality screenshot, and several paragraphs.
+- Confirmed that the prior scale graphic included the 27,862-row Attempt #1 adapted set, obscuring the final Attempt #2 lineage.
+
+**Decisions**
+
+- Make the final run the only primary visual story in Attempt #2.
+- Reduce development recipe history to the single fact needed to explain why Dataset 2 was selected.
+
+### 2026-08-12 12:22 +07 - Final-run narrative rebuilt
+
+**Status:** in progress
+
+**Completed**
+
+- Removed the 45,758-row candidate-pool taxonomy, Dataset 1-3 table, 8.0-to-9.4 screenshot, and all related prose.
+- Replaced the misleading growth chart with the finalized composition: 34,640 finance samples plus 13,856 general-purpose examples equals a 48,496-example pre-split mixture, with 48,127 examples trained.
+- Renumbered the final evaluation screenshot to Figure 5 and retained the verified 87-to-13 and 74-to-27 results.
+- Corrected the closing description from a "small model" to an adapted model.
+
+**Next**
+
+- Remove obsolete assets and verify desktop and mobile output.
+
+**Blockers**
+
+- None
+
+### 2026-08-12 12:30 +07 - Corrected publication verified
+
+**Status:** complete
+
+**Completed**
+
+- Deleted the obsolete Attempt #2 quality screenshot asset and all styles used only by the removed charts and table.
+- Fixed the mobile mixture equation so its arithmetic operators remain legible.
+
+**Evidence**
+
+- Desktop and 393px browser checks found no horizontal overflow and no console errors or warnings.
+- Browser text inspection found none of the stale 45,758-row candidate-pool labels or old Figure 6/7 captions.
+- The final result asset rendered at its expected 1600-by-1162 resolution with the 87-to-13 and 74-to-27 caption.
+- All asset references resolve locally, and `git diff --check` completed without errors.
+
+**Next**
+
+- Commit and push the corrected publication.
+
+**Blockers**
+
+- None
