@@ -577,3 +577,55 @@
 **Blockers**
 
 - None
+
+## Task: Align Attempt #2 with the finalized release
+
+**Status:** complete
+**Started:** 2026-08-12 08:20 +07
+
+### Scope
+
+- Separate the development candidate pool from the finalized finance dataset and training mixture.
+- Update the scale figure, evaluation context, run metadata, and public artifact links.
+- Preserve the article's existing restrained technical tone and visual system.
+
+### Decisions
+
+- Describe 45,758 rows as the three-recipe candidate pool, not the final dataset.
+- Describe 34,640 as the released finance dataset, 48,496 as the pre-split mixture after general-purpose replay, and 48,127 as the rows used for training.
+- Retain the candidate-pool taxonomy and quality figures as development history, with explicit captions.
+
+**Next**
+
+- Verify desktop and mobile rendering, then commit and publish.
+
+**Blockers**
+
+- None
+
+### 2026-08-12 11:50 +07 - Finalized Attempt #2 narrative verified
+
+**Status:** complete
+
+**Completed**
+
+- Reframed 45,758 rows as the development candidate pool rather than the final dataset.
+- Updated the scale figure to show 589 baseline rows, 27,862 Attempt #1 adapted rows, 34,640 finalized finance samples, and the 48,496-example pre-split mixture.
+- Added the exact 48,127-row training count and preserved the final 87-to-13 and 74-to-27 preference results.
+- Scoped the taxonomy and quality figures to recipe development.
+- Replaced the stale Attempt #2 artifact links and ambiguous run metadata with the finalized dataset, weights, job ID, and experiment ID.
+
+**Evidence**
+
+- Desktop and 393px browser checks reported zero page overflow and zero console warnings or errors.
+- The four-stage scale figure, candidate-pool table, and compact Resources block were visually inspected at mobile width.
+- The deployed artifact URLs were verified as public before being added.
+- `git diff --check` completed without errors.
+
+**Next**
+
+- Commit and push the verified update.
+
+**Blockers**
+
+- None

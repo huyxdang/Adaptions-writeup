@@ -398,7 +398,7 @@
 
       .scale-chart {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         align-items: end;
         gap: 1.2rem;
         min-height: 225px;
@@ -410,6 +410,7 @@
       .scale-bar-space { display: flex; align-items: end; justify-content: center; }
       .scale-bar { display: block; width: min(76px, 70%); min-height: 4px; background: var(--highlight-gray); }
       .scale-stage:nth-child(2) .scale-bar { background: var(--accent-light); }
+      .scale-stage:nth-child(3) .scale-bar { background: var(--accent-medium); }
       .scale-stage:last-child .scale-bar { background: var(--accent); }
       .scale-label { color: var(--medium-gray); font-size: 0.66rem; line-height: 1.35; }
 
@@ -434,12 +435,15 @@
       }
       article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(2) .scale-bar { transition-delay: 120ms; }
       article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(3) .scale-bar { transition-delay: 240ms; }
+      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(4) .scale-bar { transition-delay: 360ms; }
       article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(1) .scale-value,
       article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(1) .scale-label { transition-delay: 180ms; }
       article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(2) .scale-value,
       article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(2) .scale-label { transition-delay: 300ms; }
       article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(3) .scale-value,
       article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(3) .scale-label { transition-delay: 420ms; }
+      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(4) .scale-value,
+      article figure.motion-ready.is-visible .scale-chart .scale-stage:nth-child(4) .scale-label { transition-delay: 540ms; }
 
       @media (prefers-reduced-motion: reduce) {
         .scale-chart .scale-bar,
@@ -917,36 +921,43 @@
           <p>
             We therefore expanded the source corpus from roughly 1,500 to about 7,000
             institutional reports. The expanded corpus added macro outlooks, sector studies, fund
-            reviews, and fixed-income commentary. Across the two attempts, the training set grew in
-            two stages: from the 589-row baseline to 27,862 adapted rows in Attempt #1, then to 45,758
-            rows built from the broader corpus in Attempt #2—more than 50 times the original baseline.
+            reviews, and fixed-income commentary. After testing several adaptation recipes, we selected
+            Dataset 2 and combined it with the <code>market_analysis_XXL</code> dataset from Attempt #1.
+            This produced the final public finance dataset: <strong>34,640 samples</strong>, more than
+            50 times the original 589-row baseline.
           </p>
 
           <figure>
-            <div class="scale-chart" role="img" aria-label="Training-row growth from the 589-row Attempt 1 baseline to 27,862 Attempt 1 Adaptive Data rows and 45,758 Attempt 2 enhanced rows">
+            <div class="scale-chart" role="img" aria-label="Dataset growth from the 589-row baseline to 27,862 Attempt 1 adapted rows, 34,640 finalized finance samples, and a 48,496-example training mixture after general-purpose replay">
               <div class="scale-stage">
                 <span class="scale-value">589</span>
-                <span class="scale-bar-space"><i class="scale-bar" style="height:1.3%"></i></span>
-                <span class="scale-label">Attempt #1, Baseline</span>
+                <span class="scale-bar-space"><i class="scale-bar" style="height:1.2%"></i></span>
+                <span class="scale-label">Baseline</span>
               </div>
               <div class="scale-stage">
                 <span class="scale-value">27,862</span>
-                <span class="scale-bar-space"><i class="scale-bar" style="height:60.9%"></i></span>
-                <span class="scale-label">Attempt #1, Synthetic Data</span>
+                <span class="scale-bar-space"><i class="scale-bar" style="height:57.5%"></i></span>
+                <span class="scale-label">Attempt #1 adapted</span>
               </div>
               <div class="scale-stage">
-                <span class="scale-value">45,758</span>
+                <span class="scale-value">34,640</span>
+                <span class="scale-bar-space"><i class="scale-bar" style="height:71.4%"></i></span>
+                <span class="scale-label">Final finance data</span>
+              </div>
+              <div class="scale-stage">
+                <span class="scale-value">48,496</span>
                 <span class="scale-bar-space"><i class="scale-bar" style="height:100%"></i></span>
-                <span class="scale-label">Attempt #2, Enhanced Data</span>
+                <span class="scale-label">Training mixture</span>
               </div>
             </div>
-            <figcaption><strong>Figure 4:</strong> Training-data scale across the two attempts: 589 baseline rows, 27,862 Attempt #1 Adaptive Data rows, and 45,758 Attempt #2 enhanced rows.</figcaption>
+            <figcaption><strong>Figure 4:</strong> The finalized finance dataset contains <strong>34,640 samples</strong>. General-purpose replay expanded the pre-split training mixture to <strong>48,496 examples</strong>.</figcaption>
           </figure>
 
           <h4>Broader research tasks</h4>
 
           <p>
-            The expanded source corpus required a broader task taxonomy. Each training row records a
+            The expanded source corpus required a broader task taxonomy. In the 45,758-row candidate
+            pool, each generated row records a
             task family, an asset family, and the relationship between evidence and conclusion. This
             taxonomy also adds a task that Attempt #1 lacked: deciding when the evidence is insufficient.
             More than one third of the rows reward the model for declining to make an unsupported claim,
@@ -963,7 +974,7 @@
               <div class="tax-row"><span class="tax-label">Comparative analysis</span><span class="tax-track"><i class="tax-fill" style="width:4%"></i></span><span class="tax-val">1.5%</span></div>
               <div class="tax-row"><span class="tax-label">Fund &amp; benchmark</span><span class="tax-track"><i class="tax-fill" style="width:1%"></i></span><span class="tax-val">0.4%</span></div>
             </div>
-            <figcaption><strong>Figure 5:</strong> Insufficient-evidence tasks account for 36.2% of the combined dataset.</figcaption>
+            <figcaption><strong>Figure 5:</strong> Insufficient-evidence tasks account for 36.2% of the <strong>45,758-row candidate pool</strong> generated during development.</figcaption>
           </figure>
 
           <h4>Multiple adaptation recipes</h4>
@@ -972,15 +983,14 @@
             Scaling the dataset also gave us room to test different adaptation strategies. We ran
             Adaptive Data three times, using three recipes, and merged the outputs with Adaption’s
             Combine workflow. The three generations used the same source corpus but expressed each
-            analytical task differently. The combined dataset therefore increased row diversity
+            analytical task differently. This candidate pool therefore increased row diversity
             without implying that each generated row came from an independent source.
           </p>
 
           <p>
             Specifically, the three generations share the same 1,753 leakage groups. The 45,758 rows
             therefore represent roughly 15,250 unique generated items rather than three independent
-            corpora. The final row count came from broader source coverage and multiple adaptation
-            recipes.
+            corpora. We used this pool to compare recipes; it was not the dataset used for the final run.
           </p>
 
           <div class="table-frame">
@@ -992,13 +1002,13 @@
                 <tr><th>Dataset 3</th><td>15,197</td><td>Independent variant</td><td>7.0 → 9.5</td></tr>
               </tbody>
               <tfoot>
-                <tr><th><span class="sum-mark" aria-hidden="true">Σ</span>Final</th><td class="em">45,758</td><td>Combined outputs</td><td>8.0 → 9.4</td></tr>
+                <tr><th><span class="sum-mark" aria-hidden="true">Σ</span>Candidate pool</th><td class="em">45,758</td><td>Combined outputs</td><td>8.0 → 9.4</td></tr>
               </tfoot>
             </table>
           </div>
 
           <p>
-            The broader combined dataset entered Adaptive Data with a higher baseline quality score
+            The combined candidate pool entered Adaptive Data with a higher baseline quality score
             than the individual generations. It started at 8.0 and finished at 9.4, moving from grade
             B to grade A.
           </p>
@@ -1007,22 +1017,23 @@
             <a class="image-link" href="assets/a2-adaptive-data.png" aria-label="Open the full-resolution Attempt 2 combined-dataset figure">
               <img src="assets/a2-adaptive-data.png" alt="Adaption quality grade panel showing the Attempt 2 dataset improving from grade B before adaptation to grade A after adaptation" width="1546" height="624" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 6:</strong> The Adaption platform quality score increased from <strong>8.0 to 9.4</strong>, moving the broader Attempt #2 dataset from grade B to grade A.</figcaption>
+            <figcaption><strong>Figure 6:</strong> During recipe development, the candidate pool’s Adaption platform quality score increased from <strong>8.0 to 9.4</strong>, moving from grade B to grade A.</figcaption>
           </figure>
 
           <p>
-            This broader dataset gave the model more of the context found in real finance work: not
-            only individual companies, but also market conditions, sector relationships, and cases in
-            which the evidence is insufficient.
+            For the final release, we chose Dataset 2—the strongest prompt-and-completion variant—and
+            combined it with <code>market_analysis_XXL</code>. The resulting 34,640-sample finance
+            dataset retained the broader context we wanted: individual companies, macroeconomic and
+            market conditions, sector relationships, and cases in which the evidence is insufficient.
           </p>
 
           <h3 id="scale-model">Train model</h3>
 
           <p>
-            For the final run, we selected Dataset 2—the prompt-and-completion variant—and combined it
-            with the <code>market_analysis_XXL</code> dataset from Attempt #1. AutoScientist then added
-            13,856 general-purpose examples, producing a 48,496-row training mixture intended to learn
-            the broader finance domain while preserving more of the base model’s general capability.
+            AutoScientist added 13,856 general-purpose examples to the 34,640 finance samples,
+            producing a 48,496-example mixture before the training split. Of those, <strong>48,127
+            examples</strong> were used for training. The replay data was intended to preserve more of
+            the base model’s general capability while it learned the broader finance domain.
           </p>
 
           <p>
@@ -1158,38 +1169,34 @@
               <h3 id="resource-attempt-2">Attempt #2</h3>
               <dl class="resource-meta">
                 <div>
-                  <dt>Run ID</dt>
-                  <dd><button type="button" class="copy-id" data-copy="adaption_llama_3_3_70b_instru_final_final_8228cf21" aria-label="Copy run ID adaption_llama_3_3_70b_instru_final_final_8228cf21"><code>adaption_llama_3_3_70b_instru_final_final_8228cf21</code><span class="copy-glyph" aria-hidden="true"><svg class="copy-icon icon-copy" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.6" height="6.6" rx="1.3"/><path d="M8 4V2.8A1.3 1.3 0 0 0 6.7 1.5H2.8A1.3 1.3 0 0 0 1.5 2.8v3.9A1.3 1.3 0 0 0 2.8 8H4"/></svg><svg class="copy-icon icon-check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.3 6.3 4.8 8.8 9.9 3.4"/></svg></span><span class="copy-flag" aria-live="polite"></span></button></dd>
+                  <dt>Job</dt>
+                  <dd><button type="button" class="copy-id" data-copy="ae5e275c-123e-4f0e-ae5e-4b19d9ed9aa7" aria-label="Copy job ID ae5e275c-123e-4f0e-ae5e-4b19d9ed9aa7"><code>ae5e275c-123e-4f0e-ae5e-4b19d9ed9aa7</code><span class="copy-glyph" aria-hidden="true"><svg class="copy-icon icon-copy" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.6" height="6.6" rx="1.3"/><path d="M8 4V2.8A1.3 1.3 0 0 0 6.7 1.5H2.8A1.3 1.3 0 0 0 1.5 2.8v3.9A1.3 1.3 0 0 0 2.8 8H4"/></svg><svg class="copy-icon icon-check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.3 6.3 4.8 8.8 9.9 3.4"/></svg></span><span class="copy-flag" aria-live="polite"></span></button></dd>
                 </div>
                 <div>
-                  <dt>Dataset ID</dt>
-                  <dd><button type="button" class="copy-id" data-copy="2243d382-502e-4b8c-9cb0-041ae86d4345" aria-label="Copy dataset ID 2243d382-502e-4b8c-9cb0-041ae86d4345"><code>2243d382-502e-4b8c-9cb0-041ae86d4345</code><span class="copy-glyph" aria-hidden="true"><svg class="copy-icon icon-copy" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.6" height="6.6" rx="1.3"/><path d="M8 4V2.8A1.3 1.3 0 0 0 6.7 1.5H2.8A1.3 1.3 0 0 0 1.5 2.8v3.9A1.3 1.3 0 0 0 2.8 8H4"/></svg><svg class="copy-icon icon-check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.3 6.3 4.8 8.8 9.9 3.4"/></svg></span><span class="copy-flag" aria-live="polite"></span></button></dd>
+                  <dt>Experiment</dt>
+                  <dd><button type="button" class="copy-id" data-copy="8228cf21-313f-4866-aa46-a79909945c4f" aria-label="Copy training experiment ID 8228cf21-313f-4866-aa46-a79909945c4f"><code>8228cf21-313f-4866-aa46-a79909945c4f</code><span class="copy-glyph" aria-hidden="true"><svg class="copy-icon icon-copy" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.6" height="6.6" rx="1.3"/><path d="M8 4V2.8A1.3 1.3 0 0 0 6.7 1.5H2.8A1.3 1.3 0 0 0 1.5 2.8v3.9A1.3 1.3 0 0 0 2.8 8H4"/></svg><svg class="copy-icon icon-check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.3 6.3 4.8 8.8 9.9 3.4"/></svg></span><span class="copy-flag" aria-live="polite"></span></button></dd>
                 </div>
               </dl>
               <ul class="artifact-list">
                 <li class="artifact-item">
                   <span class="artifact-label">Final dataset</span>
                   <span class="artifact-platforms">
-                    <a class="platform-link" href="https://huggingface.co/datasets/huyxdang/adaption-market-analysis-final" target="_blank" rel="noreferrer" aria-label="Open the final Attempt 2 dataset on Hugging Face">
+                    <a class="platform-link" href="https://huggingface.co/datasets/huyxdang/adaption-final-final" target="_blank" rel="noreferrer" aria-label="Open the final Attempt 2 dataset on Hugging Face">
                       <img class="brand-mark" src="assets/hf-mark.svg" alt="" width="16" height="16" loading="lazy" decoding="async" />
                       Hugging Face
                     </a>
-                    <a class="platform-link" href="https://www.kaggle.com/datasets/huydang03/adaption-market-analysis-final" target="_blank" rel="noreferrer" aria-label="Open the final Attempt 2 dataset on Kaggle">
+                    <a class="platform-link" href="https://www.kaggle.com/datasets/huydang03/adaption-final-final" target="_blank" rel="noreferrer" aria-label="Open the final Attempt 2 dataset on Kaggle">
                       <img class="brand-mark" src="assets/kaggle-mark.svg" alt="" width="16" height="16" loading="lazy" decoding="async" />
                       Kaggle
                     </a>
                   </span>
                 </li>
                 <li class="artifact-item">
-                  <span class="artifact-label">Final model</span>
+                  <span class="artifact-label">Model weights</span>
                   <span class="artifact-platforms">
-                    <a class="platform-link" href="https://huggingface.co/huyxdang/adaption-market-analysis-final-model" target="_blank" rel="noreferrer" aria-label="Open the final Attempt 2 model on Hugging Face">
+                    <a class="platform-link" href="https://huggingface.co/huyxdang/adaption_final_final" target="_blank" rel="noreferrer" aria-label="Open the final Attempt 2 model weights on Hugging Face">
                       <img class="brand-mark" src="assets/hf-mark.svg" alt="" width="16" height="16" loading="lazy" decoding="async" />
                       Hugging Face
-                    </a>
-                    <a class="platform-link" href="https://www.kaggle.com/models/huydang03/adaption-market-analysis-final-model/PyTorch/lora" target="_blank" rel="noreferrer" aria-label="Open the final Attempt 2 model on Kaggle">
-                      <img class="brand-mark" src="assets/kaggle-mark.svg" alt="" width="16" height="16" loading="lazy" decoding="async" />
-                      Kaggle
                     </a>
                   </span>
                 </li>
