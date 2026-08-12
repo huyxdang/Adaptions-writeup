@@ -725,3 +725,30 @@
 **Blockers**
 
 - None
+
+## Task: Correct release identifiers
+
+**Status:** complete
+**Started:** 2026-08-12 13:35 +07
+
+### 2026-08-12 13:38 +07 - Resource identifiers corrected
+
+**Status:** complete
+
+**Completed**
+
+- Renamed “Run ID” to “Model ID” in the Resources section.
+- Replaced Attempt #2’s internal Job and Experiment identifiers with the submitted Model ID and Dataset ID.
+- Updated the copy-button values and accessibility labels to match the visible identifiers.
+
+**Evidence**
+
+- Attempt #2 now displays Model ID `adaption_llama_3_3_70b_instru_final_final_8228cf21` and Dataset ID `3038bafd-a898-4712-9020-2357cd5b8855`.
+
+**Next**
+
+- Verify, commit, and push.
+
+**Blockers**
+
+- None
