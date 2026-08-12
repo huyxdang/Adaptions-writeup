@@ -18,7 +18,7 @@
 
 ### 2026-08-10 00:13 +07 - Motion system selected
 
-**Status:** in progress
+**Status:** complete
 
 **Completed**
 
@@ -81,6 +81,51 @@
 **Blockers**
 
 - The original Desktop worktree became inaccessible to the tool process, so the isolated change was applied and verified in a temporary clone of the same repository. The blocked local files were not modified.
+
+## Task: Recommend the next Market Analysis training configuration
+
+**Status:** complete
+**Started:** 2026-08-11 19:56 +07
+
+### Scope
+
+- Diagnose the new Llama 4 Scout LoRA run from its dataset mixture, hyperparameters, and two preference win rates.
+- Compare it with the known Attempt #1 and Attempt #2 evidence without treating preference scores as accuracy.
+- Recommend one exact next configuration aimed at improving held-out Market Analysis transfer.
+
+### Plan
+
+- Verify the four dataset inputs and relevant model/training constraints.
+- Separate data-mixture, optimization, and evaluation explanations for the transfer gap.
+- Produce a prioritized next run plus a minimal ablation sequence and promotion criteria.
+
+**Blockers**
+
+- The exact Market Analysis evaluation sample size and per-task breakdown have not yet been provided.
+
+### 2026-08-11 20:31 +07 - Training diagnosis complete
+
+**Completed**
+
+- Verified the public Attempt #1 and three Attempt #2 dataset mirrors and profiled all 73,564 exported rows.
+- Compared row counts, prompt/response lengths, exact overlap, and the Attempt #2 task/asset taxonomy.
+- Checked the current Llama 4 Scout LoRA recipe against the official Meta model card and Hugging Face TRL/PEFT guidance.
+- Recommended a conservative next run and separated it from a later data-mixture ablation.
+
+**Evidence**
+
+- The current model already wins 82:18 on its own distribution but only 65:36 on the Market Analysis category, which points to a transfer gap rather than simple underfitting.
+- The three new exports contain no exact training-input or output duplicates, but 67.1% of their rows are concentrated in insufficient-evidence and market-state tasks.
+- The current run uses the upper end of the documented LoRA learning-rate range, three epochs, zero adapter dropout, rank 32, and broad attention/expert targeting.
+
+**Decision**
+
+- Hold the dataset and target modules fixed for the next run; reduce update pressure to rank 16, alpha 32, dropout 0.05, learning rate 1e-4, and two epochs, with ten evaluations.
+- Evaluate on a source-grouped local Market Analysis set and require a transfer gain without a material collapse in on-dataset preference.
+
+**Remaining uncertainty**
+
+- Statistical significance cannot be assessed until the exact pairwise evaluation count and tie policy are known.
 
 ### 2026-08-10 00:18 +07 - Figure animations implemented
 
@@ -357,6 +402,173 @@
 **Failures and recovery**
 
 - The first multi-section Playwright selector check was malformed by shell interpretation and returned `zsh: no matches found: a[href=#]`; rerunning with string concatenation completed successfully and did not affect the page.
+
+**Next**
+
+- None
+
+**Blockers**
+
+- None
+
+## Task: Render a 16:9 website showcase video
+
+**Status:** in progress
+**Started:** 2026-08-10 14:02 +07
+
+### Scope
+
+- Create a silent, 30-second, 16:9 HyperFrames video that presents the finance-model report as a website showcase.
+- Use the report's existing cover, figures, and verified result language.
+- Deliver a local MP4 and preserve a reproducible composition source.
+
+### Plan
+
+- Create a dedicated HyperFrames composition and storyboard the report into a concise visual narrative.
+- Render locally, inspect representative frames, and revise any readability or timing issues.
+- Deliver the MP4 and source files.
+
+### 2026-08-10 14:02 +07 - Environment and brief confirmed
+
+**Status:** in progress
+
+**Completed**
+
+- Confirmed a silent 30-second 16:9 website showcase as the production brief.
+- Confirmed local Node.js `v24.13.0` and FFmpeg `8.1.2`, which meet HyperFrames' published local-render requirements.
+
+**Evidence**
+
+- HyperFrames README documents HTML-to-MP4 rendering and its website showcase workflow.
+- `node --version` and `ffmpeg -version` completed successfully in the report workspace.
+
+**Decisions**
+
+- Build a dedicated composition rather than attempting to record a scroll through the live article, so the output remains deterministic and readable at video pace.
+
+**Next**
+
+- Scaffold the composition and render a first pass.
+
+**Blockers**
+
+- None
+
+## Task: Audit Attempt #1 and Attempt #2 organization
+
+**Status:** complete
+**Started:** 2026-08-10 16:35 +07
+
+### Scope
+
+- Collect independent feedback on the organization of paragraphs, figures, and subsections in both attempts.
+- Preserve the existing article during the audit and avoid implementation changes.
+
+### Plan
+
+- Run isolated reviews of Attempt #1, Attempt #2, and the cross-attempt visual and narrative flow.
+- Compare the reviews against the rendered source and synthesize the recurring issues into a prioritized recommendation.
+
+### 2026-08-10 16:51 +07 - Independent organization audit complete
+
+**Status:** complete
+
+**Completed**
+
+- Collected isolated structural reviews for Attempt #1, Attempt #2, and the cross-attempt narrative.
+- Compared their findings and identified the recurring sequencing and hierarchy problems.
+- Produced a reader-first reorganization that retains the current evidence and visuals.
+
+**Evidence**
+
+- All three reviews found that the macro story is credible but that claims, figures, interpretations, and caveats are too often separated.
+- Attempt #1's principal issue is local sequencing around extraction, adaptation, and evaluation.
+- Attempt #2's principal issue is an overloaded Data subsection and a late explanation of how its evaluation differs from Attempt #1.
+
+**Decisions**
+
+- Recommend reorganizing around claim -> evidence -> interpretation, with an explicit proof-to-scale bridge.
+- Recommend removing or repurposing the redundant first extraction figure and adding lightweight internal labels within Attempt #2.
+
+**Next**
+
+- Await approval before reorganizing the article.
+
+**Blockers**
+
+- None
+
+### 2026-08-10 16:52 +07 - Goal-centered organization implemented
+
+**Status:** complete
+
+**Completed**
+
+- Reframed both attempts around the goal of producing useful first-draft equity research.
+- Reordered Attempt #1 into complete claim, evidence, and interpretation units.
+- Added internal hierarchy to Attempt #2 for source breadth, task breadth, and adaptation recipes.
+- Moved evaluation scope and limitations next to the results they qualify.
+
+**Evidence**
+
+- Figure captions remain sequential from Figure 1 through Figure 10.
+- `git diff --check` completed without whitespace errors.
+- The article now lands on the remaining capability gap before transitioning into What's next.
+
+**Decisions**
+
+- Preserve the approved top-level TOC labels while using small fourth-level headings inside Attempt #2.
+- Keep both extraction visuals, but separate them with the failure evidence and answer-first explanation.
+
+**Next**
+
+- Publish the reorganization.
+
+**Blockers**
+
+- The in-app browser does not permit direct `file://` navigation, so verification used source and structural checks rather than a fresh browser render.
+
+## Task: Compare HTML and ImageGen extraction figures
+
+**Status:** in progress
+**Started:** 2026-08-11 14:09 +07
+
+### Scope
+
+- Create one deterministic HTML/CSS explanation and one ImageGen alternative for the report-to-training-pair method.
+- Keep both alternatives isolated from the published article.
+- Have independent reviewers compare immediate comprehension, methodological accuracy, visual fit, and responsive suitability.
+
+### Plan
+
+- Build both alternatives around the same core message and example.
+- Render and inspect the HTML version and inspect the generated image.
+- Collect blind comparative reviews and recommend the stronger production direction.
+
+**Blockers**
+
+- None
+
+## Task: Publish the latest final-run results
+
+**Status:** complete
+**Started:** 2026-08-12 07:35 +07
+
+### 2026-08-12 07:40 +07 - Latest evaluation published
+
+**Status:** complete
+
+**Completed**
+
+- Replaced the older Attempt #2 Llama 4 result with the final Llama 3.3 70B LoRA run.
+- Documented the 48,496-row training mixture, rank-16 recipe, and new 87-to-13 dataset and 74-to-27 Market Analysis preference results.
+- Replaced the result screenshot and updated the Attempt #2 run ID.
+- Added a restrained comparison explaining that the new run retained strong Market Analysis performance but is not proven superior to Attempt #1 overall.
+
+**Evidence**
+
+- Desktop and 393px Playwright checks loaded the 1600-by-1162 result asset, found the updated Figure 7 caption, and reported zero horizontal overflow.
+- `git diff --check` completed without whitespace errors.
 
 **Next**
 

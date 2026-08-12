@@ -469,7 +469,6 @@
       .cmp .em { color: var(--accent); font-weight: 500; }
       .sum-mark { display: inline-block; margin-right: 0.4rem; color: var(--accent); font: 500 11px/1 var(--mono); }
       .table-frame { margin: 1.8rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-
       .morph {
         display: grid;
         grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
@@ -780,8 +779,8 @@
           </figure>
 
           <p>
-            We then applied support, leakage, identity, capping, and deduplication checks to remove weak
-            or repetitive examples. This reduced the extracted data to a traceable baseline of
+            We then applied five checks — evidential support, answer leakage, entity identity, per-report
+            caps, and deduplication — to remove weak or repetitive examples. This reduced the extracted data to a traceable baseline of
             <strong>589 examples</strong> for training.
           </p>
 
@@ -1020,31 +1019,33 @@
           <h3 id="scale-model">Train model</h3>
 
           <p>
-            With the broader dataset ready, the next question was whether a small adapter could learn
-            from it. AutoScientist trained a rank-32 LoRA adapter for <code>Llama 4 Scout 17B</code> on
-            all 45,758 rows, completing two epochs in 168 steps.
+            For the final run, we selected Dataset 2—the prompt-and-completion variant—and combined it
+            with the <code>market_analysis_XXL</code> dataset from Attempt #1. AutoScientist then added
+            13,856 general-purpose examples, producing a 48,496-row training mixture intended to learn
+            the broader finance domain while preserving more of the base model’s general capability.
           </p>
 
           <p>
-            On Attempt #2’s dataset-specific preference evaluation, the adapted model won 80 to 20.
-            This result measures whether the adapter could produce preferred answers on tasks drawn
-            from the broader training distribution. Like the earlier win rates, it is a pairwise
-            preference score, not an accuracy measure.
+            AutoScientist trained a rank-16 LoRA adapter for <code>Llama-3.3-70B-Instruct</code> over
+            two epochs, using a learning rate of <code>1e-4</code>. On the final run’s dataset-specific
+            preference evaluation, the adapted model won <strong>87 to 13</strong>. On Adaption’s
+            separate Market Analysis evaluation, it won <strong>74 to 27</strong>.
           </p>
 
           <figure class="shot">
             <a class="image-link" href="assets/a2-winrate.png" aria-label="Open the full-resolution Attempt 2 evaluation figure">
-              <img src="assets/a2-winrate.png" alt="AutoScientist result for the combined dataset: base 20, adapted 80" width="1036" height="760" loading="lazy" decoding="async" />
+              <img src="assets/a2-winrate.png" alt="AutoScientist results for the final run: base 13 versus adapted 87 on our dataset, and base 27 versus adapted 74 across the Market Analysis category" width="1600" height="1162" loading="lazy" decoding="async" />
             </a>
-            <figcaption><strong>Figure 7:</strong> Attempt #2 produced an <strong>80 to 20</strong> dataset-specific preference result. No category-level result was produced.</figcaption>
+            <figcaption><strong>Figure 7:</strong> The final adapted model won <strong>87 to 13 on its dataset and 74 to 27</strong> across Adaption’s Market Analysis category.</figcaption>
           </figure>
 
           <p>
-            Attempt #2 has no category-level result, so the 80-to-20 preference describes performance
-            only on its own distribution. Attempt #1 provides the stronger evidence beyond our own
-            data through Adaption’s separate Market Analysis evaluation; Attempt #2 shows that we could
-            train the model on a much broader set of finance tasks while retaining a strong preference
-            result within that distribution.
+            The latest run is clearly preferred to its base model on both evaluations. These results do
+            not, however, establish that it outperforms Attempt #1 overall: the 87-to-13 and 84-to-16
+            dataset-specific results come from different distributions, while its 74-to-27 Market
+            Analysis result is close to Attempt #1’s 77-to-23 result. The evidence instead shows that
+            the broader training mixture retained strong Market Analysis performance while producing
+            our highest dataset-specific preference result.
           </p>
 
           <p>
@@ -1158,7 +1159,7 @@
               <dl class="resource-meta">
                 <div>
                   <dt>Run ID</dt>
-                  <dd><button type="button" class="copy-id" data-copy="adaption_llama_4_scout_17b_16_final_cc7ddeac" aria-label="Copy run ID adaption_llama_4_scout_17b_16_final_cc7ddeac"><code>adaption_llama_4_scout_17b_16_final_cc7ddeac</code><span class="copy-glyph" aria-hidden="true"><svg class="copy-icon icon-copy" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.6" height="6.6" rx="1.3"/><path d="M8 4V2.8A1.3 1.3 0 0 0 6.7 1.5H2.8A1.3 1.3 0 0 0 1.5 2.8v3.9A1.3 1.3 0 0 0 2.8 8H4"/></svg><svg class="copy-icon icon-check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.3 6.3 4.8 8.8 9.9 3.4"/></svg></span><span class="copy-flag" aria-live="polite"></span></button></dd>
+                  <dd><button type="button" class="copy-id" data-copy="adaption_llama_3_3_70b_instru_final_final_8228cf21" aria-label="Copy run ID adaption_llama_3_3_70b_instru_final_final_8228cf21"><code>adaption_llama_3_3_70b_instru_final_final_8228cf21</code><span class="copy-glyph" aria-hidden="true"><svg class="copy-icon icon-copy" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.6" height="6.6" rx="1.3"/><path d="M8 4V2.8A1.3 1.3 0 0 0 6.7 1.5H2.8A1.3 1.3 0 0 0 1.5 2.8v3.9A1.3 1.3 0 0 0 2.8 8H4"/></svg><svg class="copy-icon icon-check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.3 6.3 4.8 8.8 9.9 3.4"/></svg></span><span class="copy-flag" aria-live="polite"></span></button></dd>
                 </div>
                 <div>
                   <dt>Dataset ID</dt>
