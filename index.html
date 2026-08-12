@@ -341,19 +341,15 @@
         border-radius: var(--radius);
         background: var(--card);
       }
-      .mixture-step { min-width: 0; }
+      .mixture-step { min-width: 0; text-align: center; }
       .mixture-value { display: block; color: var(--black); font: 500 1.15rem/1.2 var(--mono); font-variant-numeric: tabular-nums; }
       .mixture-label { display: block; margin-top: 0.35rem; color: var(--medium-gray); font-size: 0.68rem; line-height: 1.4; }
       .mixture-step.final .mixture-value { color: var(--accent); }
       .mixture-operator { color: var(--accent); font: 400 1.15rem/1 var(--sans); text-align: center; }
-      .mixture-trained { margin: 0.9rem 0 0; color: var(--medium-gray); font: 400 0.62rem/1.5 var(--mono); text-align: right; }
-
       article figure.motion-ready .mixture-step,
-      article figure.motion-ready .mixture-operator,
-      article figure.motion-ready .mixture-trained { opacity: 0; transform: translateY(8px); }
+      article figure.motion-ready .mixture-operator { opacity: 0; transform: translateY(8px); }
       article figure.motion-ready.is-visible .mixture-step,
-      article figure.motion-ready.is-visible .mixture-operator,
-      article figure.motion-ready.is-visible .mixture-trained {
+      article figure.motion-ready.is-visible .mixture-operator {
         opacity: 1;
         transform: translateY(0);
         transition: opacity 360ms ease, transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -362,7 +358,6 @@
       article figure.motion-ready.is-visible .mixture-flow > :nth-child(3) { transition-delay: 200ms; }
       article figure.motion-ready.is-visible .mixture-flow > :nth-child(4) { transition-delay: 300ms; }
       article figure.motion-ready.is-visible .mixture-flow > :nth-child(5) { transition-delay: 400ms; }
-      article figure.motion-ready.is-visible .mixture-trained { transition-delay: 520ms; }
       .morph {
         display: grid;
         grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
@@ -501,7 +496,6 @@
         .morph-rule { height: 1px; }
         .mixture-flow { grid-template-columns: 1fr; gap: 0.8rem; padding: 1.2rem; }
         .mixture-operator { justify-self: start; margin-left: 0.2rem; }
-        .mixture-trained { text-align: left; }
         article h2 { font-size: 24px; }
         .resource-meta > div, .artifact-item { grid-template-columns: 68px minmax(0, 1fr); }
         .adaption-links li { grid-template-columns: 92px minmax(0, 1fr); }
@@ -835,8 +829,7 @@
                 <span class="mixture-label">Pre-split training mixture</span>
               </div>
             </div>
-            <p class="mixture-trained">48,127 examples used for training</p>
-            <figcaption><strong>Figure 4:</strong> AutoScientist added <strong>13,856 general-purpose examples</strong> to the finalized finance dataset, creating a <strong>48,496-example</strong> mixture before the training split.</figcaption>
+            <figcaption><strong>Figure 4:</strong> General-purpose replay expands 34,640 finance samples into a 48,496-example training mixture.</figcaption>
           </figure>
 
           <h3 id="scale-model">Train model</h3>
