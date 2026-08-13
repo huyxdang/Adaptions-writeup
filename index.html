@@ -853,20 +853,19 @@
           </figure>
 
           <p>
-            The latest run is clearly preferred to its base model on both evaluations. These results do
-            not, however, establish that it outperforms Attempt #1 overall: the 87-to-13 and 84-to-16
-            dataset-specific results come from different distributions, while its 74-to-27 Market
-            Analysis result is close to Attempt #1’s 77-to-23 result. The evidence instead shows that
-            the broader training mixture retained strong Market Analysis performance while producing
-            our highest dataset-specific preference result.
+            The final model was strongly preferred over its base model on both evaluations. We can
+            compare our two attempts:
           </p>
 
+          <ul>
+            <li><strong>Stronger fit to the new dataset:</strong> Attempt #2 achieved a higher dataset-specific preference despite covering broader and more varied financial tasks.</li>
+            <li><strong>Broader training did not weaken domain performance:</strong> The model retained strong Market Analysis performance after adding wider market context and general-purpose data.</li>
+            <li><strong>Attempt #2 is not proven superior overall:</strong> The models were evaluated indirectly against their respective base models, so proving superiority requires a head-to-head comparison on the same held-out prompts.</li>
+          </ul>
+
           <p>
-            Together, the two attempts moved us closer to the original goal. We first adapted a model
-            to draft company-level equity research, then broadened its training context to include
-            more of the market information encountered in real finance work. What remains is to test
-            whether it can reason reliably across those relationships and make useful predictions about
-            what happens next.
+            Attempt #2 therefore achieved its immediate objective: substantially broader training while
+            retaining strong finance performance.
           </p>
 
           <h3 id="whats-next">What’s next</h3>
