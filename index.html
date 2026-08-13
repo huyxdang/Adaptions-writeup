@@ -807,6 +807,15 @@
             coverage moved the training task closer to the finance workflow described in the introduction.
           </p>
 
+          <h4>General-purpose coverage</h4>
+
+          <p>
+            To keep the model from becoming too specialized, AutoScientist added <strong>13,856 synthetic
+            general-purpose examples</strong> to the 34,640 finance samples. This created a 48,496-example
+            mixture before the training split, helping preserve the base model’s broader capabilities while
+            it learned the finance domain.
+          </p>
+
           <figure>
             <div class="mixture-flow" role="img" aria-label="34,640 finance samples plus 13,856 general-purpose examples produced a 48,496-example pre-split training mixture, of which 48,127 examples were used for training">
               <div class="mixture-step">
@@ -830,13 +839,7 @@
           <h3 id="scale-model">Train model</h3>
 
           <p>
-            AutoScientist added 13,856 general-purpose examples to the 34,640 finance samples,
-            producing a 48,496-example mixture before the training split. Of those, <strong>48,127
-            examples</strong> were used for training. The replay data was intended to preserve more of
-            the base model’s general capability while it learned the broader finance domain.
-          </p>
-
-          <p>
+            Of the 48,496-example mixture, <strong>48,127 examples</strong> were used for training.
             AutoScientist trained a rank-16 LoRA adapter for <code>Llama-3.3-70B-Instruct</code> over
             two epochs, using a learning rate of <code>1e-4</code>. On the final run’s dataset-specific
             preference evaluation, the adapted model won <strong>87 to 13</strong>. On Adaption’s
