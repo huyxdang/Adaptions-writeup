@@ -427,8 +427,8 @@
       }
 
       .artifact-list, .adaption-links { margin: 0.9rem 0 0; padding: 0; list-style: none; }
-      .artifact-item, .adaption-links li { display: grid; grid-template-columns: 116px minmax(0, 1fr); align-items: center; gap: 1rem; min-height: 42px; border-top: 1px solid var(--border); }
-      .artifact-label, article .adaption-links a { color: var(--black); font-size: 13px; }
+      .artifact-item { display: grid; grid-template-columns: 116px minmax(0, 1fr); align-items: center; gap: 1rem; min-height: 42px; border-top: 1px solid var(--border); }
+      .artifact-label { color: var(--black); font-size: 13px; }
       .artifact-platforms { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 1.5rem; }
 
       article .platform-link { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--medium-gray); font-size: 12px; line-height: 1; text-decoration: none; white-space: nowrap; transition: color 140ms ease; }
@@ -438,9 +438,24 @@
 
       .adaption-heading { display: flex; align-items: center; gap: 0.55rem; }
       .adaption-mark { width: 19px; height: 19px; flex: 0 0 auto; }
-      article .adaption-links a { text-decoration: none; transition: color 140ms ease; }
-      article .adaption-links a:hover { color: var(--accent); }
-      .adaption-links span { color: var(--medium-gray); font-size: 12px; }
+      .adaption-links li { border-top: 1px solid var(--border); }
+      article .adaption-service-link {
+        display: grid;
+        grid-template-columns: 116px minmax(0, 1fr);
+        align-items: center;
+        gap: 1rem;
+        min-height: 42px;
+        color: var(--black);
+        text-decoration: none;
+      }
+      article .adaption-service-link:hover,
+      article .adaption-service-link:focus-visible { text-decoration: none; }
+      .adaption-service-name { color: var(--black); font-size: 13px; transition: color 140ms ease; }
+      .adaption-service-description { color: var(--medium-gray); font-size: 12px; transition: color 140ms ease; }
+      .adaption-service-link:hover .adaption-service-name,
+      .adaption-service-link:focus-visible .adaption-service-name { color: var(--accent); }
+      .adaption-service-link:hover .adaption-service-description,
+      .adaption-service-link:focus-visible .adaption-service-description { color: var(--black); }
 
       .report-footer {
         display: grid;
@@ -498,7 +513,7 @@
         .mixture-operator { justify-self: start; margin-left: 0.2rem; }
         article h2 { font-size: 24px; }
         .resource-meta > div, .artifact-item { grid-template-columns: 68px minmax(0, 1fr); }
-        .adaption-links li { grid-template-columns: 92px minmax(0, 1fr); }
+        article .adaption-service-link { grid-template-columns: 92px minmax(0, 1fr); }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -1013,12 +1028,16 @@
               </div>
               <ul class="adaption-links">
                 <li>
-                  <a href="https://adaptionlabs.ai/adaptive-data" target="_blank" rel="noreferrer">Adaptive Data</a>
-                  <span>Generate &amp; synthesize training data</span>
+                  <a class="adaption-service-link" href="https://adaptionlabs.ai/adaptive-data" target="_blank" rel="noreferrer">
+                    <span class="adaption-service-name">Adaptive Data</span>
+                    <span class="adaption-service-description">Generate &amp; synthesize training data</span>
+                  </a>
                 </li>
                 <li>
-                  <a href="https://adaptionlabs.ai/auto-scientist" target="_blank" rel="noreferrer">AutoScientist</a>
-                  <span>Automate LLM training</span>
+                  <a class="adaption-service-link" href="https://adaptionlabs.ai/auto-scientist" target="_blank" rel="noreferrer">
+                    <span class="adaption-service-name">AutoScientist</span>
+                    <span class="adaption-service-description">Automate LLM training</span>
+                  </a>
                 </li>
               </ul>
             </section>
