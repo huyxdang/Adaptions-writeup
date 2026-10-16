@@ -22,19 +22,17 @@ The 77:23 figure is broader-category platform preference evidence. Independence 
 
 ![Attempt 1 preference results showing 84 to 16 on-dataset and 77 to 23 on Market Analysis](assets/a1-winrates.png)
 
-## Attempt #2 — Scaling 50×
+## Attempt #2 — Scale up
 
-“Scaling 50×” is the chosen editorial label. The measured scale is roughly 1,500 to about 7,000 source reports and, for Attempt #2, 45,702 generated rows plus 56 rows in the Combine output, totaling 45,758.
+The source corpus expanded from roughly 1,500 to about 7,000 institutional reports, broadening company-level equity research to macro, sector, fund, and fixed-income research.
 
-**Expanded the source and task coverage from company-level equity research to macro, sector, fund, and fixed-income research.**
+After testing three Adaptive Data recipes, the final run selected Dataset 2 and combined it with `market_analysis_XXL` from Attempt #1. The released finance dataset contains **34,640 samples**, more than 50 times the original 589-row baseline. AutoScientist added **13,856 synthetic general-purpose examples**, yielding a **48,496-example mixture before the training split**.
 
-The broader taxonomy covers insufficient-evidence decisions, market-state interpretation, actual-versus-forward-looking separation, driver transmission, comparative analysis, and fund-and-benchmark analysis. Three Adaptive Data recipes over shared source items produced the 45,702 generated rows; the 45,758-row total represents roughly 15,250 unique generated items through multiple enhancement variants, not independent source records. The Adaption platform quality score increased from 8.0 to 9.4, and the resulting Llama 4 Scout 17B adaptation recorded an 80:20 in-distribution preference result. Attempt #2 therefore demonstrates **scale and breadth**, not better generalization than Attempt #1.
+The final rank-16 Llama 3.3 70B LoRA adapter trained for two epochs at `1e-4`. It recorded **87:13** on-dataset and **74:27** on Adaption's separate Market Analysis preference evaluation.
 
-![Attempt 2 quality panel showing a move from grade B to grade A](assets/a2-adaptive-data.png)
+![Attempt 2 preference results showing 87 to 13 on-dataset and 74 to 27 on Market Analysis](assets/a2-winrate.png)
 
-![Attempt 2 preference result showing 80 to 20 on the combined dataset](assets/a2-winrate.png)
-
-The attempts are not a controlled head-to-head benchmark. Their models, data, methods, and evaluation scopes differ. Attempt #1 includes a broader Market Analysis category result; Attempt #2 does not.
+The attempts are not a controlled head-to-head benchmark. Their datasets and training configurations differ, and each adapter was compared with its own base model. These results do not prove overall superiority or clean external transfer; the unpublished protocol and split-hygiene limits still apply.
 
 See [Experiment History](docs/EXPERIMENT_HISTORY.md), [Methods](docs/METHODS.md), and [Results](docs/RESULTS.md).
 
@@ -103,7 +101,7 @@ This section describes future research, not a completed model or evaluated exper
 | Attempt | Dataset | LoRA adapter | Reported preference (adapted:base) |
 | --- | --- | --- | --- |
 | Attempt #1 | [Hugging Face](https://huggingface.co/datasets/huyxdang/adaption-equity-analysis-small) · [Kaggle](https://www.kaggle.com/datasets/huydang03/adaption-equity-analysis-small) | [Hugging Face](https://huggingface.co/huyxdang/adaption_vietnam_equity_research_note) · [Kaggle](https://www.kaggle.com/models/huydang03/adaption-vietnam-equity-research-note/PyTorch/lora) | 84:16 on-dataset; 77:23 Market Analysis |
-| Attempt #2 | [Hugging Face](https://huggingface.co/datasets/huyxdang/adaption-market-analysis-final) · [Kaggle](https://www.kaggle.com/datasets/huydang03/adaption-market-analysis-final) | [Hugging Face](https://huggingface.co/huyxdang/adaption-market-analysis-final-model) · [Kaggle](https://www.kaggle.com/models/huydang03/adaption-market-analysis-final-model/PyTorch/lora) | 80:20 on-dataset; no category result |
+| Attempt #2 | [Hugging Face](https://huggingface.co/datasets/huyxdang/adaption-final-final) · [Kaggle](https://www.kaggle.com/datasets/huydang03/adaption-final-final) | [Hugging Face](https://huggingface.co/huyxdang/adaption_final_final) | 87:13 on-dataset; 74:27 Market Analysis |
 
 The host pages govern artifact access and licensing.
 

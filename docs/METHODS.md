@@ -35,33 +35,24 @@ The first attempt focused on company-level equity research from roughly 1,500 So
 | Training experiment | `22ed78c2-6708-4e15-814f-b2bc73ca95af` |
 | Fine-tune job | `140dbd16-fb1d-41da-ac02-b307e8d43024` |
 
-## Attempt #2 — Scaling 50×
+## Attempt #2 — Scale up
 
-“Scaling 50×” is an editorial label. The second attempt expanded the source corpus to about 7,000 institutional reports spanning macro outlooks, sector studies, fund reviews, fixed-income commentary, and company research. Three Adaptive Data recipes produced 45,702 generated rows, and 56 rows reported by the Combine output brought the total to 45,758.
+The second attempt expanded the source corpus to about 7,000 institutional reports spanning macro outlooks, sector studies, fund reviews, fixed-income commentary, and company research. After testing three Adaptive Data recipes, the final run selected Dataset 2, the prompt-and-completion variant, and combined it with `market_analysis_XXL` from Attempt #1.
 
-Its combined-dataset task taxonomy included these reported, rounded shares:
-
-- insufficient evidence: 36.2%;
-- market-state interpretation: 30.9%;
-- actual-versus-forward-looking separation: 17.0%;
-- driver transmission: 13.7%;
-- comparative analysis: 1.5%;
-- fund and benchmark analysis: 0.4%.
-
-The recipes use shared source items, so the total represents roughly 15,250 unique generated items through multiple enhancement variants, not 45,758 independent source records.
+The final public finance dataset contains 34,640 samples, more than 50 times the original 589-row baseline. AutoScientist added 13,856 synthetic general-purpose examples to preserve broader capabilities, yielding a 48,496-example mixture before the training split. The development candidate pool must not be presented as the released dataset or as independent source records.
 
 | Parameter | Value |
 | --- | --- |
-| Base model | `togethercomputer/Llama-4-Scout-17B-16E-Instruct_bnb_4bit` |
+| Base model | `Llama-3.3-70B-Instruct` |
 | Method | LoRA supervised fine-tuning |
-| Combined dataset | 45,758 rows |
-| Rank / alpha / dropout | 32 / 64 / 0.05 |
-| Target modules | `q_proj`, `k_proj`, `v_proj`, `o_proj` |
-| Epochs / steps | 2 / 168 |
-| Peak learning rate | `2e-5` |
-| Run ID | `adaption_llama_4_scout_17b_16_final_cc7ddeac` |
+| Finance dataset | 34,640 samples |
+| Pre-split mixture | 48,496 examples |
+| Rank | 16 |
+| Epochs | 2 |
+| Learning rate | `1e-4` |
+| Run ID | `adaption_llama_3_3_70b_instru_final_final_8228cf21` |
 
-Attempt #2 tests scale and breadth. It does not establish better generalization than Attempt #1 because it has no equivalent Market Analysis category evaluation.
+Attempt #2 recorded 87:13 on-dataset and 74:27 Market Analysis preferences. These platform evaluations do not establish superiority over Attempt #1 without a head-to-head comparison on the same held-out prompts.
 
 ## Future research
 

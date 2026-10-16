@@ -1,148 +1,71 @@
-# Future Improvement — From Financial Research Model to Global Market-System Intelligence
+# What's next: Dynamic global-market relationships
 
-## Foundation
+## Objective
 
-The completed work consists of two attempts:
+The completed experiments teach models to reconstruct financial analysis from supplied evidence. The next research question is larger: can a system identify how new information propagates across companies, sectors, asset classes, and geographies while preserving exactly what was knowable at the time?
 
-- **Attempt #1 — Proof of Concept:** converted institutional equity-research reports into leakage-controlled training data and trained a Llama 3.3 70B LoRA adapter for reconstructing analyst judgments from supplied evidence.
-- **Attempt #2 — Scaling 50×:** expanded source coverage to about 7,000 macro, sector, fund, fixed-income, and company reports. Three recipes produced 45,702 generated rows plus 56 rows in the Combine output, totaling 45,758; shared-source variants represent roughly 15,250 unique generated items. A Llama 4 Scout 17B LoRA adapter was trained on the combined dataset.
+The immediate goal is not simply to add more documents or increase model parameters. It is to build a point-in-time dataset that makes dynamic market relationships explicit, then test whether those relationships are learned more effectively through model adaptation or retrieval adaptation.
 
-“Scaling 50×” is an editorial label; the exact report and row counts above are the authoritative scale measurements.
+## Proposed dataset
 
-The completed work uses institutional research first for company-level supplied-evidence tasks, then for broader source coverage and a wider financial task taxonomy.
+Each example would begin with an event and a decision timestamp. Its evidence set would contain only information published by that timestamp, preventing later reports, revised figures, subsequent prices, and hindsight conclusions from leaking backward.
 
-The next step is to scale both the **geographic universe** and the **structure of the reasoning problem**.
+The dataset would represent time-varying links among:
 
-Instead of asking only:
+- companies, business segments, suppliers, customers, and competitors;
+- sectors, commodities, interest rates, currencies, and credit exposures;
+- funds, ownership relationships, and geographic exposures;
+- macroeconomic releases, policy decisions, and market regimes.
 
-> **What does this evidence imply for this company?**
+Each training case would preserve source provenance, publication time, supporting passages, contradictions, relationship paths, analytical horizon, and the conclusion supported by the available evidence.
 
-we want the system to eventually answer:
-
-> **What changed, which parts of the global financial system are exposed, through which transmission channels, over what horizon, and what evidence actually supports that conclusion?**
-
-## Global financial evidence
-
-A global version could combine equities, sovereign and corporate credit, rates, FX, commodities, real estate, central-bank research, regulatory filings, earnings calls, institutional research, and macroeconomic releases across major markets.
-
-The objective is not simply to add more documents. Evidence must remain attributable, time-bounded, and suitable for testing transmission hypotheses across entities, markets, and asset classes.
-
-## Point-in-time data discipline
-
-Every training, retrieval, and evaluation case should preserve exactly what information was available at the decision timestamp. Later reports, revised data, subsequent market moves, and hindsight conclusions must not leak backward.
-
-A point-in-time evidence record should preserve:
-
-- source and publication timestamp;
-- claim lineage and supporting passages;
-- contradictions and revisions;
-- market context available before the event;
-- the exact evidence set used for each conclusion.
-
-## Dynamic market relationships
-
-Suppliers, customers, competitors, ownership, funds, industries, commodities, leadership, patents, and geographic exposures change over time. These relationships should be represented as time-varying links rather than static metadata or independent company observations.
-
-A dynamic knowledge network could connect:
+A representative reasoning path might be:
 
 ```text
-Company → Business segment → Product → Commodity → Supplier → Customer
-        → Competitor → Fund → Credit exposure → Geography → Macro factor
+Rate shock -> Bond yields -> Bank funding -> Mortgage rates
+           -> Housing demand -> Construction -> Materials -> Company earnings
 ```
 
-## Cross-sector and cross-asset transmission
+This structure would allow the same event to have different implications over immediate, near-term, medium-term, and structural horizons.
 
-The system should reason through first- and higher-order effects instead of stopping at the directly mentioned asset.
+## Literature review: two research directions
 
-```text
-Rate shock → Bond yields → Bank funding → Mortgage rates → Housing demand
-           → Construction → Materials → Company earnings
-```
+### 1. Graph-aware model adaptation
 
-Transmission analysis should cover equities, rates, FX, commodities, sovereign and corporate credit, real estate, and related sectors while accounting for contracts, inventory, hedging, pricing power, and pass-through capacity.
+[FinRipple: Aligning Large Language Models with Financial Market for Event Ripple Effect Awareness](https://arxiv.org/abs/2505.23826) by Yuanjian Xu and colleagues models financial events as shocks that propagate through a time-varying company network. It combines dynamic relationships with financial theory-guided reinforcement learning and evaluates whether the model can identify effects beyond the company directly named in an event.
 
-## Multi-horizon impact
+This direction suggests adapting the model itself to learn transmission paths. For our project, the dynamic relationship dataset would supply the entities, temporal links, evidence, and downstream effects needed to train and test that behavior.
 
-The same event can have different signs at different horizons. Future analysis should distinguish:
+### 2. Point-in-time retrieval adaptation
 
-- immediate market reaction;
-- near-term operating or liquidity impact;
-- medium-term earnings, thesis, and valuation transmission;
-- longer-term structural change.
+[Point-in-Time Financial RAG with Frozen LLMs and Market-Feedback Adaptive Retrieval](https://arxiv.org/abs/2605.31201) by Zijie Zhao and Roy E. Welsch takes a different approach. It keeps the reader model frozen, retrieves only evidence available at the historical decision time, and updates an external source-memory system using matured residual-return feedback.
 
-## Market-feedback evaluation
+This direction suggests that better evidence selection may matter more than repeatedly fine-tuning the reader. For our project, the same dynamic relationship dataset could guide retrieval by event type, entity, market regime, relationship path, and analytical horizon.
 
-Model hypotheses could be compared with subsequently realized market behavior—not as unquestionable labels, but as noisy feedback about whether the model identified economically relevant relationships.
+## Proposed comparison
 
-Evaluation should separate broad market, sector, factor, and company-specific movement where possible. It should test whether the evidence and transmission hypothesis were useful, not treat realized returns as a perfect answer key or present the system as an investment-return engine.
+The two approaches should be evaluated against each other on the same point-in-time cases:
 
-## Adaptive retrieval
+1. **Adapted model:** train the reader to reason directly over dynamic market relationships.
+2. **Adaptive retrieval:** keep the reader fixed and learn which historical evidence and relationship paths to retrieve.
+3. **Combined system:** adapt both the reader and retrieval layer, then test whether the added complexity produces a measurable gain.
 
-Retrieval should learn which evidence sources are useful for different event types, entities, market regimes, and horizons while keeping historical evidence strictly point-in-time.
+Model size should be treated as a controlled variable rather than the definition of scale. If larger base models are tested, they should use the same data, retrieval conditions, prompts, and evaluation cases as smaller models.
 
-A future retrieval policy could adapt using:
+## Evaluation
 
-- entity and relationship relevance;
-- publication time and evidence freshness;
-- market regime and event type;
-- uncertainty and conflicting evidence;
-- analytical horizon;
-- subsequent feedback about source usefulness.
+Evaluation should use chronological splits and include unseen markets, industries, source types, languages, regimes, and shocks. It should separately measure:
 
-## Global transfer tests
+- identification of directly and indirectly exposed entities;
+- correctness of the proposed transmission path;
+- use of evidence available at the decision time;
+- recognition of insufficient or contradictory evidence;
+- performance across immediate and longer analytical horizons;
+- calibration and uncertainty;
+- generalization beyond the dataset's original geography and distribution.
 
-Future evaluation should test whether financial reasoning learned from one geography or regime generalizes to unseen markets, industries, asset classes, languages, source types, and shocks instead of only testing interpolation within the original corpus.
+Subsequent market behavior can provide noisy feedback about whether a relationship was economically relevant, but it should not be treated as an unquestionable answer key or as proof of investment performance.
 
-## Research directions
+## Release boundary
 
-Two complementary research directions provide useful blueprints. They are references for future design, not implemented components of this report.
-
-### [FinRipple](https://arxiv.org/abs/2505.23826)
-
-FinRipple argues that financial events should be modeled as shocks propagating through a dynamic network rather than as isolated company sentiment. Its framework constructs time-varying company relationships—including supply chains, fund holdings, leadership links, and patent relationships—and aligns predicted ripple effects with realized asset-pricing residuals.
-
-That is close to the structural direction we want:
-
-> **Event → Direct exposure → Related entities → Ripple effects → Market response**
-
-### Point-in-Time Financial RAG with Market-Feedback Adaptive Retrieval
-
-This complementary direction freezes the reader, retrieves only evidence available at the historical decision time, supplies pre-event market context, predicts residual impact over multiple horizons, and lets subsequently realized returns update an external source-memory system rather than continually fine-tuning the reader on noisy returns.
-
-## Longer-term architecture
-
-```text
-Institutional Research Model
-→ understands how professional analysts reason
-
-+ Global Point-in-Time Evidence
-→ knows what the market could actually have known at that moment
-
-+ Dynamic Financial Relationships
-→ knows which companies, sectors, and assets are connected
-
-+ Cross-Asset Transmission Reasoning
-→ understands how a shock can propagate through those connections
-
-+ Market Feedback
-→ learns which evidence and transmission hypotheses historically proved useful
-```
-
-## Evaluation and release work
-
-Before claiming that this future system exists or works:
-
-1. define a point-in-time, release-eligible evidence corpus and source-rights record;
-2. implement dynamic relationship and provenance tracking;
-3. freeze evaluation definitions, horizons, baselines, and market-adjustment methods;
-4. publish error analysis, uncertainty, and conflicting-evidence behavior;
-5. run transfer tests across geographies, regimes, sectors, asset classes, and source types;
-6. evaluate it as a research workflow rather than an autonomous investment engine.
-
-## Long-term objective
-
-The ambition is not simply to train on more financial documents.
-
-**Attempt #1 used company-level supplied-evidence tasks. Attempt #2 broadened the source coverage and financial task taxonomy. The next step is to test how information propagates through the global financial system.**
-
-Everything after Attempt #2 in this document is a future research direction, not a completed experiment, model, or evaluation result.
+This roadmap describes future research, not a completed third attempt. Before making performance claims, the project would need a release-eligible point-in-time corpus, documented source rights, frozen evaluation definitions, reproducible baselines, and published error analysis.

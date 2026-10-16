@@ -13,17 +13,17 @@ No raw datasets or source reports are stored in this repository. The two documen
 
 The report records a 739-row curated corpus split into 589 train, 77 validation, and 73 held-out rows. The 589-row train split is the training baseline expanded by Adaptive Data. This repository does not assert that every curated split is separately published. Independence between the platform evaluations and the local 73-row held-out split, as well as complete split hygiene, are not established in the public record. Adaption does not publish the quality-score rubric.
 
-## Attempt #2 — Scaling 50×
+## Attempt #2 — Scale up
 
-“Scaling 50×” is an editorial label. The measured Attempt #2 output is 45,702 generated rows plus 56 rows reported by the Combine output, totaling 45,758.
+The final public finance dataset contains 34,640 samples, more than 50 times the original 589-row baseline.
 
-- Hugging Face: [huyxdang/adaption-market-analysis-final](https://huggingface.co/datasets/huyxdang/adaption-market-analysis-final)
-- Kaggle: [adaption-market-analysis-final](https://www.kaggle.com/datasets/huydang03/adaption-market-analysis-final)
-- Published size: 45,758 instruction-tuning rows
-- Composition: 15,252 + 15,253 + 15,197 = 45,702 generated rows, plus 56 rows reported by the Combine output
-- Adaption platform quality score: 8.0 to 9.4, grade B to A
+- Hugging Face: [huyxdang/adaption-final-final](https://huggingface.co/datasets/huyxdang/adaption-final-final)
+- Kaggle: [adaption-final-final](https://www.kaggle.com/datasets/huydang03/adaption-final-final)
+- Composition: Dataset 2, the prompt-and-completion variant, combined with `market_analysis_XXL` from Attempt #1
+- General-purpose replay: 13,856 synthetic examples added by AutoScientist
+- Mixture before the training split: 48,496 examples
 
-The three generations cover the same underlying source items using three enhancement recipes. The public final dataset reports roughly 15,250 unique generated items represented through enhancement variants, not 45,758 independent source records. Adaption does not publish the quality-score rubric.
+The earlier three-recipe candidate pool is not the released finance dataset. Generated variants should not be treated as independent source reports. No platform quality score for the finalized finance dataset is established by the current report.
 
 ## Use and licensing
 

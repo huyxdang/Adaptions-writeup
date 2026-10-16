@@ -56,65 +56,51 @@ The 84:16 result is an in-distribution diagnostic. Adaption, rather than the pro
 - Dataset: [Hugging Face](https://huggingface.co/datasets/huyxdang/adaption-equity-analysis-small) · [Kaggle](https://www.kaggle.com/datasets/huydang03/adaption-equity-analysis-small)
 - LoRA adapter: [Hugging Face](https://huggingface.co/huyxdang/adaption_vietnam_equity_research_note) · [Kaggle](https://www.kaggle.com/models/huydang03/adaption-vietnam-equity-research-note/PyTorch/lora)
 
-## Attempt #2 — Scaling 50×
+## Attempt #2 — Scale up
 
 **Expanded source and task coverage from company-level equity research to macro, sector, fund, and fixed-income research.**
 
-“Scaling 50×” is an editorial label. The measured change is from roughly 1,500 to about 7,000 source reports; three recipes produced 45,702 generated rows, and 56 rows in the Combine output brought the total to 45,758.
-
 ### Data
 
-The source corpus expanded from roughly 1,500 to about 7,000 institutional reports. The combined-dataset taxonomy reported these rounded shares: insufficient evidence (36.2%), market-state interpretation (30.9%), actual-versus-forward-looking separation (17.0%), driver transmission (13.7%), comparative analysis (1.5%), and fund and benchmark analysis (0.4%).
+The source corpus expanded from roughly 1,500 to about 7,000 institutional reports. After testing three Adaptive Data recipes, the final run selected Dataset 2, the prompt-and-completion variant, and combined it with `market_analysis_XXL` from Attempt #1.
 
-Adaptive Data ran three recipes over the same source corpus, then combined their outputs:
-
-| Generation | Rows | Recipe | Quality |
-| --- | ---: | --- | --- |
-| Dataset 1 | 15,252 | Completion rewritten | 7.0 to 9.2 |
-| Dataset 2 | 15,253 | Prompt and completion with response constraints | 7.0 to 9.5 |
-| Dataset 3 | 15,197 | Independent variant of the constrained recipe | 7.0 to 9.5 |
-| Combined | **45,758** | 45,702 generated rows plus 56 | Adaption platform score: 8.0 to 9.4 |
-
-The generations share the same underlying source items. The combined row count represents roughly 15,250 unique generated items through multiple enhancement variants, not 45,758 independent source records.
-
-![Attempt 2 quality result](../assets/a2-adaptive-data.png)
+The released finance dataset contains **34,640 samples**, more than 50 times the original 589-row baseline. AutoScientist added **13,856 synthetic general-purpose examples**, producing a **48,496-example mixture before the training split**. The earlier three-recipe candidate pool is not the finalized dataset.
 
 ### Model
 
 | Field | Value |
 | --- | --- |
-| Base model | `togethercomputer/Llama-4-Scout-17B-16E-Instruct_bnb_4bit` |
+| Base model | `Llama-3.3-70B-Instruct` |
 | Method | LoRA supervised fine-tuning |
-| Rank / alpha / dropout | 32 / 64 / 0.05 |
-| Target modules | `q_proj`, `k_proj`, `v_proj`, `o_proj` |
-| Epochs / steps | 2 / 168 |
-| Peak learning rate | `2e-5` |
-| Run ID | `adaption_llama_4_scout_17b_16_final_cc7ddeac` |
+| Rank | 16 |
+| Epochs | 2 |
+| Learning rate | `1e-4` |
+| Run ID | `adaption_llama_3_3_70b_instru_final_final_8228cf21` |
 
 ### Results
 
 | Evaluation | Adapted | Base |
 | --- | ---: | ---: |
-| On-dataset preference | **80%** | 20% |
-| Market Analysis preference | Not produced | Not produced |
+| On-dataset preference | **87** | 13 |
+| Market Analysis preference | **74** | 27 |
 
-![Attempt 2 preference result](../assets/a2-winrate.png)
+![Attempt 2 preference results: 87 to 13 on-dataset and 74 to 27 on Market Analysis](../assets/a2-winrate.png)
 
-Attempt #2 demonstrated scale and breadth while retaining a large preference margin on its own distribution. Without a category-level result, it did not establish broader transfer or better generalization than Attempt #1.
+These are the platform-reported pairwise preference values, not accuracy. The final run retained strong preference results while broadening its finance coverage and adding general-purpose data. The attempts were not compared head-to-head on identical held-out prompts, so these results do not prove that Attempt #2 is superior overall.
 
 ### Public releases
 
-- Dataset: [Hugging Face](https://huggingface.co/datasets/huyxdang/adaption-market-analysis-final) · [Kaggle](https://www.kaggle.com/datasets/huydang03/adaption-market-analysis-final)
-- LoRA adapter: [Hugging Face](https://huggingface.co/huyxdang/adaption-market-analysis-final-model) · [Kaggle](https://www.kaggle.com/models/huydang03/adaption-market-analysis-final-model/PyTorch/lora)
+- Dataset: [Hugging Face](https://huggingface.co/datasets/huyxdang/adaption-final-final) · [Kaggle](https://www.kaggle.com/datasets/huydang03/adaption-final-final)
+- Model weights: [Hugging Face](https://huggingface.co/huyxdang/adaption_final_final)
 
 ## Reading progress across attempts
 
 | Question | Evidence |
 | --- | --- |
 | Can leakage-controlled financial evidence support analyst-style responses on a broader Adaption category evaluation? | Attempt #1 recorded a 77:23 Market Analysis preference result; clean external transfer is not established. |
-| Can the same workflow scale to broader sources and tasks? | Attempt #2 reached 45,758 rows and an 80:20 on-dataset result. |
+| Can the same workflow scale to broader sources and tasks? | Attempt #2 released 34,640 finance samples, used a 48,496-example pre-split mixture, and recorded 87:13 on-dataset and 74:27 Market Analysis preferences. |
 
-The scores must not be ranked as though they came from one controlled benchmark. The models, datasets, configurations, and evaluation scopes changed between attempts.
+The scores must not be ranked as though they came from one controlled benchmark. The datasets and training configurations changed between attempts; the evaluations compare each adapted model with its own base rather than the two adapters directly.
 
 **Attempt #1 used company-level supplied-evidence tasks. Attempt #2 broadened the source coverage and financial task taxonomy. The next step is to test how information propagates through the global financial system.**
 

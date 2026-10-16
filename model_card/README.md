@@ -5,7 +5,7 @@ This directory records the two publicly released LoRA adapters documented by the
 | Attempt | Base model | Method | Public adapter | Evaluation scope |
 | --- | --- | --- | --- | --- |
 | Attempt #1 | `meta-llama/Llama-3.3-70B-Instruct-Reference` | LoRA SFT | [Hugging Face](https://huggingface.co/huyxdang/adaption_vietnam_equity_research_note) · [Kaggle](https://www.kaggle.com/models/huydang03/adaption-vietnam-equity-research-note/PyTorch/lora) | 84:16 in-distribution; 77:23 broader Market Analysis category |
-| Attempt #2 | `togethercomputer/Llama-4-Scout-17B-16E-Instruct_bnb_4bit` | LoRA SFT | [Hugging Face](https://huggingface.co/huyxdang/adaption-market-analysis-final-model) · [Kaggle](https://www.kaggle.com/models/huydang03/adaption-market-analysis-final-model/PyTorch/lora) | 80:20 in-distribution; no category result |
+| Attempt #2 | `Llama-3.3-70B-Instruct` | LoRA SFT | [Hugging Face](https://huggingface.co/huyxdang/adaption_final_final) | 87:13 in-distribution; 74:27 broader Market Analysis category |
 
 Each preference result is shown as **adapted:base**. For Attempt #1, independence between the broader category evaluation and the local 73-row held-out split, as well as complete split hygiene, are not established in the public record.
 
@@ -24,11 +24,10 @@ Each preference result is shown as **adapted:base**. For Attempt #1, independenc
 
 | Field | Value |
 | --- | --- |
-| Rank / alpha / dropout | 32 / 64 / 0.05 |
-| Target modules | `q_proj`, `k_proj`, `v_proj`, `o_proj` |
-| Epochs / steps | 2 / 168 |
-| Peak learning rate | `2e-5` |
-| Run ID | `adaption_llama_4_scout_17b_16_final_cc7ddeac` |
+| Rank | 16 |
+| Epochs | 2 |
+| Learning rate | `1e-4` |
+| Run ID | `adaption_llama_3_3_70b_instru_final_final_8228cf21` |
 
 ## Use and limitations
 
